@@ -1,0 +1,11 @@
+package com.resturant.restapi.repository;
+
+import com.resturant.restapi.Model.Food;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface FoodRepository extends JpaRepository<Food,Integer> {
+
+
+}
