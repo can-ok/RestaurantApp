@@ -8,17 +8,16 @@ class Home extends Component {
     render() { 
         return ( 
         <div>
-        <Heading/> 
 
-            <div className="row">
-                <div className="col">
+            <div class="border-bottom border-3 mb-2">
+                <Heading/> 
+
+            </div>
+
+            <div> 
                 <DrinkList/>
-                </div>
-
-                <div className="col">
                 <FoodList/>
-                </div>
-
+        
             </div>
         </div> );
     }

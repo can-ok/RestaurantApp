@@ -61,21 +61,20 @@ class FoodList extends Component {
     render() { 
 
         const {items}=this.state;
-        const listItem= items.map( (item)=>
-        
-        <div className="d-flex mb-3 mt-2 border">
+     
+        const listTable= items.map( (item)=>
+        <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td><Link to={`/description/${"food"}/${item.id}`} >{item.title} </Link></td>
+                    <td>{item.description}</td>
+                    <td>{item.productCategory}</td>
+                    <td>{item.price.toString()}</td>
 
-        <Link to={`/description/${"food"}/${item.id}`} >
-            
-            {item.title} 
-        </Link>
+                    <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Edit</Link></td>
+                    <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Delete </Button></td>
+         </tr>
 
-        <div className="ml-auto">
-                <Link to={`/update/${"food"}/${item.id}`}   className="btn btn-warning mr-1">Edit</Link>
-                <Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} > Delete </Button>
-                </div>
-
-        </div>)
+       )
 
         return ( 
             <div>
@@ -85,11 +84,24 @@ class FoodList extends Component {
             <Link className="btn float-right" to="/add/food"><GrFormAdd size='1rem'/><strong>Add Food</strong></Link>
 
             </div>
-
-            <div>
-                {listItem}
-            </div>
-                    
+            <table className="table">
+                <thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>price</th>
+                    <th></th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {listTable}
+                </tbody>
+            </table>
+            
+            
         </div>
          );
     }

@@ -61,21 +61,19 @@ class DrinkList extends Component {
 
         const {items}=this.state;
         //const type="drink";
-        const listItem= items.map( (item)=>
-        
-        <div className="d-flex mb-3 mt-2 border">
+        const listTable= items.map( (item)=>
 
-        <Link to={`/description/${"drink"}/${item.id}`} >
-            
-            {item.title} 
-        </Link>
+        <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td><Link to={`/description/${"drink"}/${item.id}`} >{item.title} </Link></td>
+                    <td>{item.description}</td>
+                    <td>{item.productCategory}</td>
+                    <td>{item.price.toString()}</td>
 
-        <div className="ml-auto">
-                <Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning mr-1">Edit</Link>
-                <Button className="btn btn-danger"onClick={()=>this.handle_detele(item.id)}> Delete </Button>
-                </div>
+                    <td><Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning">Edit</Link></td>
+                    <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)}> Delete </Button></td>
+         </tr>
 
-        </div>
 
         );
 
@@ -88,9 +86,23 @@ class DrinkList extends Component {
 
             </div>
 
-            <div>
-                {listItem}
-            </div>
+            <table className="table">
+                <thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>price</th>
+                    <th></th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {listTable}
+                </tbody>
+            </table>
+            
             
         </div> );
     }
