@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 import static java.util.Collections.addAll;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
 @RestController
 public class ProductsController {
 
