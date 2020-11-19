@@ -2,11 +2,13 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
+import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.repository.DrinksRepository;
 import com.resturant.restapi.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,36 @@ public class ProductsService {
         return drinksRepository.findAll();
     }
 
+
+    public List<? extends Product> getSpecificCategory(String ProductCategor){
+
+        List<Food> listfood=foodRepository.getCategoryByFoods(ProductCategor);
+        List<Drink> listDrink=drinksRepository.findDrinkByProductCategory(ProductCategor);
+
+        if(!listfood.isEmpty())
+        {
+            return listfood;
+        }
+        else if(!listDrink.isEmpty())
+        {
+            return listDrink;
+        }
+        else {
+
+            return Collections.emptyList();
+        }
+
+    }
+
+    public List<String> getAllCategoriesFood(){
+
+        return foodRepository.getCategories();
+    }
+
+    public List<String> getAllCategoriesDrink(){
+
+        return drinksRepository.getCategories();
+    }
 
     public List<Food> getAllFoods(){
 
@@ -119,5 +151,7 @@ public class ProductsService {
             return optinalDrink.get();
         }
     }
+
+
 
 }

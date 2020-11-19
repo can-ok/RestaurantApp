@@ -93,4 +93,19 @@ public class ProductsController {
         return productsService.updateDrink(id,drink);
     }
 
+    @GetMapping(path="/category/{ProductCategory}")
+    public List<? extends Product> retrivebyProductCategor(@PathVariable String ProductCategory){
+
+        return productsService.getSpecificCategory(ProductCategory);
+    }
+
+    @GetMapping(path="/getCategories")
+    public List<String> retriveAllCategories()
+    {
+        return new ArrayList<String>() {{
+            addAll(productsService.getAllCategoriesDrink());
+            addAll(productsService.getAllCategoriesFood());
+        }};
+    }
+
 }

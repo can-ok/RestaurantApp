@@ -17,6 +17,20 @@
 }
 
 
+.Category_List{
+
+  max-width: 35rem;
+  margin: 4rem auto;
+}
+
+.descriptionItem{
+
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+}
+
+
 .border-3 {
   border-bottom: #111213;;
   border-width:3px !important;
