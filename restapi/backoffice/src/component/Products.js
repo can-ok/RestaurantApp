@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import Heading from './Heading';
-import DrinkList from './DrinkList';
-import FoodList from './FoodList';
+import DrinkList from './Products/DrinkList';
+import FoodList from './Products/FoodList';
 
-class Home extends Component {
+
+class Products extends Component {
     state = {  }
     render() { 
         return ( 
         <div>
-
             <div class="border-bottom border-3 mb-2">
-                <Heading/> 
+                <Heading  address={"/"} title={"Products"}/> 
 
             </div>
 
@@ -24,6 +24,4 @@ class Home extends Component {
 }
 
 
-export 
-
-default Home;
+export default Products;

@@ -3,12 +3,12 @@ import "../App.css"
 import {Navbar,Nav,NavItem,NavbarBrand,Container} from 'reactstrap';
 
 
-const Heading = () => {
+const Heading = (props) => {
     return ( 
 
         <Navbar class="border-bottom border-3 mb-3" >
             <Container >
-                <NavbarBrand  href="/"> <strong>Back Office </strong></NavbarBrand>
+                <NavbarBrand  href={props.address}> <strong>{props.title} </strong></NavbarBrand>
                 <Nav>
                    
                 </Nav>

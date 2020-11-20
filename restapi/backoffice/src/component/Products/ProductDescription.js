@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import '../App.css'
+import '../../App.css'
 //import {FaFacebook} from 'react-icons/fa'
 import {Link} from "react-router-dom";
 
-import '../App.css'
 
 
 class ProductDescription extends Component {

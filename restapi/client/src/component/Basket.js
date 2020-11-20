@@ -4,15 +4,18 @@ import { AiOutlinePlusCircle,AiOutlineMinusCircle } from 'react-icons/ai';
 
 
 export default class Basket extends Component {
-    state = { 
-            cartItems:this.props.cartItems
-     }
+    constructor(props){
+        super(props);
+        this.state = {
+            cartItems:props.cartItems
 
-    
+        };
+      }
+
+
+   
 
     handleBaskesState=(item,cartItems)=>{
-
-  
 
      for (let i in cartItems) {
         if (cartItems[i].id == item.id) {
@@ -32,8 +35,6 @@ export default class Basket extends Component {
 
 
     handleBaskesStateDecremet=(event,item,cartItems)=>{
-
-  
 
         for (let i in cartItems) {
            if (cartItems[i].id == item.id) {
@@ -59,9 +60,45 @@ export default class Basket extends Component {
        }
 
     
-    handleClick=()=>{
+    handleClick=(event,price,items)=>{
+        var data=[]
+
+        items.forEach(item => {
+            //delete item
+            this.props.handleRemoveFromCart(event,item)
+
+            var jsonData={
+                "productId":item.id,
+                "productCount":item.count,
+                "totalPrice":price,
+                "paymentType":"cash"
+            }
+            
+            data.push(jsonData);
+        });
+
+        fetch("http://localhost:8080/orders/saveOrders",{
 
 
+            method:'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(data,)}
+        ).then((response)=>{
+
+            console.log(response)
+
+
+        })
+        
+        .catch((err)=>{
+            console.error(err)
+        })
+            
+
+        
     }
         
 
@@ -69,7 +106,6 @@ export default class Basket extends Component {
     render() { 
     
         const cartItems=this.props.cartItems;
-     
         return (
             <div className="border border-secondary rounded">
                 {cartItems.length==0? "Basket is empty": "Basket"}
@@ -81,12 +117,12 @@ export default class Basket extends Component {
 
                                 <li className="mt-3 border-bottom">
                                     
-                                    <label className="mr-2" onClick={()=>this.handleBaskesState(item,cartItems)}><AiOutlinePlusCircle size={18} /></label>
+                                    <label className="mr-2 float-left" onClick={()=>this.handleBaskesState(item,cartItems)}><AiOutlinePlusCircle size={24} /></label>
                                     <label>{item.title} :</label>
                                     <label className="ml-2">{item.count} </label>
             
                                     {/*<button className="btn btn-danger" onClick={(e)=>this.props.handleRemoveFromCart(e,item)}>X</button>*/}
-                                    <label className="ml-2" onClick={(event)=>this.handleBaskesStateDecremet(event,item,cartItems)}><AiOutlineMinusCircle size={18}/> </label>
+                                    <label className="ml-2 float-right" onClick={(event)=>this.handleBaskesStateDecremet(event,item,cartItems)}><AiOutlineMinusCircle size={24}/> </label>
 
                                 </li>
 
@@ -95,7 +131,7 @@ export default class Basket extends Component {
                             
                             <div className="mt-2 mb-2">
                             <label>Total: {cartItems.reduce((a,c)=>a+c.price*c.count,0)}</label>
-                            <button className="btn btn-danger float-right" onClick={()=>this.handleClick()}>Order</button>
+                            <button className="btn btn-danger float-right" onClick={(event)=>this.handleClick(event,cartItems.reduce((a,c)=>a+c.price*c.count,0),this.props.cartItems)}>Order</button>
                             </div>
                     </div>   
                 }

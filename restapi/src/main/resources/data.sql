@@ -11,3 +11,8 @@ insert into Food values(4, 'oreo Cheesecake',20,'tatlılar','Cheesecake' )
 insert into Food values(5, 'et döner',20,'yemek','Döner' )
 
 insert into Food values(6, 'füme sandviç',20,'yemek','Sandviç' )
+
+
+insert into User values(1, 'canokan','can123','ADMIN')
+
+insert into User values(2, 'mert','mert123','USER')
