@@ -1,6 +1,6 @@
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.User;
+import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,18 +13,18 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User insertUser(User user){
+    public Users insertUser(Users users){
 
-        return userRepository.save(user);
+        return userRepository.save(users);
     }
 
-    public List<User> getAllUser(){
+    public List<Users> getAllUser(){
 
         return userRepository.findAll();
     }
 
-    public User getUser(Integer id){
-        Optional<User> userEntity=userRepository.findById(id);
+    public Users getUser(Integer id){
+        Optional<Users> userEntity=userRepository.findById(id);
 
         if(!userEntity.isPresent()){
             return null;
@@ -41,25 +41,25 @@ public class UserService {
     }
 
 
-    public User updateUser(Integer id,User user){
-        Optional<User> entity = userRepository.findById(id);
-
-        if (!entity.isPresent()) {
-            System.out.println("Sonuç bulunamadı");
-            return null;}
-        else{
-
-            entity.get().setId(id);
-            entity.get().setName(user.getName());
-            entity.get().setPassword(user.getPassword());
-            entity.get().setRole(user.getRole());
-
-
-            userRepository.save(entity.get());
-
-            return entity.get();
-        }
-    }
+//    public Users updateUser(Integer id, Users users){
+//        Optional<Users> entity = userRepository.findById(id);
+//
+//        if (!entity.isPresent()) {
+//            System.out.println("Sonuç bulunamadı");
+//            return null;}
+//        else{
+//
+//            entity.get().setId(id);
+//            entity.get().setName(users.getName());
+//            entity.get().setPassword(users.getPassword());
+//            entity.get().setRole(users.getRole());
+//
+//
+//            userRepository.save(entity.get());
+//
+//            return entity.get();
+//        }
+    //}
 
 
 

@@ -16,6 +16,7 @@ import static java.util.Collections.addAll;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
 @RestController
+@RequestMapping("/products")
 public class ProductsController {
 
     @Autowired
@@ -24,12 +25,12 @@ public class ProductsController {
 
 
     @GetMapping(path = "/drinks")
-    public List<? extends Product> getAllDrinks(){
+    public List<Drink> getAllDrinks(){
 
         return productsService.getAllDrinks();
     }
 
-    @GetMapping(path="/getProducts")
+    @GetMapping(path="/getAll")
     private List<? extends Product> getAllProducts(){
 
         return new ArrayList<Product>() {{

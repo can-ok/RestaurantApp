@@ -8,19 +8,29 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Drink extends Product {
+@Table(name="PRODUCTS")
+public class Drink extends Product{
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column(name = "ID")
     private Integer id;
 
-    @Column
+    @Column(name = "PRODUCTCATEGORY ")
     private String productCategory;
-    @Column
+
+
+
+    @Column(name = "TITLE")
     private String  title;
-    @Column
-    private int price;
-    @Column
+
+
+
+    @Column(name = "DESCRIPTION ")
     private String description;
+
+    @Column(name="PRICE")
+    private Integer price;
 
 
     public Integer getId() {
@@ -38,17 +48,17 @@ public class Drink extends Product {
 
     @Override
     public void setProductCategory(String productCategory) {
-        this.productCategory=productCategory;
+        this.productCategory = productCategory;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
     @Override
     public void setTitle(String title) {
-        this.title=title;
-
+        this.title = title;
     }
 
     @Override
@@ -59,7 +69,6 @@ public class Drink extends Product {
     @Override
     public void setPrice(int price) {
         this.price=price;
-
     }
 
     @Override
@@ -68,9 +77,10 @@ public class Drink extends Product {
     }
 
     @Override
-    public void setDescription(String Description) {
-
-        this.description=Description;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+
 
 }

@@ -1,18 +1,34 @@
-insert into DRINK values(1, 'sekersiz mesrubat',3,'mesrubatlar','Cola sekersiz' )
-
-insert into DRINK values(2, 'mesrubat',3,'mesrubatlar','Coco-Cola' )
 
 
-insert into Food values(3, 'çikolatalı tatlı',20,'tatlılar','Profiterol' )
-
-insert into Food values(4, 'oreo Cheesecake',20,'tatlılar','Cheesecake' )
 
 
-insert into Food values(5, 'et döner',20,'yemek','Döner' )
+/* AUTH */
+insert into AUTHORITIES values('user1','ROLE_USER')
 
-insert into Food values(6, 'füme sandviç',20,'yemek','Sandviç' )
+insert into AUTHORITIES values('admin','ROLE_ADMIN')
 
 
-insert into User values(1, 'canokan','can123','ADMIN')
+/* users */
 
-insert into User values(2, 'mert','mert123','USER')
+insert into USERS values(1,'user1','{noop}pass1',true)
+
+insert into USERS values(2,'admin','{noop}admin123',true)
+
+
+
+
+
+
+insert into PRODUCTS values(1, 'sekersiz mesrubat',3,'mesrubatlar','Cola sekersiz' )
+
+insert into PRODUCTS values(2, 'mesrubat',3,'mesrubatlar','Coco-Cola' )
+
+
+insert into PRODUCTS values(3, 'çikolatalı tatlı',20,'tatlılar','Profiterol' )
+
+insert into PRODUCTS values(4, 'oreo Cheesecake',30,'tatlılar','Cheesecake' )
+
+
+insert into PRODUCTS values(5, 'et döner',25,'yemek','Döner' )
+
+insert into PRODUCTS values(6, 'füme sandviç',15,'yemek','Sandviç' )

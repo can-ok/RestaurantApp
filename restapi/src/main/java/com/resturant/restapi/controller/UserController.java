@@ -1,8 +1,7 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.Model.User;
+import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.service.UserService;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,19 +16,19 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/getAll")
-    public List<User> getAllUsers(){
+    public List<Users> getAllUsers(){
 
         return userService.getAllUser();
     }
 
     @PostMapping("/save")
-    public User saveUser(@RequestBody User user){
+    public Users saveUser(@RequestBody Users users){
 
-        return userService.insertUser(user);
+        return userService.insertUser(users);
     }
 
     @GetMapping("/get/{id}")
-    public User getUser(@PathVariable Integer id){
+    public Users getUser(@PathVariable Integer id){
 
         return userService.getUser(id);
     }
@@ -39,11 +38,11 @@ public class UserController {
 
         return userService.deleteUser(id);
     }
-    @PutMapping("/update/{id}")
-    public User updateUser(@PathVariable Integer id,@RequestBody User user){
-
-        return userService.updateUser(id,user);
-    }
+//    @PutMapping("/update/{id}")
+//    public Users updateUser(@PathVariable Integer id, @RequestBody Users users){
+//
+//        return userService.updateUser(id, users);
+//    }
 
 
 }

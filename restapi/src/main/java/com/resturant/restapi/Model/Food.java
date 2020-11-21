@@ -8,6 +8,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name="PRODUCTS")
 public class Food extends Product{
 
 
@@ -15,15 +16,23 @@ public class Food extends Product{
     @Id
     private Integer id;
 
-    @Column
+    @Column(name = "PRODUCTCATEGORY")
     private String productCategory;
-    @Column
+
+
+
+    @Column(name = "TITLE")
     private String  title;
-    @Column
-    private int price;
-    @Column
+
+
+
+    @Column(name = "DESCRIPTION ")
     private String description;
 
+
+
+    @Column(name="PRICE")
+    private Integer price;
 
     public Integer getId() {
         return id;
@@ -61,8 +70,9 @@ public class Food extends Product{
     @Override
     public void setPrice(int price) {
         this.price=price;
-
     }
+
+
 
     @Override
     public String getDescription() {

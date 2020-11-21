@@ -4,15 +4,15 @@ import {ListGroup,ListGroupItem,Button} from 'reactstrap';
 import {GrFormAdd} from 'react-icons/gr'
 
 
+import ProductsService  from '../../api/ProductsService'
+
 class FoodList extends Component {
     state = { 
         items:[]
      }
 
     componentDidMount(){
-
-
-        fetch("http://localhost:8080/food")
+        ProductsService.getProduct("food")
         .then((response)=>{
 
             return response.json()
@@ -29,16 +29,8 @@ class FoodList extends Component {
 
 
     handle_detele=(itemId)=>{
-        //http://localhost:8080/delete/food/1
-         fetch("http://localhost:8080/delete/food/"+itemId
-         ,{
-     
-             method: 'DELETE',
-             headers: {
-                 'Accept': 'application/json',
-                 'Content-Type': 'application/json'
-             },
-         })
+
+        ProductsService.deleteProduct("food",itemId)
          .then((response)=>{
              
              return response.json();

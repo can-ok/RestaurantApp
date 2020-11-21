@@ -23,7 +23,6 @@ public class ProductsService {
 
     public List<Drink> getAllDrinks(){
 
-
         return drinksRepository.findAll();
     }
 
@@ -70,6 +69,8 @@ public class ProductsService {
 
     public Drink insertDrink(Drink drink){
         Drink drinkEntity=drinksRepository.save(drink);
+        drinksRepository.flush();
+
         return drinkEntity;
     }
 
@@ -122,7 +123,6 @@ public class ProductsService {
 
             entity.get().setId(id);
             entity.get().setDescription(food.getDescription());
-            entity.get().setPrice(food.getPrice());
             entity.get().setTitle(food.getTitle());
             entity.get().setProductCategory(food.getProductCategory());
 
@@ -142,7 +142,7 @@ public class ProductsService {
 
             optinalDrink.get().setId(id);
             optinalDrink.get().setDescription(drink.getDescription());
-            optinalDrink.get().setPrice(drink.getPrice());
+            //optinalDrink.get().setPrice(drink.getPrice());
             optinalDrink.get().setTitle(drink.getTitle());
             optinalDrink.get().setProductCategory(drink.getProductCategory());
 

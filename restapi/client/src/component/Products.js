@@ -161,7 +161,7 @@ class Production extends Component {
             <div className="col-sm float-left mt-2">
             <ListGroup className="Category_List">
                 <ListGroupItem  tag="button" action  onClick={()=>this.getItems()}>
-                <Link>All</Link>
+                <Link>Hepsi</Link>
                 </ListGroupItem>
             {catagoiresItem}
             </ListGroup>

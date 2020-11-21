@@ -2,12 +2,13 @@ import React,{Component} from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 
+import ProductsService from '../../api/ProductsService';
+
 class AddProduct extends Component {
     state = { itemTitle:"",
               itemDescription:"",
               productCategory:"",
               price:"",
-              productType:this.props.match.params.type,
 
             }
 
@@ -28,11 +29,10 @@ class AddProduct extends Component {
 
 
     mySubmitHandler=()=>{
-        console.log(this.state.productType)
 
-        const type=this.state.productType
+        const type=this.props.match.params.type;
         
-        var data={
+      /*   var data={
             "title":this.state.itemTitle,
             "description":this.state.itemDescription,
             "price":this.state.price,
@@ -48,14 +48,11 @@ class AddProduct extends Component {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-        })
+        }) */
+
+        ProductsService.addProduct(this.state,type)
         .then((response)=>{
-            
-        
             console.log(response);
-
-
-
          })
         .catch((error) => {
             console.error('Error:', error);

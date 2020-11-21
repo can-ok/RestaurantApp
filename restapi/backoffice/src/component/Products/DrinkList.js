@@ -3,14 +3,15 @@ import {Link} from 'react-router-dom';
 import {ListGroup,ListGroupItem,Button} from 'reactstrap';
 import {GrFormAdd} from 'react-icons/gr'
 
+import ProductsService from '../../api/ProductsService'
+
 class DrinkList extends Component {
     state = {
                 items:[] 
             }
 
     componentDidMount(){
-        //http://localhost:8080/drinks
-        fetch("http://localhost:8080/drinks")
+        ProductsService.getProduct("drinks")
         .then((response)=>{
             
             return response.json();
@@ -29,15 +30,7 @@ class DrinkList extends Component {
 
     handle_detele=(itemId)=>{
    //http://localhost:8080/delete/food/1
-    fetch("http://localhost:8080/delete/drink/"+itemId
-    ,{
-
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-    })
+   ProductsService.deleteProduct("drink",itemId)
     .then((response)=>{
         
         return response.json();
