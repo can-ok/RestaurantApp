@@ -8,7 +8,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="PRODUCTS")
+@Table(name="DRINK")
 public class Drink extends Product{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

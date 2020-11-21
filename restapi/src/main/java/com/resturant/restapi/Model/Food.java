@@ -8,7 +8,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="PRODUCTS")
+@Table(name="FOOD")
 public class Food extends Product{
 
 
