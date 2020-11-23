@@ -82,13 +82,13 @@ public class ProductsController {
         return productsService.deleteDrink(id);
     }
 
-    @PutMapping(path = "update/food/{id}")
+    @PutMapping(path = "/update/food/{id}")
     public Food updateFood(@RequestBody Food food,@PathVariable Integer id){
 
         return productsService.updateFood(id,food);
     }
 
-    @PutMapping(path = "update/drink/{id}")
+    @PutMapping(path = "/update/drink/{id}")
     public Drink updateDrink(@RequestBody Drink drink,@PathVariable Integer id){
 
         return productsService.updateDrink(id,drink);

@@ -14,9 +14,8 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Integer id;
-
-
 
 
     @Column(name="USERNAME")
@@ -27,6 +26,18 @@ public class Users {
 
     @Column(name = "ENABLED")
     private boolean Enabled;
+
+
+
+    @Column(name="AUTHORITY")
+    private String Authority;
+    public String getAuthority() {
+        return Authority;
+    }
+
+    public void setAuthority(String authority) {
+        Authority = authority;
+    }
 
 
 
@@ -43,7 +54,7 @@ public class Users {
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.UserName = userName;
     }
 
     public String getPassword() {
@@ -51,7 +62,7 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.Password = password;
     }
 
     public boolean isEnabled() {
@@ -59,6 +70,6 @@ public class Users {
     }
 
     public void setEnabled(boolean enabled) {
-        Enabled = enabled;
+        this.Enabled = enabled;
     }
 }

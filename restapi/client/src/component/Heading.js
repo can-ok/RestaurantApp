@@ -2,16 +2,17 @@ import {Link} from 'react-router-dom';
 import "../App.css"
 import {Navbar,Nav,NavItem,NavbarBrand,Container} from 'reactstrap';
 
+import {Button} from 'reactstrap';
+import HamburgerMenu from './HamburgerItem';
 
-const Heading = () => {
+const Heading = (props) => {
     return ( 
 
         <Navbar>
             <Container>
-                <NavbarBrand href="/" > <strong>Client </strong></NavbarBrand>
-                <Nav>
-                   
-                </Nav>
+                <NavbarBrand  href="/" > <strong>Client </strong></NavbarBrand>
+                <Button onClick={() => props.func()}><HamburgerMenu /> </Button>
+
             </Container>
         </Navbar>
 

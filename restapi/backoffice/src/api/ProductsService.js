@@ -2,10 +2,11 @@
 
 class ProductsService{
 
+    token=localStorage.getItem("token");
 
      getProduct(name){
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "BASIC dXNlcjE6cGFzczE=");
+        myHeaders.append("Authorization", this.token);
 
 
         var requestOptions = {
@@ -24,7 +25,7 @@ class ProductsService{
      deleteProduct(name,itemId){
 
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "BASIC dXNlcjE6cGFzczE=");
+        myHeaders.append("Authorization", this.token);
 
 
         var requestOptions = {
@@ -44,7 +45,8 @@ class ProductsService{
     addProduct(item,type){
 
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", "BASIC dXNlcjE6cGFzczE=");
+        myHeaders.append("Authorization",this.token);
+        myHeaders.append("Content-Type", "application/json");
 
         var data={
             "title":item.itemTitle,
@@ -60,6 +62,54 @@ class ProductsService{
         headers: myHeaders,
         body: JSON.stringify(data)
         })
+
+        return response;
+    }
+
+
+    getProductbyId(id,type){
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", this.token);
+
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        };
+
+        let response
+        
+        response=fetch(`http://localhost:8080/products/${type}/${id}`,requestOptions)
+        
+
+        return response;
+
+
+    }
+
+    updateProduct(id,type,item){
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", this.token);
+        myHeaders.append("Content-Type", "application/json");
+
+
+        var data={
+            "title":item.itemTitle,
+            "description":item.itemDescription,
+            "price":item.price,
+            "productCategory":item.productCategory
+            };
+        
+               //http://localhost:8080/products/update/drink/1
+        let response=fetch(`http://localhost:8080/products/update/${type}/${id}`,{
+
+            method: 'PUT',
+            headers:myHeaders,
+            body: JSON.stringify(data)
+        })
+
 
         return response;
     }

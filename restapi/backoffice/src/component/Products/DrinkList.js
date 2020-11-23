@@ -54,7 +54,9 @@ class DrinkList extends Component {
 
         const {items}=this.state;
         //const type="drink";
-        const listTable= items.map( (item)=>
+        let listTable=null;
+        if(items.length>0){
+        listTable= items.map( (item)=>
 
         <tr key={item.id}>
                     <td>{item.id}</td>
@@ -66,9 +68,10 @@ class DrinkList extends Component {
                     <td><Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning">Edit</Link></td>
                     <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)}> Delete </Button></td>
          </tr>
-
-
-        );
+          );
+       }
+    
+       
 
         return ( <div>
 

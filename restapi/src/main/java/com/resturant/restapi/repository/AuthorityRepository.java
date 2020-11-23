@@ -1,9 +1,11 @@
 package com.resturant.restapi.repository;
 
-import com.resturant.restapi.Model.Orders;
+
+import com.resturant.restapi.Model.AUTHORITIES;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrdersRepository extends JpaRepository<Orders,Integer> {
+public interface AuthorityRepository  extends JpaRepository<AUTHORITIES, Integer> {
+
 }

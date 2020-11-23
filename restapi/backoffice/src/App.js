@@ -14,29 +14,53 @@ import User from './component/User'
 import AddUser from './component/Users/AddUser'
 import EditUser from './component/Users/EditUser'
 
-function App() {
-  return (
+import LoginForm from './component/LoginForm';
+import Logout from './component/Logout'
 
-    <div>
-    
-    <MenuBar/>
-    <div className="App_main">
+import React, { Component } from 'react';
 
-    <Router>
-      <Switch>
-          <Route exact path="/" component={Products}/>
-          <Route exact path="/description/:type/:id" component={ProductDescription} />
-          <Route exact path="/add/:type" component={AddProduct}/>
-          <Route exact path="/update/:type/:id" component={EditProduct} />
-          <Route  exact path="/users/add" component={AddUser} />
-          <Route exact path="/users" component={User}/>
-          <Route exact path="/users/edit/:id" component={EditUser} />
-      </Switch>
-    </Router>
-    </div>
-    </div>
+class App extends Component {
+  state = { token:null }
 
-  );
+  componentDidMount(){
+
+    try{
+      const token=localStorage.getItem("token");
+      this.setState({token})
+    }
+    catch(ex){
+
+      this.setState({token:null})
+    }
+   
+
+  }
+  render() { 
+    return (
+
+      <div>
+      
+      <MenuBar token={this.state.token}/>
+      <div className="App_main">
+  
+      <Router>
+        <Switch>
+            <Route exact path="/" component={Products}/>
+            <Route exact path="/login" component={LoginForm}/>
+            <Route exact path="/logout" component={Logout} />
+            <Route exact path="/description/:type/:id" component={ProductDescription} />
+            <Route exact path="/add/:type" component={AddProduct}/>
+            <Route exact path="/update/:type/:id" component={EditProduct} />
+            <Route  exact path="/users/add" component={AddUser} />
+            <Route exact path="/users" component={User}/>
+            <Route exact path="/users/edit/:id" component={EditUser} />
+        </Switch>
+      </Router>
+      </div>
+      </div>
+  
+    );
+  }
 }
-
+ 
 export default App;

@@ -125,7 +125,7 @@ public class ProductsService {
             entity.get().setDescription(food.getDescription());
             entity.get().setTitle(food.getTitle());
             entity.get().setProductCategory(food.getProductCategory());
-
+            entity.get().setPrice(food.getPrice());
             foodRepository.save(entity.get());
 
             return entity.get();
@@ -142,7 +142,7 @@ public class ProductsService {
 
             optinalDrink.get().setId(id);
             optinalDrink.get().setDescription(drink.getDescription());
-            //optinalDrink.get().setPrice(drink.getPrice());
+            optinalDrink.get().setPrice(drink.getPrice());
             optinalDrink.get().setTitle(drink.getTitle());
             optinalDrink.get().setProductCategory(drink.getProductCategory());
 

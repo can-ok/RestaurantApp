@@ -53,20 +53,26 @@ class FoodList extends Component {
     render() { 
 
         const {items}=this.state;
+
+
+        let listTable=null;
+        if(items.length>0){
+            listTable= items.map( (item)=>
+            <tr key={item.id}>
+                        <td>{item.id}</td>
+                        <td><Link to={`/description/${"food"}/${item.id}`} >{item.title} </Link></td>
+                        <td>{item.description}</td>
+                        <td>{item.productCategory}</td>
+                        <td>{item.price.toString()}</td>
+    
+                        <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Edit</Link></td>
+                        <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Delete </Button></td>
+             </tr>)
+        
+        }
      
-        const listTable= items.map( (item)=>
-        <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td><Link to={`/description/${"food"}/${item.id}`} >{item.title} </Link></td>
-                    <td>{item.description}</td>
-                    <td>{item.productCategory}</td>
-                    <td>{item.price.toString()}</td>
-
-                    <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Edit</Link></td>
-                    <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Delete </Button></td>
-         </tr>
-
-       )
+       
+       
 
         return ( 
             <div>

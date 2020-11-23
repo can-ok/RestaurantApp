@@ -23,6 +23,18 @@
   
 }
 
+.basketItem{
+
+  max-height:  10rem;
+  overflow-y: scroll;
+}
+
+.basket_order{
+  position: relative;;
+  top: 50%;
+}
+
+
 .descriptionItem{
 
   list-style-type: none;

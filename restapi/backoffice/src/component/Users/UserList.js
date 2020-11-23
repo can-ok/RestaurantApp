@@ -4,6 +4,9 @@ import {GrFormAdd} from 'react-icons/gr'
 import {Button, FormGroup, Label,Form,Input} from 'reactstrap';
 import axios from 'axios';
 
+
+import UserSerivce from '../../api/UserService';
+
 class UserList extends Component {
     state = { 
             users:[],
@@ -13,7 +16,7 @@ class UserList extends Component {
 
     componentDidMount(){
         //http://localhost:8080/users/getAll
-        axios.get("http://localhost:8080/users/getAll")
+        UserSerivce.getAllUser()
         .then((response)=>{
 
             this.setState({
@@ -73,8 +76,8 @@ class UserList extends Component {
 
          return( <tr key={user.id}>
                 <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.role}</td>
+                <td>{user.userName}</td>
+                <td>{user.authority}</td>
                 <td><Link to={"/users/edit/"+user.id}  className="btn btn-warning">Edit</Link></td>
                 <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(user.id)}> Delete </Button></td>
             </tr>)

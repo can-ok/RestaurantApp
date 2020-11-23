@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
+import ProductsService from '../../api/ProductsService'
 
 
 class EditProduct extends Component {
@@ -17,10 +18,8 @@ class EditProduct extends Component {
         let id=this.props.match.params.id
         let type=this.state.type
 
-        console.log("id"+id)
-        console.log("type"+type)
-            //http://localhost:8080/news/5
-        fetch(`http://localhost:8080/${type}/${id}`)
+      
+        ProductsService.getProductbyId(id,type)
         .then((response)=>{
             
             //this.setState({response})
@@ -63,29 +62,13 @@ class EditProduct extends Component {
 
         let id=this.props.match.params.id
         let type=this.props.match.params.type
-        var data={
-                "id":id,
-                "title":this.state.itemTitle,
-                "description":this.state.itemDescription,
-                "productCategory":this.state.productCategory,
-                "price":this.state.price
-        };
-        //http://localhost:8080/update/drink/1
-               
-        fetch(`http://localhost:8080/update/${type}/${id}` ,{
 
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-            body: JSON.stringify(data)
-        })
+        ProductsService.updateProduct(id,type,this.state)
         .then((response)=>{
             
         
             console.log(response)
-            })
+        })
         .catch((error) => {
             console.error('Error:', error);
             });

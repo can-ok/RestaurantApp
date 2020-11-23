@@ -32,7 +32,7 @@ const ProductList = (props) => {
 
     <div className="row justify-content-center">
     
-       <button className="btn btn-secondary mt-2  btn-block" onClick={(e) => props.handleAddToCart(e, item)}>Add <GrFormAdd size={32} color="red"/> </button>
+       <button className="btn btn-secondary mt-2  btn-block" onClick={(e) => props.handleAddToCart(e, item)}>Ekle <GrFormAdd size={32} color="red"/> </button>
 
         </div>
     </div>

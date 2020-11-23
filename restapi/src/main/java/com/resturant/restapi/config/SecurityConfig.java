@@ -22,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests();
         http.authorizeRequests().antMatchers("/products/**").access( "hasAnyRole('ADMIN','USER')");
         http.authorizeRequests().antMatchers("/users/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers("/orders/**").access("hasAnyRole('ADMIN','USER')");
+        http.authorizeRequests().antMatchers("/register").permitAll();
         http.httpBasic();
         http.cors();
         //http.authorizeRequests().antMatchers("/product/add").access("hasRole('ADMIN')");

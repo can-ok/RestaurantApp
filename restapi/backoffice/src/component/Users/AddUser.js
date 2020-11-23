@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 
+import UserSerivce from '../../api/UserService';
+
 import axios from 'axios';
 
 class AddUser extends Component {
@@ -10,15 +12,7 @@ class AddUser extends Component {
 
     mySubmitHandler=()=>{
 
-        const {userName,userPass,userRole}=this.state;
-        var userCandidate={
-            "name":userName,
-            "password":userPass,
-            "role":userRole
-        }
-        //http://localhost:8080/users/save
-
-        axios.post("http://localhost:8080/users/save",userCandidate)
+        UserSerivce.addUser(this.state)
         .then((response)=>{
             console.log(response)
         }).catch((error)=>{

@@ -6,6 +6,8 @@ import '../App.css'
 import ProductList from "./ProductsList";
 import Basket from "./Basket";
 
+import ProductService from '../api/ProductService';
+
 class Production extends Component {
     state = {  items:[] ,
                value:"",
@@ -21,40 +23,38 @@ class Production extends Component {
         this.getItems()
 
         //http://localhost:8080/getCategories
-        fetch("http://localhost:8080/getCategories")
+        ProductService.getCategories()
         .then((response)=>{
-            
-            return response.json();
-        }).then((data)=>{
 
             this.setState({
-                allCategories:data
-            });
-        }).catch((error)=>{
+                allCategories:response.data
+            })
+
+        })
+        .catch((error)=>{
 
             console.error("Error :",error)
         })
 
-
     }
- /*    handleChange=(event)=>{
+
+    handleChange=(event)=>{
         
         this.setState({value:event.target.value})
     }
-     */
+    
     
     getItems=()=>{
 
             //http://localhost:8080/drinks
-        fetch("http://localhost:8080/getProducts")
+        ProductService.getAllProducts()
         .then((response)=>{
             
-            return response.json();
-        }).then((data)=>{
-
             this.setState({
-                items:data
+                items:response.data
             });
+
+
         }).catch((error)=>{
 
             console.error("Error :",error)
@@ -65,19 +65,16 @@ class Production extends Component {
    
     getItemCategory=(specificCategory)=>{
 
-        fetch(`http://localhost:8080/category/${specificCategory}`)
+        ProductService.getProductsByCategory(specificCategory)
         .then((response)=>{
             
-
-            return response.json();
-            }
-        ).then((data)=>{
-        
+            
             this.setState({
-                items:data
+                items:response.data
             })
     
-        })
+        }
+        )
         .catch((error) => {
             console.error('Error:', error);
             });
@@ -86,9 +83,14 @@ class Production extends Component {
 
     handleRemoveFromCart=(event,item)=>{
 
+        
+
+
+
         this.setState(state=>{
+
             
-            const cartItems=state.cartItems.filter(element=> element.id !== item.id)
+            const cartItems=state.cartItems.filter(element=> (element.title !== item.title))
             return {cartItems}
         });
 
@@ -98,7 +100,7 @@ class Production extends Component {
     handleAddToCart=(e,product)=>{
 
         const itemFoundIndex = this.state.cartItems.findIndex(
-            cp => cp.id === product.id
+            cp => (cp.id === product.id)&& (cp.productCategory=== product.productCategory)
           );
 
 
@@ -119,51 +121,36 @@ class Production extends Component {
         this.setState({ cartItems:cartItemList });
 
     
-    /*     this.setState( state=>{
-
-            const cartItems=state.cartItems
-            let productAlreadyInCart=false;
-            cartItems.forEach(element => {
-
-                if(element.id===product.id){
-                    productAlreadyInCart=true;
-                    element.count++;
-                }
-
-            });
-
-            if(!productAlreadyInCart){
-
-                cartItems.push({...product,count:1})
-            }
-
-            return cartItems;
-        }); */
+  
     }
     
 
     render() { 
         
 
-        const catagoiresItem=this.state.allCategories.map( (category)=>
+        let categoriesList=this.state.allCategories;
+
+        if(categoriesList.length>0){
+            categoriesList=this.state.allCategories.map( (category)=>
         
 
-        <ListGroupItem  tag="button" action onClick={()=>this.getItemCategory(category)}>
-            <Link>{category} </Link>
-        </ListGroupItem>
-        
-        );
+            <ListGroupItem  tag="button" action onClick={()=>this.getItemCategory(category)}>
+                <Link>{category} </Link>
+            </ListGroupItem>
+            
+            );
+        }
 
     
         return ( <div>
 
         <div class="row">
-            <div className="col-sm float-left mt-2">
+            <div className="col-sm float-left mt-2 row align-items-center">
             <ListGroup className="Category_List">
                 <ListGroupItem  tag="button" action  onClick={()=>this.getItems()}>
                 <Link>Hepsi</Link>
                 </ListGroupItem>
-            {catagoiresItem}
+            {categoriesList}
             </ListGroup>
             </div>
 
