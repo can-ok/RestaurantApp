@@ -7,9 +7,10 @@ const MenuBar = (props) => {
     return ( <Navbar bg="dark" variant="dark">
     <Navbar.Brand href="#home">BackOffice</Navbar.Brand>
     <Nav className="mr-auto">
-      <Nav.Link href="/">Products</Nav.Link>
-      <Nav.Link href="/users">Users</Nav.Link>
-      <Nav.Link href="#pricing">Reports</Nav.Link>
+      <Nav.Link href="/">Ürünler</Nav.Link>
+      <Nav.Link href="/users">Kullanıcılar</Nav.Link>
+      <Nav.Link href="#pricing">Raporlar</Nav.Link>
+      <Nav.Link href="#pricin2g">Yetkililer</Nav.Link>
 
       {!token && <Nav.Link href="/login">Login</Nav.Link> }  
 

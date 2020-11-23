@@ -65,8 +65,8 @@ class FoodList extends Component {
                         <td>{item.productCategory}</td>
                         <td>{item.price.toString()}</td>
     
-                        <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Edit</Link></td>
-                        <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Delete </Button></td>
+                        <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
+                        <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
              </tr>)
         
         }
@@ -86,10 +86,10 @@ class FoodList extends Component {
                 <thead>
                     <tr>
                     <th>ID</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>price</th>
+                    <th>İsim</th>
+                    <th>Açıklama</th>
+                    <th>Kategori</th>
+                    <th>Fiyat</th>
                     <th></th>
                     <th></th>
                     </tr>

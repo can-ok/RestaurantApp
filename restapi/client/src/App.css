@@ -33,7 +33,13 @@
   position: relative;;
   top: 50%;
 }
+.div1 {
+  width: 35%;
+  height: 200px;
+  padding: 10%;
 
+  border: 1px solid blue;
+}
 
 .descriptionItem{
 

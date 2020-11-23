@@ -9,7 +9,7 @@ class Products extends Component {
     render() { 
         return ( 
         <div>
-            <div class="border-bottom border-3 mb-2">
+            <div>
                 <Heading  address={"/"} title={"Products"}/> 
 
             </div>

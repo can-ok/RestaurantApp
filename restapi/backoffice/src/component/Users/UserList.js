@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {GrFormAdd} from 'react-icons/gr'
 import {Button, FormGroup, Label,Form,Input} from 'reactstrap';
-import axios from 'axios';
 
 
 import UserSerivce from '../../api/UserService';
@@ -37,8 +36,10 @@ class UserList extends Component {
         const users=this.state.users.filter(item => item.id !==itemId)
 
         this.setState({users})
-        //http://localhost:8080/users/delete/1
-        axios.delete("http://localhost:8080/users/delete/"+itemId).then((response)=>console.log(response))
+        //http://localhost:8080/users/delete/1,
+
+        UserSerivce.deleteUser(itemId)
+        .then((response)=>console.log(response))
         .catch((err)=>console.error(err))
         
     }

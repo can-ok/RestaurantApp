@@ -11,7 +11,7 @@ const Heading = (props) => {
         <Navbar>
             <Container>
                 <NavbarBrand  href="/" > <strong>Client </strong></NavbarBrand>
-                <Button onClick={() => props.func()}><HamburgerMenu /> </Button>
+                <Button href="/menu" onClick={() => props.func()}><HamburgerMenu /> </Button>
 
             </Container>
         </Navbar>

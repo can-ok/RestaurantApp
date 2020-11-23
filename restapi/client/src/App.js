@@ -11,6 +11,7 @@ import LoginForm from './component/LoginPage';
 
 import React, { Component } from 'react';
 
+import Logout from './component/Logout'
 
 
 class App extends Component {
@@ -44,7 +45,6 @@ class App extends Component {
     let menuScrenStatus=this.state.menuScrenStatus? false:true;
     console.log(menuScrenStatus)
     
-
     this.setState({
       menuScrenStatus
     })
@@ -71,7 +71,8 @@ class App extends Component {
             />
             <Route exact path="/listCategory/:category" component={CategoryList} />
             <Route exact path="/menu" component={Menu}/>
-        
+            <Route exact path="/logout" component={Logout} />
+
           </Switch>
         </Router>
         </div>

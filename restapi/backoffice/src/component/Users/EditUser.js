@@ -3,13 +3,15 @@ import axios from 'axios';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 
+import UserService from '../../api/UserService'
 
 class EditUser extends Component {
     state = {
         id:"",
         userName:"",
         userPass:"",
-        userRole:"" }
+        userRole:"",
+        enabled:"" }
 
 
     handleInputChange=(event)=>{
@@ -27,15 +29,16 @@ class EditUser extends Component {
     componentDidMount(){
 
         let id=this.props.match.params.id
-        axios.get("http://localhost:8080/users/get/"+id)
+        UserService.getUserById(id)
         .then((response)=>{
 
             console.log(response)
             this.setState({
                 id:response.data.id,
-                userName:response.data.name,
+                userName:response.data.userName,
                 userPass:response.data.password,
-                userRole:response.data.role
+                userRole:response.data.authority,
+                enabled:response.data.enabled
             })
 
         })
@@ -51,13 +54,14 @@ class EditUser extends Component {
 
         let userData={
             "id":this.state.id,
-            "name":this.state.userName,
+            "userName":this.state.userName,
             "password":this.state.userPass,
-            "role":this.state.userRole
+            "authority":this.state.userRole,
+            "enabled":this.state.enabled
         }
         //http://localhost:8080/users/update/1
         
-        axios.put(`http://localhost:8080/users/update/${this.state.id}`,userData)
+        UserService.updateUser(this.state.id,userData)
         .then((response)=>{
             
         
@@ -77,7 +81,7 @@ class EditUser extends Component {
         return ( <Form>
            
             <FormGroup>
-              <Label>Name:
+              <Label>Username:
               <Input name="userName" type="text"  onChange={this.handleInputChange} value={userName} /></Label>
             </FormGroup>
             <FormGroup>
@@ -85,12 +89,12 @@ class EditUser extends Component {
               <Input name="userPass" type="text"  onChange={this.handleInputChange} value={userPass}/></Label>
             </FormGroup>
             <FormGroup>
-              <Label>Role:
+              <Label>Authority:
               <Input name="userRole" type="text"  onChange={this.handleInputChange} value={userRole}/></Label>
             </FormGroup>
 
             <Link to="/users" onClick={this.handleUpdate} className="btn btn-success">Submit</Link>
-            <Link to="/users" className="btn btn-danger ml-2">Cancel</Link>        
+            <Link to="/users" className="btn btn-danger ml-2">Geri</Link>        
             </Form>  );
     }
 }
