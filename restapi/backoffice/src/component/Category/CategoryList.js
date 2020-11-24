@@ -11,7 +11,7 @@ import AddCategory from './AddCategory';
 class CategoryList extends Component {
     state = {  categories:[],
             showComponent: false,
-
+            updateId:null
             }
 
 
@@ -32,7 +32,16 @@ class CategoryList extends Component {
     showForm=()=>{
 
         this.setState({
-            showComponent:true
+            showComponent:true,
+            formStatus:"add"
+        })
+    }
+
+    showFormUpdate=(id)=>{
+        this.setState({
+            showComponent:true,
+            formStatus:"update",
+            updateId:id
         })
     }
 
@@ -62,7 +71,7 @@ class CategoryList extends Component {
                         <td>{item.name}</td>
                       
     
-                        <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
+                        <td><Button onClick={()=>this.showFormUpdate(item.id)} className="btn btn-warning">Düzenle</Button></td>
                         <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
              </tr>)
         
@@ -90,7 +99,7 @@ class CategoryList extends Component {
             </tbody>
         </table> 
         </div>
-        {this.state.showComponent ? <AddCategory/>:null}
+        {this.state.showComponent ? <AddCategory formStatus={this.state.formStatus} updateId={this.state.updateId} />:null}
 
         </div>
 

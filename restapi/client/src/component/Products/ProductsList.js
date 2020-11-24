@@ -1,8 +1,8 @@
 
 import {Link} from 'react-router-dom';
 import {Button,ListGroup, ListGroupItem} from 'reactstrap';
-import '../App.css'
 
+import '../../App.css'
 
 import { GrFormAdd} from 'react-icons/gr';
 
@@ -23,7 +23,7 @@ const ProductList = (props) => {
     </h5>
 
     <Link  to={`/listCategory/${item.productCategory}`} className="row justify-content-center">
-    <label className="row justify-content-center">{item.productCategory}</label>
+    <label className="row justify-content-center">{item.productcategory.name}</label>
     </Link>
     <label className="row justify-content-center">{item.price.toString()} tl</label>
 

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {ListGroup, ListGroupItem} from 'reactstrap';
-import '../App.css'
+import '../../App.css'
 
 import ProductList from "./ProductsList";
-import Basket from "./Basket";
+import Basket from "../Basket";
 
-import ProductService from '../api/ProductService';
-import CategoryService from '../api/CategoryService';
+import ProductService from '../../api/ProductService';
+import CategoryService from '../../api/CategoryService';
 
 class Production extends Component {
     state = {  items:[] ,
@@ -101,7 +101,7 @@ class Production extends Component {
     handleAddToCart=(e,product)=>{
 
         const itemFoundIndex = this.state.cartItems.findIndex(
-            cp => (cp.id === product.id)&& (cp.productCategory=== product.productCategory)
+            cp => (cp.id === product.id)&& (cp.productcategory.id=== product.productcategory.id)
           );
 
 
@@ -146,7 +146,7 @@ class Production extends Component {
         return ( <div>
 
         <div className="row">
-            <div className="col-sm float-left mt-2 row align-items-center">
+            <div className="col-sm float-left mt-2 row">
             <ListGroup className="Category_List">
                 <ListGroupItem  tag="button" action  onClick={()=>this.getItems()}>
                 <Link>Hepsi</Link>

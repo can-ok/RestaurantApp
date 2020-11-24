@@ -37,5 +37,11 @@ insert into Food values(null, 'et döner',25,'Döner',3 )
 insert into Food values(null , 'füme sandviç',15,'Sandviç',3 )
 
 
+insert into TABLE_CATEGORY values(1,'Salon')
+
+insert into TABLE_CATEGORY values(2,'Balkon')
 
 
+insert into TABLES values(1,true,'MASA 1',1)
+
+insert into TABLES values(2,true,'MASA 2',2)

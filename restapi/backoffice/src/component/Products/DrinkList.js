@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {ListGroup,ListGroupItem,Button} from 'reactstrap';
+import {Button} from 'reactstrap';
 import {GrFormAdd} from 'react-icons/gr'
 
 import ProductsService from '../../api/ProductsService'
@@ -47,7 +47,19 @@ class DrinkList extends Component {
         console.error('Error:', error);
     });
 
+    }
 
+
+
+    handle_filterProducts=(category)=>{
+
+        const items=this.state.items.filter( item=>
+            item.productcategory.name ==category
+         )
+
+         this.setState({
+             items
+         })
     }
 
     render() { 
@@ -62,7 +74,7 @@ class DrinkList extends Component {
                     <td>{item.id}</td>
                     <td><Link to={`/description/${"drink"}/${item.id}`} >{item.title} </Link></td>
                     <td>{item.description}</td>
-                    <td>{item.productcategory.name}</td>
+                    <td><Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link></td>
                     <td>{item.price.toString()}</td>
 
                     <td><Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning">Düzenle</Link></td>

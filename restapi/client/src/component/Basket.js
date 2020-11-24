@@ -38,8 +38,8 @@ export default class Basket extends Component {
 
     handleBaskesStateDecremet=(event,item,cartItems)=>{
 
-        for (let i in cartItems) {
-           if ((cartItems[i].id == item.id) && (cartItems[i].productCategory == item.productCategory )) {
+        for (let i in cartItems) {  
+           if ((cartItems[i].id == item.id) && (cartItems[i].productcategory.name == item.productcategory.name )) {
                if(cartItems[i].count<=1)
                {
                 cartItems[i].count--;
@@ -73,7 +73,8 @@ export default class Basket extends Component {
                 "productId":item.id,
                 "productCount":item.count,
                 "totalPrice":price,
-                "paymentType":"cash"
+                "paymentType":"cash",
+                "orderTable":localStorage.getItem("table")
             }
             
             data.push(jsonData);
@@ -85,7 +86,7 @@ export default class Basket extends Component {
 
             console.log(response)
            
-
+            alert("Sipariş verildi")
         })
         
         .catch((err)=>{

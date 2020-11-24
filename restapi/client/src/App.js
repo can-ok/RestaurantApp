@@ -1,8 +1,8 @@
 import {BrowserRouter as Router,Redirect,Route,Switch} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import Products from './component/Products'
-import CategoryList from './component/ProductCategory';
+import Products from './component/Products/Products'
+import CategoryList from './component/Products/ProductCategory';
 
 import Menu from './component/MenuScreen';
 import Heading from './component/Heading';
@@ -13,6 +13,7 @@ import React, { Component } from 'react';
 
 import Logout from './component/Logout'
 
+import TableList from './component/Table/TableList';
 
 class App extends Component {
 
@@ -72,7 +73,7 @@ class App extends Component {
             <Route exact path="/listCategory/:category" component={CategoryList} />
             <Route exact path="/menu" component={Menu}/>
             <Route exact path="/logout" component={Logout} />
-
+            <Route exact path="/table" component={TableList} />
           </Switch>
         </Router>
         </div>

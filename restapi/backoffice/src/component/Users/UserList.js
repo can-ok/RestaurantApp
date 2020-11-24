@@ -77,7 +77,7 @@ class UserList extends Component {
 
          return( <tr key={user.id}>
                 <td>{user.id}</td>
-                <td>{user.userName}</td>
+                <td>{user.username}</td>
                 <td>{user.authority}</td>
                 <td><Link to={"/users/edit/"+user.id}  className="btn btn-warning">Edit</Link></td>
                 <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(user.id)}> Delete </Button></td>

@@ -3,9 +3,15 @@ import {Form,FormGroup,Label,Input, Button} from 'reactstrap';
 import {Link} from "react-router-dom";
 import CategoryService from '../../api/CategoryService';
 
-class AddCategory extends Component {
-    state = { itemTitle:""}
 
+
+
+class AddCategory extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { itemTitle:""  }
+
+    }
     handleInputChange=(event)=>{
         const target = event.target;
         const name = target.name;
@@ -18,9 +24,17 @@ class AddCategory extends Component {
 
     mySubmitHandler=()=>{
 
-        
+        let apiCall=null;
+        if(this.props.formStatus==="add"){
+            apiCall=CategoryService.addCategories(this.state.itemTitle)
 
-        CategoryService.addgetCategories(this.state.itemTitle)
+        }
+        else{
+           apiCall=CategoryService.updateCategory(this.state.itemTitle,this.props.updateId)
+        }
+
+
+        apiCall
         .then((response)=>{
             console.log(response);
             window.location="/categories"; //full reload

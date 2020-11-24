@@ -27,6 +27,18 @@ class FoodList extends Component {
     } 
 
 
+    handle_filterProducts=(category)=>{
+
+        const items=this.state.items.filter(
+            item=> item.productcategory.name ===category
+         )
+
+         this.setState({
+             items
+         })
+    }
+
+
 
     handle_detele=(itemId)=>{
 
@@ -62,7 +74,7 @@ class FoodList extends Component {
                         <td>{item.id}</td>
                         <td><Link to={`/description/${"food"}/${item.id}`} >{item.title} </Link></td>
                         <td>{item.description}</td>
-                        <td>{item.productcategory.name}</td>
+                        <td><Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link> </td>
                         <td>{item.price.toString()}</td>
     
                         <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Düzenle</Link></td>

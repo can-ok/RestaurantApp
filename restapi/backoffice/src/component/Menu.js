@@ -10,8 +10,10 @@ const MenuBar = (props) => {
       <Nav.Link href="/">Ürünler</Nav.Link>
       <Nav.Link href="/users">Kullanıcılar</Nav.Link>
       <Nav.Link href="/categories">Kategoriler</Nav.Link>
+      <Nav.Link href="/tables">Masalar</Nav.Link>
       <Nav.Link href="#pricing">Raporlar</Nav.Link>
       <Nav.Link href="#pricin2g">Yetkililer</Nav.Link>
+      <Nav.Link href="/config">Config</Nav.Link>
 
       {!token && <Nav.Link href="/login">Login</Nav.Link> }  
 

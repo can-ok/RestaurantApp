@@ -1,4 +1,3 @@
-import {Navbar,Nav,NavItem,NavbarBrand,Container} from 'reactstrap';
 
 import {Link} from 'react-router-dom';
 import '../::/../App.css'
@@ -8,7 +7,6 @@ class Menu extends Component {
     state = {  }
     render() { 
 
-        const items=[{"name":"deneme"},{"name":"deneme"},{"name":"deneme"},{"name":"deneme"},{"name":"deneme"}]
 
 
         return (  <div>
@@ -20,7 +18,7 @@ class Menu extends Component {
 
                         SEPET
                     </Link>    
-                    <Link className="col-sm div1 m-2">
+                    <Link to="/table" className="col-sm div1 m-2">
                         MASALAR
                    </Link> 
                    <Link className="col-sm div1 m-2">

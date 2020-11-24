@@ -19,7 +19,12 @@ import EditUser from './component/Users/EditUser'
 import LoginForm from './component/LoginForm';
 import Logout from './component/Logout'
 
+import Config from './component/Configuration';
+
+import TableList from './component/Table/TableList';
+
 import React, { Component } from 'react';
+import AddTable from './component/Table/AddTable';
 
 class App extends Component {
   state = { token:null }
@@ -43,7 +48,8 @@ class App extends Component {
       <div>
       
       <MenuBar token={this.state.token}/>
-      <div className="App_main">
+      {/*className="App_main" */}
+      <div className="App_main2">
   
       <Router>
         <Switch>
@@ -58,11 +64,13 @@ class App extends Component {
             <Route exact path="/users/edit/:id" component={EditUser} />
             <Route exact path="/categories" component={CategoryList} />
             <Route exact path="/addCategory" component={AddCategory}/>
+            <Route exact path="/config" component={Config} />
+            <Route exact path="/tables" component={TableList} />
+            <Route exact path="/addTable" component={AddTable} />
         </Switch>
       </Router>
       </div>
-      </div>
-  
+      </div>  
     );
   }
 }
