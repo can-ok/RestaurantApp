@@ -29,10 +29,7 @@
   overflow-y: scroll;
 }
 
-.basket_order{
-  position: relative;;
-  top: 50%;
-}
+
 .div1 {
   width: 35%;
   height: 200px;
@@ -48,6 +45,17 @@
   padding: 5px;
 }
 
+.basketPaket{
+
+  align-content: center;
+  justify-content: center;
+  height: 250px;
+}
+.order_btn{
+
+  vertical-align: bottom;
+
+}
 
 .border-3 {
   border-bottom: #111213;;

@@ -4,33 +4,41 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="DRINK")
-public class Drink extends Product{
+public class Drink extends Product implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "PRODUCTCATEGORY ")
-    private String productCategory;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="PRODUCTCATEGORY_id")
+//    private PRODUCTCATEGORY productCategory;
 
 
 
-    @Column(name = "TITLE")
+
     private String  title;
 
 
 
-    @Column(name = "DESCRIPTION ")
     private String description;
 
-    @Column(name="PRICE")
     private Integer price;
+
+
+
+    public void setProductcategory(ProductCategory productcategory) {
+        this.productcategory = productcategory;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name="category_id")
+   private ProductCategory productcategory;
 
 
     public Integer getId() {
@@ -41,15 +49,7 @@ public class Drink extends Product{
         this.id = id;
     }
 
-    @Override
-    public String getProductCategory() {
-        return productCategory;
-    }
 
-    @Override
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
-    }
 
     @Override
     public String getTitle() {
@@ -82,5 +82,13 @@ public class Drink extends Product{
     }
 
 
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public ProductCategory getProductcategory() {
+        return productcategory;
+    }
 
 }

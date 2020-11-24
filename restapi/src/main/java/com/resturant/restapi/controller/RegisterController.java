@@ -1,5 +1,6 @@
 package com.resturant.restapi.controller;
 
+
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class RegisterController {
 
 
     @PostMapping("/register")
-    public Map<String ,String> register(@RequestBody Users users){
+    public Map<String ,String> register(@RequestBody Users user){
 
-        return userService.register(users);
+        return userService.register(user);
     }
 }

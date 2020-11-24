@@ -9,6 +9,7 @@ const MenuBar = (props) => {
     <Nav className="mr-auto">
       <Nav.Link href="/">Ürünler</Nav.Link>
       <Nav.Link href="/users">Kullanıcılar</Nav.Link>
+      <Nav.Link href="/categories">Kategoriler</Nav.Link>
       <Nav.Link href="#pricing">Raporlar</Nav.Link>
       <Nav.Link href="#pricin2g">Yetkililer</Nav.Link>
 

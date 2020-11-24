@@ -45,17 +45,17 @@ public class ProductsController {
         return productsService.getAllFoods();
     }
 
-    @PostMapping(path ="/add/food")
-    public Food addFood(@RequestBody Food food){
+    @PostMapping(path ="/add/food/{id}")
+    public String addFood(@RequestBody Food food,@PathVariable int id){
 
-        return productsService.insertFood(food);
+        return productsService.insertFood(food,id);
     }
 
 
-    @PostMapping(path ="/add/drink")
-    public Drink addDrink(@RequestBody Drink drink){
+    @PostMapping(path ="/add/drink/{id}")
+    public String addDrink(@RequestBody Drink drink,@PathVariable int id){
 
-        return productsService.insertDrink(drink);
+        return productsService.insertDrink(drink,id);
     }
 
     @GetMapping(path = "/drink/{id}")
@@ -94,19 +94,19 @@ public class ProductsController {
         return productsService.updateDrink(id,drink);
     }
 
-    @GetMapping(path="/category/{ProductCategory}")
-    public List<? extends Product> retrivebyProductCategor(@PathVariable String ProductCategory){
+    @GetMapping(path="/category/{id}")
+    public List<? extends Product> retrivebyProductCategor(@PathVariable int id){
 
-        return productsService.getSpecificCategory(ProductCategory);
+        return productsService.getSpecificCategory(id);
     }
 
-    @GetMapping(path="/getCategories")
-    public List<String> retriveAllCategories()
-    {
-        return new ArrayList<String>() {{
-            addAll(productsService.getAllCategoriesDrink());
-            addAll(productsService.getAllCategoriesFood());
-        }};
-    }
+//    @GetMapping(path="/getCategories")
+//    public List<String> retriveAllCategories()
+//    {
+//        return new ArrayList<String>() {{
+//            addAll(productsService.getAllCategoriesDrink());
+//            addAll(productsService.getAllCategoriesFood());
+//        }};
+//    }
 
 }

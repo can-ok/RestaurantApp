@@ -5,23 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="AUTHORITIES")
-public class AUTHORITIES {
+@Entity(name = "AUTHORITIES")
+public class AUTHORITIES implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;
 
+    @Column(name= "USERNAME")
+    private String username;
 
-    @Column(name="USERNAME")
-    private String UserName;
-
-    @Column(name ="AUTHORITY")
+    @Column(name= "AUTHORITY")
     private String 	AUTHORITY;
 
     public Integer getId() {
@@ -32,12 +31,12 @@ public class AUTHORITIES {
         this.id = id;
     }
 
-    public String getUserName() {
-        return UserName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        UserName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getAUTHORITY() {

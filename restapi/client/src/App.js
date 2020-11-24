@@ -54,7 +54,7 @@ class App extends Component {
 
     return (
       <div className="App container">
-      <div class="border-bottom border-3" >
+      <div className="border-bottom border-3" >
             <Heading func={this.changeScreen}/>
       
             </div>

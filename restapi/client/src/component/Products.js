@@ -7,11 +7,12 @@ import ProductList from "./ProductsList";
 import Basket from "./Basket";
 
 import ProductService from '../api/ProductService';
+import CategoryService from '../api/CategoryService';
 
 class Production extends Component {
     state = {  items:[] ,
                value:"",
-               allCategories:[],
+               categories:[],
                cartItems:[]             
     }
 
@@ -23,13 +24,16 @@ class Production extends Component {
         this.getItems()
 
         //http://localhost:8080/getCategories
-        ProductService.getCategories()
-        .then((response)=>{
+
+        CategoryService.getCategories()
+        .then((respose)=>{
+
+            return respose.json()
+        }).then((data)=>{
 
             this.setState({
-                allCategories:response.data
+                categories:data
             })
-
         })
         .catch((error)=>{
 
@@ -83,9 +87,6 @@ class Production extends Component {
 
     handleRemoveFromCart=(event,item)=>{
 
-        
-
-
 
         this.setState(state=>{
 
@@ -128,23 +129,23 @@ class Production extends Component {
     render() { 
         
 
-        let categoriesList=this.state.allCategories;
+        let categoriesList=null;
 
-        if(categoriesList.length>0){
-            categoriesList=this.state.allCategories.map( (category)=>
+         if(this.state.categories.length>0){
+            categoriesList=this.state.categories.map( (category)=>
         
 
-            <ListGroupItem  tag="button" action onClick={()=>this.getItemCategory(category)}>
-                <Link>{category} </Link>
+            <ListGroupItem  tag="button" action onClick={()=>this.getItemCategory(category.id)}>
+                <Link>{category.name} </Link>
             </ListGroupItem>
             
             );
-        }
+        } 
 
     
         return ( <div>
 
-        <div class="row">
+        <div className="row">
             <div className="col-sm float-left mt-2 row align-items-center">
             <ListGroup className="Category_List">
                 <ListGroupItem  tag="button" action  onClick={()=>this.getItems()}>

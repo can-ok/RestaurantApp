@@ -124,18 +124,18 @@ export default class Basket extends Component {
         }
 
         return (
-            <div className="border border-secondary rounded">
+            <div className="border border-secondary rounded ">
                 
                 
                    
-        <div className="basketItem">
+        <div className="basketItem basketPaket">
             <ul className="descriptionItem">
                 {carts}
             </ul>
             </div>   
 
                 
-        <div className="mb-2 mr-2">
+        <div className="mb-2 mr-2 order_btn">
         <label>Toplam: {cartItems.reduce((a,c)=>a+c.price*c.count,0)} TL</label>
 
         <button className="btn btn-danger float-right" onClick={(event)=>this.handleClick(event,cartItems.reduce((a,c)=>a+c.price*c.count,0),this.props.cartItems)}>Sipariş</button>

@@ -55,8 +55,12 @@ class ProductsService{
             "productCategory":item.productCategory
             };
 
+        let categoryId=item.selectValue;
+        
+        //http://localhost:8080/products/add/food/1
 
-        let response=fetch("http://localhost:8080/products/add/"+type,{
+        
+        let response=fetch(`http://localhost:8080/products/add/${type}/${categoryId}`,{
 
         method: 'POST',
         headers: myHeaders,

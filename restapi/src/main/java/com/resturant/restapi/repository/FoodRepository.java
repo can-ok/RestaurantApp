@@ -14,11 +14,13 @@ public interface FoodRepository extends JpaRepository<Food,Integer> {
 //    @Query("select Food.id,Food .description,Food .price from Food where PRODUCT_CATEGORY=:category")
 //    String findFoodByProductCategory(String category);
 
-    @Query("Select f from Food f where f.productCategory=:name")
-    List<Food> getCategoryByFoods(String name);
+//    @Query("Select f from Food f where f.productCategory=:name")
+//    List<Food> getCategoryByFoods(String name);
+//
+//
+//    @Query("Select DISTINCT PRODUCTCATEGORY from Food")
+//    List<String> getCategories();
 
-
-    @Query("Select DISTINCT productCategory from Food")
-    List<String> getCategories();
+    List<Food> findFoodByProductcategoryId(Integer id);
 
 }

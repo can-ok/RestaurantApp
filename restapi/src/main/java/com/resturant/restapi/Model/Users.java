@@ -4,43 +4,37 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="users")
-public class Users {
+@Entity(name = "USERS")
+public class Users  implements Serializable {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Integer id;
 
-
-    @Column(name="USERNAME")
-    private String UserName;
-
-    @Column(name ="PASSWORD")
+    @Column(name = "USERNAME")
+    private String USERNAME;
+    @Column(name = "PASSWORD")
     private String Password;
-
     @Column(name = "ENABLED")
     private boolean Enabled;
 
 
 
-    @Column(name="AUTHORITY")
-    private String Authority;
-    public String getAuthority() {
-        return Authority;
+
+    private String 	AUTHORITY;
+
+    public String getAUTHORITY() {
+        return AUTHORITY;
     }
 
-    public void setAuthority(String authority) {
-        Authority = authority;
+    public void setAUTHORITY(String AUTHORITY) {
+        this.AUTHORITY = AUTHORITY;
     }
-
-
-
     public Integer getId() {
         return id;
     }
@@ -49,12 +43,12 @@ public class Users {
         this.id = id;
     }
 
-    public String getUserName() {
-        return UserName;
+    public String getUSERNAME() {
+        return USERNAME;
     }
 
-    public void setUserName(String userName) {
-        this.UserName = userName;
+    public void setUSERNAME(String USERNAME) {
+        this.USERNAME = USERNAME;
     }
 
     public String getPassword() {

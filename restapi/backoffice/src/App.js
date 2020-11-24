@@ -8,6 +8,8 @@ import ProductDescription from './component/Products/ProductDescription';
 import AddProduct from './component/Products/AddProduct'
 import EditProduct from './component/Products/EditProduct';
 
+import CategoryList from './component/Category/CategoryList';
+import AddCategory from './component/Category/AddCategory';
 import MenuBar from './component/Menu'
 
 import User from './component/User'
@@ -51,9 +53,11 @@ class App extends Component {
             <Route exact path="/description/:type/:id" component={ProductDescription} />
             <Route exact path="/add/:type" component={AddProduct}/>
             <Route exact path="/update/:type/:id" component={EditProduct} />
-            <Route  exact path="/users/add" component={AddUser} />
+            <Route exact path="/users/add" component={AddUser} />
             <Route exact path="/users" component={User}/>
             <Route exact path="/users/edit/:id" component={EditUser} />
+            <Route exact path="/categories" component={CategoryList} />
+            <Route exact path="/addCategory" component={AddCategory}/>
         </Switch>
       </Router>
       </div>

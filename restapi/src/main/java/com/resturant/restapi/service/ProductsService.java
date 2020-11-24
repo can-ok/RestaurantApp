@@ -3,11 +3,14 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.Product;
+import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.repository.DrinksRepository;
 import com.resturant.restapi.repository.FoodRepository;
+import com.resturant.restapi.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +22,9 @@ public class ProductsService {
     DrinksRepository drinksRepository;
 
     @Autowired
+    ProductCategoryRepository productcategoryRepository;
+
+    @Autowired
     FoodRepository foodRepository;
 
     public List<Drink> getAllDrinks(){
@@ -27,51 +33,92 @@ public class ProductsService {
     }
 
 
-    public List<? extends Product> getSpecificCategory(String ProductCategor){
+//    public List<? extends Product> getSpecificCategory(String ProductCategor){
+//
+//        List<Food> listfood=foodRepository.getCategoryByFoods(ProductCategor);
+//        List<Drink> listDrink=drinksRepository.findDrinkByProductCategory(ProductCategor);
+//
+//        if(!listfood.isEmpty())
+//        {
+//            return listfood;
+//        }
+//        else if(!listDrink.isEmpty())
+//        {
+//            return listDrink;
+//        }
+//        else {
+//
+//            return Collections.emptyList();
+//        }
+//
+//    }
 
-        List<Food> listfood=foodRepository.getCategoryByFoods(ProductCategor);
-        List<Drink> listDrink=drinksRepository.findDrinkByProductCategory(ProductCategor);
+
+    public List<? extends Product> getSpecificCategory(int ProductCategoryId){
+
+        List<Food> listfood=foodRepository.findFoodByProductcategoryId(ProductCategoryId);
+        List<Drink> listdrink=drinksRepository.findDrinkByProductcategoryId(ProductCategoryId);
 
         if(!listfood.isEmpty())
         {
             return listfood;
         }
-        else if(!listDrink.isEmpty())
+        else if(!listdrink.isEmpty())
         {
-            return listDrink;
+            return listdrink;
         }
         else {
 
             return Collections.emptyList();
         }
-
+        
     }
 
-    public List<String> getAllCategoriesFood(){
 
-        return foodRepository.getCategories();
-    }
 
-    public List<String> getAllCategoriesDrink(){
 
-        return drinksRepository.getCategories();
-    }
+
+//    public List<String> getAllCategoriesFood(){
+//
+//        return foodRepository.getCategories();
+//    }
+//
+//    public List<String> getAllCategoriesDrink(){
+//
+//        return drinksRepository.getCategories();
+//    }
 
     public List<Food> getAllFoods(){
 
         return foodRepository.findAll();
     }
 
-    public Food insertFood(Food food){
-        Food foodEntity=foodRepository.save(food);
-        return foodEntity;
+    public String insertFood(Food food,int id){
+
+        Optional<ProductCategory> productcategory=productcategoryRepository.findById(id);
+        if(productcategory.isPresent()){
+
+            food.setProductcategory(productcategory.get());
+            foodRepository.save(food);
+            return "Success";
+        }
+
+        return "fail";
     }
 
-    public Drink insertDrink(Drink drink){
-        Drink drinkEntity=drinksRepository.save(drink);
-        drinksRepository.flush();
+    public String insertDrink(Drink drink,int id){
+        Optional<ProductCategory> productcategory=productcategoryRepository.findById(id);
 
-        return drinkEntity;
+        if(productcategory.isPresent()){
+
+            drink.setProductcategory(productcategory.get());
+            drinksRepository.save(drink);
+            return "Success";
+        }
+
+
+
+        return "fail";
     }
 
     public Food getFoodById(Integer id){
@@ -100,16 +147,41 @@ public class ProductsService {
 
     public List<Food> deleteFood(Integer id){
 
-        foodRepository.deleteById(id);
+        List<Food> foods=new ArrayList<>();
 
-        return foodRepository.findAll();
+        Optional<Food> foodEntity=foodRepository.findById(id);
+        if(foodEntity.isPresent()){
+
+            foodEntity.get().setProductcategory(null);
+
+            foodRepository.delete(foodEntity.get());
+            foods=foodRepository.findAll();
+
+        }
+
+        return foods;
+
+
     }
 
     public List<Drink> deleteDrink(Integer id){
 
-        drinksRepository.deleteById(id);
+        List<Drink> foods=new ArrayList<>();
 
-        return drinksRepository.findAll();
+        Optional<Drink> drinkEntity=drinksRepository.findById(id);
+        if(drinkEntity.isPresent()){
+
+            drinkEntity.get().setProductcategory(null);
+
+            drinksRepository.delete(drinkEntity.get());
+            foods=drinksRepository.findAll();
+
+        }
+
+        return foods;
+
+
+
     }
 
 
@@ -124,7 +196,7 @@ public class ProductsService {
             entity.get().setId(id);
             entity.get().setDescription(food.getDescription());
             entity.get().setTitle(food.getTitle());
-            entity.get().setProductCategory(food.getProductCategory());
+            //entity.get().setProductCategory(food.getProductCategory());
             entity.get().setPrice(food.getPrice());
             foodRepository.save(entity.get());
 
@@ -144,7 +216,7 @@ public class ProductsService {
             optinalDrink.get().setDescription(drink.getDescription());
             optinalDrink.get().setPrice(drink.getPrice());
             optinalDrink.get().setTitle(drink.getTitle());
-            optinalDrink.get().setProductCategory(drink.getProductCategory());
+            //optinalDrink.get().setProductCategory(drink.getProductCategory());
 
             drinksRepository.save(optinalDrink.get());
 

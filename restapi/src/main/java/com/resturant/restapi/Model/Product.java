@@ -4,8 +4,6 @@ public abstract class Product {
 
 
 
-    public abstract String getProductCategory();
-    public abstract void setProductCategory(String productCategory);
 
 
     public abstract String getTitle();

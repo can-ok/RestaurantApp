@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -20,15 +20,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
         http.authorizeRequests();
-        http.authorizeRequests().antMatchers("/products/**").access( "hasAnyRole('ADMIN','USER')");
+        http.authorizeRequests().antMatchers("/products/**").access("hasAnyRole('ADMIN','USER')");
         http.authorizeRequests().antMatchers("/users/**").hasRole("ADMIN");
         http.authorizeRequests().antMatchers("/orders/**").access("hasAnyRole('ADMIN','USER')");
         http.authorizeRequests().antMatchers("/register").permitAll();
+        http.authorizeRequests().antMatchers("/category/**").permitAll();
         http.httpBasic();
         http.cors();
         //http.authorizeRequests().antMatchers("/product/add").access("hasRole('ADMIN')");
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

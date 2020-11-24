@@ -9,7 +9,7 @@ class AuthService{
     login(item){
 
         var candidate={
-            "userName":item.username,
+            "username":item.username,
             "password":item.password,
         }
 

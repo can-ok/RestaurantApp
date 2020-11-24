@@ -52,10 +52,10 @@ class CategoryList extends Component {
     
             <div className="card">
 
-                <div class="card-body">
-                    <h5 class="card-title">{item.title}</h5>
-                    <p class="card-text">{item.description}</p>
-                    <p class="card-text">{item.price.toString()}</p>
+                <div className="card-body">
+                    <h5 className="card-title">{item.title}</h5>
+                    <p className="card-text">{item.description}</p>
+                    <p className="card-text">{item.price.toString()}</p>
 
                 </div>
 

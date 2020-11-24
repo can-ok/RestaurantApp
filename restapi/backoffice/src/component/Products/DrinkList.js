@@ -62,7 +62,7 @@ class DrinkList extends Component {
                     <td>{item.id}</td>
                     <td><Link to={`/description/${"drink"}/${item.id}`} >{item.title} </Link></td>
                     <td>{item.description}</td>
-                    <td>{item.productCategory}</td>
+                    <td>{item.productcategory.name}</td>
                     <td>{item.price.toString()}</td>
 
                     <td><Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning">Düzenle</Link></td>

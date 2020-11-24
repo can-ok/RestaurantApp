@@ -1,15 +1,17 @@
 import React,{Component} from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
-
 import ProductsService from '../../api/ProductsService';
+
+import CategoryService from '../../api/CategoryService';
 
 class AddProduct extends Component {
     state = { itemTitle:"",
               itemDescription:"",
               productCategory:"",
               price:"",
-
+              options:[],
+              selectValue:1
             }
 
 
@@ -24,31 +26,31 @@ class AddProduct extends Component {
     
             [name]:event.target.value
         })
-    
+        
+        
+    }
+
+
+    componentDidMount(){
+
+      CategoryService.getCategories()
+      .then((response)=>{
+          return response.json()
+      })
+      .then((data)=>{
+
+        this.setState({
+          options:data
+        })
+      })
+
     }
 
 
     mySubmitHandler=()=>{
 
         const type=this.props.match.params.type;
-        
-      /*   var data={
-            "title":this.state.itemTitle,
-            "description":this.state.itemDescription,
-            "price":this.state.price,
-            "productCategory":this.state.productCategory
-            };
-
-
-        fetch("http://localhost:8080/add/"+type,{
-
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-        }) */
+     
 
         ProductsService.addProduct(this.state,type)
         .then((response)=>{
@@ -62,6 +64,11 @@ class AddProduct extends Component {
 
 
     render() { 
+
+        const optionList=this.state.options.map((item)=>{
+          return(<option key={item.id} value={item.id}>{item.name}</option>)
+        })
+
         return ( <Form>
            
             <FormGroup>
@@ -72,10 +79,12 @@ class AddProduct extends Component {
               <Label>Description:
               <Input name="itemDescription" type="text"  onChange={this.handleInputChange}/></Label>
             </FormGroup>
+
             <FormGroup>
-              <Label>Category:
-              <Input name="productCategory" type="text"  onChange={this.handleInputChange}/></Label>
-            </FormGroup>
+             <select id = "dropdown" name="selectValue" value={this.state.selectValue}  onChange={this.handleInputChange}>
+                {optionList}
+              </select>
+              </FormGroup>
 
             <FormGroup>
               <Label>Price:
