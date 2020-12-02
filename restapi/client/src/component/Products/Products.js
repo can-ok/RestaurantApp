@@ -155,7 +155,7 @@ class Production extends Component {
             </ListGroup>
             </div>
 
-            <div className="col-6">
+            <div className="col-6 CardItem">
 
             <ProductList handleAddToCart={this.handleAddToCart} items={this.state.items} /> 
 

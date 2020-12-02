@@ -46,6 +46,50 @@ class TableService{
         return response;
 
     }
+
+    deleteTable(id){
+
+        var myHeaders=new Headers;
+        myHeaders.append("Authorization", this.token)
+
+        //http://localhost:8080/table/delete/1
+        let response=fetch(`http://localhost:8080/table/delete/${id}`,{
+
+            method:'DELETE',
+            headers:myHeaders,
+
+        })
+
+        return response;
+    }
+
+    updateTable(id,item){
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", this.token);
+        myHeaders.append("Content-Type", "application/json");
+
+        
+        var data={
+            "title":item.tableName,
+            "enabled":true,
+            "tableCategory":item.selectedCategory
+        }
+        
+        //localhost:8080/table/update/1
+        let response=fetch(`http://localhost:8080/table/update/${id}`,{
+
+            method: 'PUT',
+            headers:myHeaders,
+            body: JSON.stringify(data)
+        })
+
+
+        return response;
+    }
+
+
+  
  
 
 }

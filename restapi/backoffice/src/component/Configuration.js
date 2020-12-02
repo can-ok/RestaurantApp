@@ -38,6 +38,7 @@ class Config extends Component {
 
         const confList=(
                         <ul className="list-group">
+                        <li class="list-group-item"><strong>Message: </strong>{items.message} </li>
                         <li class="list-group-item"><strong>Jpa: </strong>{items.Jpa} </li>
                         <li class="list-group-item"><strong>dataSource: </strong>{items.dataSource} </li>
                         <li class="list-group-item"><strong>dataSourceName: </strong> {items.dataSourceName}</li>
@@ -48,6 +49,8 @@ class Config extends Component {
         )
 
         return ( <div>
+
+            
             
             {confList}
         </div>  );

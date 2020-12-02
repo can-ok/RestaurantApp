@@ -25,10 +25,15 @@
 
 .basketItem{
 
-  max-height:  10rem;
+  max-height:  50rem;
   overflow-y: scroll;
 }
 
+.CardItem{
+
+  max-height:  40rem;
+  overflow-y: scroll;
+}
 
 .div1 {
   width: 35%;
@@ -49,13 +54,9 @@
 
   align-content: center;
   justify-content: center;
-  height: 250px;
+  height: 40rem;
 }
-.order_btn{
 
-  vertical-align: bottom;
-
-}
 
 .border-3 {
   border-bottom: #111213;;

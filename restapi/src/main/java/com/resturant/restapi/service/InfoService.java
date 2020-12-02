@@ -9,7 +9,8 @@ import java.util.Map;
 @Service
 public class InfoService {
 
-
+    @Value("${spring.message}")
+    private String message;
 
     @Value("${spring.h2.console.enabled}")
     private Boolean hConsole;
@@ -31,7 +32,7 @@ public class InfoService {
     public Map<String,String> getConfig(){
 
         HashMap<String, String> map = new HashMap<>();
-
+        map.put("message",message);
         map.put("hConsole",hConsole.toString());
         map.put("dataSource",dataSource);
         map.put("Jpa",jpaInfo);

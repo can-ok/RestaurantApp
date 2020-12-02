@@ -47,6 +47,8 @@ public class TableService {
 
         Optional<Tables> tableEntity=tableRepository.findById(id);
 
+        Optional<TableCategory> tableCategoryEntity=tableCategoryRepository.findById(tables.getTableCategory().getId());
+
         if(!tableEntity.isPresent()){
             return null;
         }
@@ -56,7 +58,7 @@ public class TableService {
             tableEntity.get().setEnabled(tables.getEnabled());
             tableEntity.get().setTableCategory(tables.getTableCategory());
             tableEntity.get().setTitle(tables.getTitle());
-
+            tableEntity.get().setTableCategory(tableCategoryEntity.get());
             tableRepository.save(tableEntity.get());
             return tableEntity.get();
         }

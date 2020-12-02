@@ -111,7 +111,22 @@ class CategoryService{
      }
 
      
+     getTablebyId(id){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", this.token);
  
+ 
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        };
+
+        //localhost:8080/table/update/1
+        let response=fetch(`http://localhost:8080/tablecategory/getTable/${id}`,requestOptions)
+
+        return response;
+
+    }
 
 
 }

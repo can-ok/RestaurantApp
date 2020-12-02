@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 import CategoryService from '../../api/CategoryService';
-import { Table } from 'react-bootstrap';
 import TableService from '../../api/TableService';
 
 
-
-class AddTable extends Component {
-    state = { tableName:"",
-              tableCategory:[],
-              selectValue:1
-            }
-
+class EditTable extends Component {
+    state = {  tableCategory:[],
+        selectValue:1,
+        tableName:"",
+        selectedCategory:{}
+    }
 
 
     componentDidMount(){
@@ -31,20 +29,25 @@ class AddTable extends Component {
     }
 
     mySubmitHandler=()=>{     
-      
-        TableService.addTable(this.state).
+        
+        let id=this.props.match.params.id
+
+
+        CategoryService.getTablebyId(this.state.selectValue).
         then((response)=>{
 
-            window.location="/tables"
             return response.json()
-        }).catch((err)=>{
-
-            console.log(err)
+        }).then((data)=>{
+            console.log(data)
+            this.setState({
+                selectedCategory:data
+            })
         })
 
+
+        TableService.updateTable(id,this.state)
         
     }
-
 
     handleInputChange=(event)=>{
         const target = event.target;
@@ -56,12 +59,16 @@ class AddTable extends Component {
         })
     }
 
+
+   
+
+
     render() { 
 
         const optionList=this.state.tableCategory.map((category)=>
 
-            <option key={category.id} value={category.id}>{category.title}</option>
-        )
+        <option key={category.id} value={category.id}>{category.title}</option>
+    )
         return (<Form>
            
             <FormGroup>
@@ -78,10 +85,10 @@ class AddTable extends Component {
               
             </FormGroup>
 
-            <Link to="/users" onClick={this.mySubmitHandler} className="btn btn-success">Submit</Link>
-            <Link to="/users" className="btn btn-danger ml-2">Cancel</Link>        
-            </Form>  );
+            <Link onClick={this.mySubmitHandler} className="btn btn-success">Submit</Link>
+            <Link to="/tables" className="btn btn-danger ml-2">Cancel</Link>        
+            </Form>    );
     }
 }
  
-export default AddTable;
+export default EditTable;

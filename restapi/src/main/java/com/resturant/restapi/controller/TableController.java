@@ -25,9 +25,20 @@ public class TableController {
     }
 
     @PostMapping(path ="/add/{id}")
-    public String addFood(@RequestBody Tables table, @PathVariable int id){
+    public String addTable(@RequestBody Tables table, @PathVariable int id){
 
         return tableService.insertTable(table,id);
+    }
+
+    @DeleteMapping(path="/delete/{id}")
+    public String deleteTable(@PathVariable Integer id){
+        return tableService.deleteTable(id);
+    }
+
+    @PutMapping(path = "/update/{id}")
+    public Tables updateTable(@RequestBody Tables tables,@PathVariable int id){
+
+        return tableService.updateTable(id,tables);
     }
 
 }

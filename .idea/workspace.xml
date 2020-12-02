@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8329de62-6b11-4e55-a50e-bfc24986cae3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/restapi/backoffice/src/component/Table/EditTable.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/restapi/src/main/resources/application-dev.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/src/api/CategoryService.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/src/api/CategoryService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/src/api/ProductsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/src/api/ProductsService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/src/api/TableService.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/src/api/TableService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/src/component/Configuration.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/src/component/Configuration.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/src/component/Table/AddTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/src/component/Table/AddTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/backoffice/src/component/Table/TableList.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/backoffice/src/component/Table/TableList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/client/src/component/Basket.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/client/src/component/Basket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/client/src/component/Products/Products.js" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/client/src/component/Products/Products.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/controller/TableCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/controller/TableCategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/controller/TableController.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/controller/TableController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/service/InfoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/service/InfoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/service/TableCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/service/TableCategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/service/TableService.java" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/java/com/resturant/restapi/service/TableService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restapi/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/restapi/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1knj12uukAgHrgQh1NjXgdI5uBe" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/restapi" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8329de62-6b11-4e55-a50e-bfc24986cae3" name="Default Changelist" comment="" />
+      <created>1606343031394</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606343031394</updated>
+      <workItem from="1606343032526" duration="20000" />
+      <workItem from="1606373306677" duration="131000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606373424863">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="137" y="18" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1606373424863" />
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1606373437892">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1366.728@0.0.1366.728" timestamp="1606373437892" />
+  </component>
+</project>

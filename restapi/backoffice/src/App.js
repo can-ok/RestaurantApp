@@ -25,6 +25,7 @@ import TableList from './component/Table/TableList';
 
 import React, { Component } from 'react';
 import AddTable from './component/Table/AddTable';
+import EditTable from './component/Table/EditTable';
 
 class App extends Component {
   state = { token:null }
@@ -67,6 +68,7 @@ class App extends Component {
             <Route exact path="/config" component={Config} />
             <Route exact path="/tables" component={TableList} />
             <Route exact path="/addTable" component={AddTable} />
+            <Route exact path="/editTable/:id" component={EditTable} />
         </Switch>
       </Router>
       </div>

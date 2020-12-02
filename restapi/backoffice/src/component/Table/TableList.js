@@ -22,6 +22,15 @@ class TableList extends Component {
         })
     }
 
+    handle_detele=(id)=>{
+        console.log(id)
+        const tables=this.state.tables.filter(item=> item.id !== id)
+        this.setState({tables})
+
+        TableService.deleteTable(id).then((response)=>console.log(response))
+        .catch((err)=>console.error(err))
+    }
+
 
     render() {
         
@@ -37,7 +46,7 @@ class TableList extends Component {
             <td>{item.title}</td>
             <td>{item.tableCategory.title}</td>
             <td>{item.enabled.toString()}</td>
-            <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
+            <td><Link to={`/editTable/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
             <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
         </tr>)
         }

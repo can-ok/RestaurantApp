@@ -1,21 +1,5 @@
 
 
-
-
-/* AUTH */
-insert into AUTHORITIES values(1,'ROLE_USER','user1')
-
-insert into AUTHORITIES values(2 ,'ROLE_ADMIN','admin')
-
-Insert into Users values(1,'ROLE_USER',true,'{noop}pass1','user1')
-
-Insert into Users values(2,'ROLE_ADMIN',true,'{noop}admin1','admin')
-
-
-
-/* users */
-
-
 insert into PRODUCT_CATEGORY   values(1,'Mesrubatlar')
 
 insert into PRODUCT_CATEGORY   values(2,'Tatlılar')

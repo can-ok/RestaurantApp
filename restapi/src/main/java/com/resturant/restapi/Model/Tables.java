@@ -20,9 +20,9 @@ public class Tables {
     private Boolean enabled;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    private TableCategory tableCategory;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "category_id")
+//    private TableCategory tableCategory;
 
     public Integer getId() {
         return id;
@@ -48,11 +48,13 @@ public class Tables {
         this.enabled = enabled;
     }
 
-    public TableCategory getTableCategory() {
-        return tableCategory;
-    }
+//    public TableCategory getTableCategory() {
+//        return tableCategory;
+//    }
+//
+//    public void setTableCategory(TableCategory tableCategory) {
+//        this.tableCategory = tableCategory;
+//    }
 
-    public void setTableCategory(TableCategory tableCategory) {
-        this.tableCategory = tableCategory;
-    }
+
 }
