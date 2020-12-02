@@ -24,21 +24,21 @@ public class TableController {
         return tableService.getAllTables();
     }
 
-    @PostMapping(path ="/add/{id}")
-    public String addTable(@RequestBody Tables table, @PathVariable int id){
+    @PostMapping(path ="/add")
+    public Tables addTable(@RequestBody Tables table){
 
-        return tableService.insertTable(table,id);
+        return tableService.insertTable(table);
     }
-
-    @DeleteMapping(path="/delete/{id}")
-    public String deleteTable(@PathVariable Integer id){
-        return tableService.deleteTable(id);
-    }
-
-    @PutMapping(path = "/update/{id}")
-    public Tables updateTable(@RequestBody Tables tables,@PathVariable int id){
-
-        return tableService.updateTable(id,tables);
-    }
+//
+//    @DeleteMapping(path="/delete/{id}")
+//    public String deleteTable(@PathVariable Integer id){
+//        return tableService.deleteTable(id);
+//    }
+//
+//    @PutMapping(path = "/update/{id}")
+//    public Tables updateTable(@RequestBody Tables tables,@PathVariable int id){
+//
+//        return tableService.updateTable(id,tables);
+//    }
 
 }

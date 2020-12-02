@@ -20,6 +20,19 @@ public class Tables {
     private Boolean enabled;
 
 
+
+    private Integer tableCount;
+
+    public Integer getTableCount() {
+        return tableCount;
+    }
+
+    public void setTableCount(Integer tableCount) {
+        this.tableCount = tableCount;
+    }
+
+
+
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "category_id")
 //    private TableCategory tableCategory;

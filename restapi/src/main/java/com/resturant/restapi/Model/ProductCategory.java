@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +19,8 @@ public class ProductCategory implements Serializable {
     private Integer id;
 
     private String name;
+
+
 
     public Integer getId() {
         return id;

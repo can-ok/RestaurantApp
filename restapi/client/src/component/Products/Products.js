@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {ListGroup, ListGroupItem} from 'reactstrap';
+import {Label, ListGroup, ListGroupItem} from 'reactstrap';
 import '../../App.css'
 
 import ProductList from "./ProductsList";
@@ -153,6 +153,12 @@ class Production extends Component {
                 </ListGroupItem>
             {categoriesList}
             </ListGroup>
+
+            
+            <div className="col">
+            <Label> { localStorage.getItem('table')}</Label>
+            </div>
+
             </div>
 
             <div className="col-6 CardItem">

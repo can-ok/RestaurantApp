@@ -28,15 +28,15 @@ class TableService{
         myHeaders.append("Authorization", this.token);
         myHeaders.append("Content-Type", "application/json");
 
-        let id=state.selectValue;
+        
         var data={
             "title":state.tableName,
-            "enabled": true
-
+            "enabled": true,
+            "tableCount":state.tableCount
         }
 
         //localhost:8080/table/add/2
-        let response=fetch(`http://localhost:8080/table/add/${id}`,{
+        let response=fetch(`http://localhost:8080/table/add`,{
 
         method: 'POST',
         headers: myHeaders,

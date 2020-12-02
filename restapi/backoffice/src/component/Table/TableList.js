@@ -44,7 +44,7 @@ class TableList extends Component {
         <tr key={item.id} >
             <td>{item.id}</td>
             <td>{item.title}</td>
-            <td>{item.tableCategory.title}</td>
+            <td>{item.tableCount}</td>
             <td>{item.enabled.toString()}</td>
             <td><Link to={`/editTable/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
             <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
@@ -63,7 +63,7 @@ class TableList extends Component {
                     <tr>
                     <th>ID</th>
                     <th>İsim</th>
-                    <th>Kategori</th>
+                    <th>Sayı</th>
                     <th>Enable</th>
                     <th></th>
                     <th></th>

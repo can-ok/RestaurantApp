@@ -17,14 +17,9 @@ public class Food extends Product implements Serializable {
     private Integer id;
 
 
-
-
     private String  title;
 
-
-
     private String description;
-
 
 
     private Integer price;

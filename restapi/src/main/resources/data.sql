@@ -1,3 +1,13 @@
+insert into AUTHORITIES values(1,'ROLE_USER','user1')
+
+insert into AUTHORITIES values(2 ,'ROLE_ADMIN','admin')
+
+Insert into Users values(1,'ROLE_USER',true,'{noop}pass1','user1')
+
+Insert into Users values(2,'ROLE_ADMIN',true,'{noop}admin1','admin')
+
+
+
 
 
 insert into PRODUCT_CATEGORY   values(1,'Mesrubatlar')
@@ -21,11 +31,16 @@ insert into Food values(null, 'et döner',25,'Döner',3 )
 insert into Food values(null , 'füme sandviç',15,'Sandviç',3 )
 
 
-insert into TABLE_CATEGORY values(1,'Salon')
+-- insert into TABLE_CATEGORY values(1,'Salon')
+--
+-- insert into TABLE_CATEGORY values(2,'Balkon')
+--
 
-insert into TABLE_CATEGORY values(2,'Balkon')
+-- insert into TABLES values(1,true,'Salon',10)
+--
+-- insert into TABLES values(2,true,'Bahçe',20)
 
+insert into TABLES(ID,ENABLED,TITLE,TABLE_COUNT) values(1,true,'Bahçe',20)
 
-insert into TABLES values(1,true,'MASA 1',1)
+insert into TABLES(ID,ENABLED,TITLE,TABLE_COUNT) values(3,true,'Ayakta',0)
 
-insert into TABLES values(2,true,'MASA 2',2)

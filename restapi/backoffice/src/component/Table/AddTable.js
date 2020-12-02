@@ -9,7 +9,7 @@ import TableService from '../../api/TableService';
 
 class AddTable extends Component {
     state = { tableName:"",
-              tableCategory:[],
+              tableCount:0,
               selectValue:1
             }
 
@@ -17,7 +17,7 @@ class AddTable extends Component {
 
     componentDidMount(){
 
-        CategoryService.getTableCategories()
+      /*   CategoryService.getTableCategories()
         .then((response)=>{
 
             return response.json()
@@ -27,7 +27,11 @@ class AddTable extends Component {
             this.setState({
                 tableCategory:data
             })
-        })
+        }) */
+
+
+
+
     }
 
     mySubmitHandler=()=>{     
@@ -58,10 +62,7 @@ class AddTable extends Component {
 
     render() { 
 
-        const optionList=this.state.tableCategory.map((category)=>
-
-            <option key={category.id} value={category.id}>{category.title}</option>
-        )
+      
         return (<Form>
            
             <FormGroup>
@@ -69,10 +70,8 @@ class AddTable extends Component {
               <Input name="tableName" type="text"  onChange={this.handleInputChange} /></Label>
             </FormGroup>
             <FormGroup>
-            <select id = "dropdown" name="selectValue" value={this.state.selectValue}  onChange={this.handleInputChange}>
-                {optionList}
-              </select>
-
+            <Label>Count:
+            <Input type='number' name="tableCount" /> </Label>
             </FormGroup>
             <FormGroup>
               
