@@ -1,5 +1,6 @@
 package com.resturant.restapi.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -32,7 +33,7 @@ public class Food extends Product implements Serializable {
         this.id = id;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="category_id")
     private ProductCategory productcategory;
 
@@ -43,6 +44,8 @@ public class Food extends Product implements Serializable {
     public void setProductcategory(ProductCategory productcategory) {
         this.productcategory = productcategory;
     }
+
+
 
     public void setPrice(Integer price) {
         this.price = price;

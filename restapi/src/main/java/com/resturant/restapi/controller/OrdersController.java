@@ -1,6 +1,7 @@
 package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.Orders;
+import com.resturant.restapi.dto.OrdersDto;
 import com.resturant.restapi.service.OrdersService;
 import com.resturant.restapi.service.ProductsService;
 import org.hibernate.criterion.Order;
@@ -18,23 +19,23 @@ public class OrdersController {
     OrdersService ordersService;
 
     @GetMapping("/getOrders")
-    public List<Orders> getAllOrders(){
+    public List<OrdersDto> getAllOrders(){
 
         return ordersService.getOrders();
     }
 
     @PostMapping("/saveOrder")
-    public Orders saveOrder(@RequestBody Orders orders){
+    public OrdersDto saveOrder(@RequestBody OrdersDto ordersDto){
 
-        return ordersService.saveOrder(orders);
+        return ordersService.saveOrder(ordersDto);
     }
 
     @PostMapping("/saveOrders")
-    public List<Orders> saveOrders(@RequestBody List<Orders> orders){
+    public List<OrdersDto> saveOrders(@RequestBody List<OrdersDto> ordersDto){
 
-        System.out.println(orders);
+        System.out.println(ordersDto);
 
-        return ordersService.saveOrders(orders);
+        return ordersService.saveOrders(ordersDto);
 
     }
 

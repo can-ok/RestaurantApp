@@ -145,8 +145,14 @@ class Production extends Component {
     
         return ( <div>
 
+                <div className="row">
+                <h5 className='ml-3 mt-2 border'> <strong>Durum:</strong> { localStorage.getItem('table')}</h5>
+
+                </div>
+
         <div className="row">
-            <div className="col-sm float-left mt-2 row">
+            <div className="col-sm float-left mt-2 ml-2 row">
+            
             <ListGroup className="Category_List">
                 <ListGroupItem  tag="button" action  onClick={()=>this.getItems()}>
                 <Link>Hepsi</Link>
@@ -154,10 +160,10 @@ class Production extends Component {
             {categoriesList}
             </ListGroup>
 
+        
+
             
-            <div className="col">
-            <Label> { localStorage.getItem('table')}</Label>
-            </div>
+                
 
             </div>
 

@@ -9,7 +9,8 @@ class EditTable extends Component {
     state = {  tableCategory:[],
         selectValue:1,
         tableName:"",
-        selectedCategory:{}
+        tableCount:0
+
     }
 
 
@@ -33,17 +34,7 @@ class EditTable extends Component {
         let id=this.props.match.params.id
 
 
-        CategoryService.getTablebyId(this.state.selectValue).
-        then((response)=>{
-
-            return response.json()
-        }).then((data)=>{
-            console.log(data)
-            this.setState({
-                selectedCategory:data
-            })
-        })
-
+        console.log(this.state.tableCount)
 
         TableService.updateTable(id,this.state)
         
@@ -65,10 +56,7 @@ class EditTable extends Component {
 
     render() { 
 
-        const optionList=this.state.tableCategory.map((category)=>
-
-        <option key={category.id} value={category.id}>{category.title}</option>
-    )
+        
         return (<Form>
            
             <FormGroup>
@@ -76,13 +64,8 @@ class EditTable extends Component {
               <Input name="tableName" type="text"  onChange={this.handleInputChange} /></Label>
             </FormGroup>
             <FormGroup>
-            <select id = "dropdown" name="selectValue" value={this.state.selectValue}  onChange={this.handleInputChange}>
-                {optionList}
-              </select>
-
-            </FormGroup>
-            <FormGroup>
-              
+            <Label>Count:
+            <Input type='number' name="tableCount" /> </Label>
             </FormGroup>
 
             <Link onClick={this.mySubmitHandler} className="btn btn-success">Submit</Link>

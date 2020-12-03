@@ -1,5 +1,6 @@
 package com.resturant.restapi.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -15,16 +16,7 @@ public class Drink extends Product implements Serializable {
     @Id
     private Integer id;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name="PRODUCTCATEGORY_id")
-//    private PRODUCTCATEGORY productCategory;
-
-
-
-
     private String  title;
-
-
 
     private String description;
 
@@ -36,9 +28,9 @@ public class Drink extends Product implements Serializable {
         this.productcategory = productcategory;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name="category_id")
-   private ProductCategory productcategory;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="category_id")
+    private ProductCategory productcategory;
 
 
     public Integer getId() {

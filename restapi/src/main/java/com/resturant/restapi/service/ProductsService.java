@@ -4,6 +4,10 @@ import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.converter.DtoConverter;
+import com.resturant.restapi.dto.DrinkDto;
+import com.resturant.restapi.dto.FoodDto;
+import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.repository.DrinksRepository;
 import com.resturant.restapi.repository.FoodRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
@@ -27,31 +31,13 @@ public class ProductsService {
     @Autowired
     FoodRepository foodRepository;
 
-    public List<Drink> getAllDrinks(){
+    public List<DrinkDto> getAllDrinks(){
 
-        return drinksRepository.findAll();
+        List<DrinkDto> dtoDrinkList=(List<DrinkDto>)(List<?>) drinksRepository.findAll();
+
+        return dtoDrinkList;
     }
 
-
-//    public List<? extends Product> getSpecificCategory(String ProductCategor){
-//
-//        List<Food> listfood=foodRepository.getCategoryByFoods(ProductCategor);
-//        List<Drink> listDrink=drinksRepository.findDrinkByProductCategory(ProductCategor);
-//
-//        if(!listfood.isEmpty())
-//        {
-//            return listfood;
-//        }
-//        else if(!listDrink.isEmpty())
-//        {
-//            return listDrink;
-//        }
-//        else {
-//
-//            return Collections.emptyList();
-//        }
-//
-//    }
 
 
     public List<? extends Product> getSpecificCategory(int ProductCategoryId){
@@ -75,30 +61,24 @@ public class ProductsService {
     }
 
 
+    public List<FoodDto> getAllFoods(){
+
+        List<FoodDto> foodDtoList=new ArrayList<>();
 
 
+        foodDtoList=DtoConverter.convertFoodListtoDtoList(foodDtoList,foodRepository.findAll());
 
-//    public List<String> getAllCategoriesFood(){
-//
-//        return foodRepository.getCategories();
-//    }
-//
-//    public List<String> getAllCategoriesDrink(){
-//
-//        return drinksRepository.getCategories();
-//    }
 
-    public List<Food> getAllFoods(){
-
-        return foodRepository.findAll();
+        return foodDtoList;
     }
 
-    public String insertFood(Food food,int id){
+    public String insertFood(FoodDto dtoFood,int id){
 
         Optional<ProductCategory> productcategory=productcategoryRepository.findById(id);
+
         if(productcategory.isPresent()){
 
-            food.setProductcategory(productcategory.get());
+            Food food=DtoConverter.convertFoodDtoToFood(dtoFood,productcategory);
             foodRepository.save(food);
             return "Success";
         }
@@ -106,34 +86,36 @@ public class ProductsService {
         return "fail";
     }
 
-    public String insertDrink(Drink drink,int id){
+    public String insertDrink(DrinkDto drinkDto, int id){
         Optional<ProductCategory> productcategory=productcategoryRepository.findById(id);
 
         if(productcategory.isPresent()){
 
-            drink.setProductcategory(productcategory.get());
+            Drink drink=DtoConverter.convertDrinkDtoToDrink(drinkDto,productcategory);
             drinksRepository.save(drink);
             return "Success";
         }
 
-
-
         return "fail";
     }
 
-    public Food getFoodById(Integer id){
+    public FoodDto getFoodById(Integer id){
         Optional<Food> optinalEntity=foodRepository.findById(id);
 
         if(!optinalEntity.isPresent()){
 
             return null;
         }
+        else{
 
-        return optinalEntity.get();
+            FoodDto foodDto=DtoConverter.convertFoodtoFoodDto(optinalEntity.get());
+            return foodDto;
+        }
+
     }
 
 
-    public Drink getDrinkById(Integer id){
+    public DrinkDto getDrinkById(Integer id){
         Optional<Drink> optinalEntity=drinksRepository.findById(id);
 
         if(!optinalEntity.isPresent()){
@@ -141,13 +123,17 @@ public class ProductsService {
             return null;
         }
 
-        return optinalEntity.get();
+        else{
+
+            DrinkDto drinkDto=DtoConverter.convertDrinktoDrinkDto(optinalEntity.get());
+            return drinkDto;
+        }
     }
 
 
-    public List<Food> deleteFood(Integer id){
+    public List<FoodDto> deleteFood(Integer id){
 
-        List<Food> foods=new ArrayList<>();
+        List<FoodDto> foods=new ArrayList<>();
 
         Optional<Food> foodEntity=foodRepository.findById(id);
         if(foodEntity.isPresent()){
@@ -155,7 +141,7 @@ public class ProductsService {
             foodEntity.get().setProductcategory(null);
 
             foodRepository.delete(foodEntity.get());
-            foods=foodRepository.findAll();
+            foods=getAllFoods();
 
         }
 
@@ -164,9 +150,9 @@ public class ProductsService {
 
     }
 
-    public List<Drink> deleteDrink(Integer id){
+    public List<DrinkDto> deleteDrink(Integer id){
 
-        List<Drink> foods=new ArrayList<>();
+        List<DrinkDto> drinks=new ArrayList<>();
 
         Optional<Drink> drinkEntity=drinksRepository.findById(id);
         if(drinkEntity.isPresent()){
@@ -174,37 +160,38 @@ public class ProductsService {
             drinkEntity.get().setProductcategory(null);
 
             drinksRepository.delete(drinkEntity.get());
-            foods=drinksRepository.findAll();
+            drinks=getAllDrinks();
 
         }
 
-        return foods;
+        return drinks;
 
 
 
     }
 
 
-    public Food updateFood(Integer id,Food food){
+    public FoodDto updateFood(Integer id,FoodDto foodDto){
         Optional<Food> entity = foodRepository.findById(id);
 
         if (!entity.isPresent()) {
             System.out.println("Sonuç bulunamadı");
-            return null;}
+            return null;
+        }
         else{
 
             entity.get().setId(id);
-            entity.get().setDescription(food.getDescription());
-            entity.get().setTitle(food.getTitle());
+            entity.get().setDescription(foodDto.getDescription());
+            entity.get().setTitle(foodDto.getTitle());
             //entity.get().setProductCategory(food.getProductCategory());
-            entity.get().setPrice(food.getPrice());
+            entity.get().setPrice(foodDto.getPrice());
             foodRepository.save(entity.get());
 
-            return entity.get();
+            return foodDto;
         }
     }
 
-    public Drink updateDrink(Integer id,Drink drink){
+    public DrinkDto updateDrink(Integer id,DrinkDto drinkDto){
         Optional<Drink> optinalDrink = drinksRepository.findById(id);
 
         if (!optinalDrink.isPresent()) {
@@ -213,14 +200,14 @@ public class ProductsService {
         else{
 
             optinalDrink.get().setId(id);
-            optinalDrink.get().setDescription(drink.getDescription());
-            optinalDrink.get().setPrice(drink.getPrice());
-            optinalDrink.get().setTitle(drink.getTitle());
+            optinalDrink.get().setDescription(drinkDto.getDescription());
+            optinalDrink.get().setPrice(drinkDto.getPrice());
+            optinalDrink.get().setTitle(drinkDto.getTitle());
             //optinalDrink.get().setProductCategory(drink.getProductCategory());
 
             drinksRepository.save(optinalDrink.get());
 
-            return optinalDrink.get();
+            return drinkDto;
         }
     }
 

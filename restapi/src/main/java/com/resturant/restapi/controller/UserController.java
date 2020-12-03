@@ -2,6 +2,7 @@ package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.AUTHORITIES;
 import com.resturant.restapi.Model.Users;
+import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +19,15 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/getAll")
-    public List<Users> getAllUsers(){
+    public List<UsersDto> getAllUsers(){
 
         return userService.getAllUser();
     }
 
     @PostMapping("/save")
-    public Users saveUser(@RequestBody Users users){
+    public UsersDto saveUser(@RequestBody UsersDto usersDto){
 
-        return userService.insertUser(users);
+        return userService.insertUser(usersDto);
     }
 
     @GetMapping("/get/{id}")

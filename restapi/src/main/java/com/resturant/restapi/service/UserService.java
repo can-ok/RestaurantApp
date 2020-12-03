@@ -2,6 +2,8 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.AUTHORITIES;
 import com.resturant.restapi.Model.Users;
+import com.resturant.restapi.converter.UserDtoConverter;
+import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.repository.AuthoritiesRepository;
 
 import com.resturant.restapi.repository.UsersRepository;
@@ -19,19 +21,25 @@ public class UserService {
     @Autowired
     AuthoritiesRepository authRepository;
 
-    public Users insertUser(Users users){
+    public UsersDto insertUser(UsersDto usersDto){
 
-        AUTHORITIES newAuth=new AUTHORITIES(null,users.getUSERNAME(),users.getAUTHORITY());
+        AUTHORITIES newAuth=new AUTHORITIES(null,usersDto.getUSERNAME(),usersDto.getAUTHORITY());
         //we also have to insert authorzation
         authRepository.save(newAuth);
+
+
+        Users users=UserDtoConverter.userDtoToUser(usersDto);
         //update userpass
-        users.setPassword("{noop}"+users.getPassword());
-        return userRepository.save(users);
+        //users.setPassword("{noop}"+users.getPassword());
+        userRepository.save(users);
+        return usersDto;
     }
 
-    public List<Users> getAllUser(){
+    public List<UsersDto> getAllUser(){
 
-        return userRepository.findAll();
+
+        List<UsersDto> usersDtoList=UserDtoConverter.convertUsesrListoUserDtoList(userRepository.findAll());
+        return usersDtoList;
     }
 
     public Users getUser(Integer id){

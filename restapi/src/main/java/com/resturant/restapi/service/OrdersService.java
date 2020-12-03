@@ -1,6 +1,9 @@
 package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Orders;
+import com.resturant.restapi.converter.DtoConverter;
+import com.resturant.restapi.converter.OrdersDtoConvert;
+import com.resturant.restapi.dto.OrdersDto;
 import com.resturant.restapi.repository.OrdersRepository;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +18,27 @@ public class OrdersService {
     OrdersRepository ordersRepository;
 
 
-    public Orders saveOrder(Orders order){
+    public OrdersDto saveOrder(OrdersDto ordersDto){
 
-        return ordersRepository.save(order);
+        Orders orders= OrdersDtoConvert.ordersDtoToOrders(ordersDto);
+        ordersRepository.save(orders);
+        return ordersDto;
     }
 
-    public List<Orders> saveOrders(List<Orders> orders){
+    public List<OrdersDto> saveOrders(List<OrdersDto> ordersDto){
 
-        return  ordersRepository.saveAll(orders);
+        List<Orders> ordersList= OrdersDtoConvert.ordersDtoListToOrderList(ordersDto);
+
+        ordersRepository.saveAll(ordersList);
+
+        return ordersDto;
     }
 
-    public List<Orders> getOrders(){
+    public List<OrdersDto> getOrders(){
 
-        return ordersRepository.findAll();
+        List<OrdersDto> ordersDtoList= OrdersDtoConvert.ordersListToOrdersDtoList(ordersRepository.findAll());
+
+        return ordersDtoList;
     }
 
 }

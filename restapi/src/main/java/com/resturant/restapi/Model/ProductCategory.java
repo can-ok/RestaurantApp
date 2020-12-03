@@ -1,6 +1,7 @@
 package com.resturant.restapi.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ProductCategory implements Serializable {
+public class ProductCategory {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,6 +21,13 @@ public class ProductCategory implements Serializable {
 
     private String name;
 
+    @OneToMany(mappedBy = "productcategory")
+    @JsonIgnore
+    private Set<Drink> Drinkproducts=new HashSet<>();
+
+    @OneToMany(mappedBy = "productcategory")
+    @JsonIgnore
+    private Set<Food> Foodproducts=new HashSet<>();
 
 
     public Integer getId() {
@@ -37,4 +45,27 @@ public class ProductCategory implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
+
+    //for hold recursion
+
+//
+//    public void setDrinkproducts(Set<Drink> drinkproducts) {
+//        Drinkproducts = drinkproducts;
+//    }
+//
+//    public Set<Drink> getDrinkproducts() {
+//        return Drinkproducts;
+//    }
+//
+//    public Set<Food> getFoodproducts() {
+//        return Foodproducts;
+//    }
+//
+//    public void setFoodproducts(Set<Food> foodproducts) {
+//        Foodproducts = foodproducts;
+//    }
+
+
 }

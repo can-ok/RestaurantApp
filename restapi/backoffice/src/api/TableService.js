@@ -69,14 +69,20 @@ class TableService{
         myHeaders.append("Authorization", this.token);
         myHeaders.append("Content-Type", "application/json");
 
+
+      /*   "id": 2,
+        "title": "Salon",
+        "enabled": true,
+        "tableCount": 20
+     */
         
         var data={
             "title":item.tableName,
             "enabled":true,
-            "tableCategory":item.selectedCategory
+            "tableCount":item.tableCount
         }
-        
-        //localhost:8080/table/update/1
+        console.log(data,id)
+      //localhost:8080/table/update/1
         let response=fetch(`http://localhost:8080/table/update/${id}`,{
 
             method: 'PUT',

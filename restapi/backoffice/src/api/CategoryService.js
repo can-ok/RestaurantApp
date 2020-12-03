@@ -104,7 +104,7 @@ class CategoryService{
 
         //http://localhost:8080/tablecategory/getAll
         
-        response=fetch(`http://localhost:8080/tablecategory/getAll`,requestOptions)
+        response=fetch(`http://localhost:8080/table/getAll`,requestOptions)
         
  
         return response;
@@ -120,9 +120,8 @@ class CategoryService{
         method: 'GET',
         headers: myHeaders,
         };
-
         //localhost:8080/table/update/1
-        let response=fetch(`http://localhost:8080/tablecategory/getTable/${id}`,requestOptions)
+        let response=fetch(`http://localhost:8080/table/getTable/${id}`,requestOptions)
 
         return response;
 

@@ -30,7 +30,7 @@ class DrinkList extends Component {
 
     handle_detele=(itemId)=>{
    //http://localhost:8080/delete/food/1
-   ProductsService.deleteProduct("drink",itemId)
+   ProductsService.deleteProduct("drinkDTO",itemId)
     .then((response)=>{
         
         return response.json();
@@ -65,19 +65,19 @@ class DrinkList extends Component {
     render() { 
 
         const {items}=this.state;
-        //const type="drink";
+        //const type="drinkDTO";
         let listTable=null;
         if(items.length>0){
         listTable= items.map( (item)=>
 
         <tr key={item.id}>
                     <td>{item.id}</td>
-                    <td><Link to={`/description/${"drink"}/${item.id}`} >{item.title} </Link></td>
+                    <td><Link to={`/description/${"drinkDTO"}/${item.id}`} >{item.title} </Link></td>
                     <td>{item.description}</td>
                     <td><Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link></td>
                     <td>{item.price.toString()}</td>
 
-                    <td><Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning">Düzenle</Link></td>
+                    <td><Link to={`/update/${"drinkDTO"}/${item.id}`}   className="btn btn-warning">Düzenle</Link></td>
                     <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)}> Sil </Button></td>
          </tr>
           );
@@ -90,7 +90,7 @@ class DrinkList extends Component {
 
             <div className="mb-3">
             <strong>Drink List</strong> 
-            <Link className="btn float-right" to="/add/drink"><GrFormAdd size='1rem'/><strong>Add Drink</strong></Link>
+            <Link className="btn float-right" to="/add/drinkDTO"><GrFormAdd size='1rem'/><strong>Add Drink</strong></Link>
 
             </div>
 

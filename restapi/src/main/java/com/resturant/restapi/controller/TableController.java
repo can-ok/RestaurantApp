@@ -3,6 +3,7 @@ package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.Tables;
+import com.resturant.restapi.dto.TablesDto;
 import com.resturant.restapi.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +20,15 @@ public class TableController {
 
 
     @GetMapping("/getAll")
-    public List<Tables> getAll(){
+    public List<TablesDto> getAll(){
 
         return tableService.getAllTables();
     }
 
     @PostMapping(path ="/add")
-    public Tables addTable(@RequestBody Tables table){
+    public TablesDto addTable(@RequestBody TablesDto tableDto){
 
-        return tableService.insertTable(table);
+        return tableService.insertTable(tableDto);
     }
 //
 //    @DeleteMapping(path="/delete/{id}")
@@ -35,10 +36,17 @@ public class TableController {
 //        return tableService.deleteTable(id);
 //    }
 //
-//    @PutMapping(path = "/update/{id}")
-//    public Tables updateTable(@RequestBody Tables tables,@PathVariable int id){
-//
-//        return tableService.updateTable(id,tables);
-//    }
+    @PutMapping(path = "/update/{id}")
+    public TablesDto updateTable(@RequestBody TablesDto tablesDto,@PathVariable int id){
+
+        return tableService.updateTable(tablesDto,id);
+    }
+
+
+    @GetMapping(path = "/getTable/{id}")
+    public TablesDto getTablesCategory(@PathVariable int id){
+
+        return tableService.getTablebyId(id);
+    }
 
 }

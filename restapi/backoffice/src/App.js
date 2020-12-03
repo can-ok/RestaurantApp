@@ -50,7 +50,7 @@ class App extends Component {
       
       <MenuBar token={this.state.token}/>
       {/*className="App_main" */}
-      <div className="App_main2">
+      <div className="App_main">
   
       <Router>
         <Switch>
