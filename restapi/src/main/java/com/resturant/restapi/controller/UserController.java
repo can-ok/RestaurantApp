@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
@@ -31,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/get/{id}")
-    public Users getUser(@PathVariable Integer id){
+    public UsersDto getUser(@PathVariable Integer id){
 
         return userService.getUser(id);
     }

@@ -15,7 +15,7 @@ public class OrdersDtoConvert {
 
         Orders orders=new Orders();
 
-        //orders.setId(ordersDto.getId()); It is AutoIncrement
+        orders.setId(ordersDto.getId()); //It is AutoIncrement
         orders.setOrderTable(ordersDto.getOrderTable());
         orders.setOrderDate(ordersDto.getOrderDate());
         orders.setPaymentType(ordersDto.getPaymentType());
@@ -25,13 +25,15 @@ public class OrdersDtoConvert {
         return orders;
     }
 
+
+
     public static List<Orders> ordersDtoListToOrderList(List<OrdersDto> ordersListDtos){
 
         List<Orders> ordersList=new ArrayList<>();
         for(OrdersDto ordersDto:ordersListDtos){
 
             Orders orders=new Orders();
-            //orders.setId(ordersDto.getId()); It is AutoIncrement
+            orders.setId(ordersDto.getId()); //It is AutoIncrement
             orders.setOrderTable(ordersDto.getOrderTable());
             orders.setOrderDate(ordersDto.getOrderDate());
             orders.setPaymentType(ordersDto.getPaymentType());

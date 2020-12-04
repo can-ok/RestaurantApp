@@ -29,6 +29,10 @@ public class ProductCategory {
     @JsonIgnore
     private Set<Food> Foodproducts=new HashSet<>();
 
+    public ProductCategory(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

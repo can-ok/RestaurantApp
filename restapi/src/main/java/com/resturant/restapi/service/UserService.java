@@ -42,14 +42,20 @@ public class UserService {
         return usersDtoList;
     }
 
-    public Users getUser(Integer id){
+    public UsersDto getUser(Integer id){
         Optional<Users> userEntity=userRepository.findById(id);
 
         if(!userEntity.isPresent()){
             return null;
         }
+        else{
 
-        return userEntity.get();
+            UsersDto usersDto=UserDtoConverter.userToUserDto(userEntity.get());
+
+            return usersDto;
+        }
+
+
     }
 
     public String deleteUser(Integer id){

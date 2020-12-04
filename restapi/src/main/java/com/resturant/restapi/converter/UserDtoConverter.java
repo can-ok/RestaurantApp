@@ -2,6 +2,7 @@ package com.resturant.restapi.converter;
 
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.dto.UsersDto;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,18 @@ public class UserDtoConverter {
         }
 
         return usersDtoList;
+    }
+
+    public static UsersDto userToUserDto(Users user){
+
+        UsersDto userDto=new UsersDto();
+
+
+        userDto.setUSERNAME(user.getUSERNAME());
+        userDto.setPassword(userDto.getPassword());
+        userDto.setEnabled(userDto.isEnabled());
+
+        return userDto;
     }
 
 }
