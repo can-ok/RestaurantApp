@@ -49,7 +49,7 @@ public class OrdersControllerTest {
     public void getAllOrders() {
 
         when(ordersService.getOrders()).thenReturn(ordersList);
-        List<OrdersDto> resultList=ordersService.getOrders();
+        List<OrdersDto> resultList=ordersController.getAllOrders();
         assertEquals(resultList,ordersList);
     }
 

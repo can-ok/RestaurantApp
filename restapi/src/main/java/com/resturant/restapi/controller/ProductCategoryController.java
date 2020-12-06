@@ -25,7 +25,7 @@ public class ProductCategoryController {
     }
 
     @PostMapping("/save")
-    public ProductCategoryDto getAllCategories(@RequestBody ProductCategoryDto productcategory){
+    public ProductCategoryDto saveCategory(@RequestBody ProductCategoryDto productcategory){
 
         return categoryService.insertCatagory(productcategory);
     }
