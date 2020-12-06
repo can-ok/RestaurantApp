@@ -14,17 +14,15 @@ class Menu extends Component {
 
                 <div className="row">
 
-                    <Link to="/" className="col-sm div1 m-2 align-middle">
-
+                    <Link to="/products" className="col-sm div1 m-2 align-middle">
                         SEPET
                     </Link>    
                     <Link to="/table" className="col-sm div1 m-2">
                         MASALAR
                    </Link> 
                    <Link className="col-sm div1 m-2">
-                            RAPORLAR
+                        RAPORLAR
                    </Link>    
-            
                     
                 </div>   
                 <div className="row">
@@ -42,7 +40,7 @@ class Menu extends Component {
 
                 </div>   
 
-                <div className="row ">
+               { localStorage.getItem('token') && <div className="row ">
 
                     <Link className="col-sm div1 m-2">
                    
@@ -53,9 +51,24 @@ class Menu extends Component {
                     <Link to="/logout" className="col-sm div1 m-2">
                         ÇIKIKŞ
                     </Link>   
-            
+
                     
-                </div>    
+        </div> }
+
+        { !localStorage.getItem('token') && <div className="row ">
+
+                    <Link className="col-sm div1 m-2">
+                   
+                    </Link>    
+                    <Link className="col-sm div1 m-2">
+                   
+                    </Link>   
+                    <Link to="/login" className="col-sm div1 m-2">
+                        GİRİŞ
+                    </Link>   
+
+                    
+        </div> }
  
 
 

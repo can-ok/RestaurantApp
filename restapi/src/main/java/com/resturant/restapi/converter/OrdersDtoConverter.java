@@ -8,11 +8,10 @@ import org.hibernate.criterion.Order;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersDtoConvert {
+public class OrdersDtoConverter {
 
 
     public static Orders ordersDtoToOrders(OrdersDto ordersDto){
-
         Orders orders=new Orders();
 
         orders.setId(ordersDto.getId()); //It is AutoIncrement
@@ -22,6 +21,7 @@ public class OrdersDtoConvert {
         orders.setProductCount(ordersDto.getProductCount());
         orders.setTotalPrice(ordersDto.getTotalPrice());
         orders.setProductId(ordersDto.getProductId());
+        orders.setWaiterId(ordersDto.getWaiterId());
         return orders;
     }
 
@@ -30,21 +30,27 @@ public class OrdersDtoConvert {
     public static List<Orders> ordersDtoListToOrderList(List<OrdersDto> ordersListDtos){
 
         List<Orders> ordersList=new ArrayList<>();
-        for(OrdersDto ordersDto:ordersListDtos){
 
-            Orders orders=new Orders();
-            orders.setId(ordersDto.getId()); //It is AutoIncrement
-            orders.setOrderTable(ordersDto.getOrderTable());
-            orders.setOrderDate(ordersDto.getOrderDate());
-            orders.setPaymentType(ordersDto.getPaymentType());
-            orders.setProductCount(ordersDto.getProductCount());
-            orders.setTotalPrice(ordersDto.getTotalPrice());
-            orders.setProductId(ordersDto.getProductId());
-
+        ordersListDtos.stream().forEach(ordersDto -> {
+            Orders orders=ordersDtoToOrders(ordersDto);
             ordersList.add(orders);
-        }
+        });
 
         return ordersList;
+    }
+
+    public static OrdersDto orderToOrdersDto(Orders orders){
+        OrdersDto ordersDto=new OrdersDto();
+        ordersDto.setId(orders.getId());
+        ordersDto.setOrderDate(orders.getOrderDate());
+        ordersDto.setOrderTable(orders.getOrderTable());
+        ordersDto.setPaymentType(orders.getPaymentType());
+        ordersDto.setProductCount(orders.getProductCount());
+        ordersDto.setProductId(orders.getProductId());
+        ordersDto.setTotalPrice(orders.getTotalPrice());
+        ordersDto.setWaiterId(orders.getWaiterId());
+
+        return ordersDto;
     }
 
 
@@ -52,20 +58,11 @@ public class OrdersDtoConvert {
 
         List<OrdersDto> odersDtoList=new ArrayList<>();
 
-        for(Orders entity:ordersList){
-
-            OrdersDto ordersDto=new OrdersDto();
-
-            ordersDto.setId(entity.getId());
-            ordersDto.setOrderDate(entity.getOrderDate());
-            ordersDto.setOrderTable(entity.getOrderTable());
-            ordersDto.setPaymentType(entity.getPaymentType());
-            ordersDto.setProductCount(entity.getProductCount());
-            ordersDto.setProductId(entity.getProductId());
-            ordersDto.setTotalPrice(entity.getTotalPrice());
-
+        ordersList.stream().forEach(entity->{
+            OrdersDto ordersDto=orderToOrdersDto(entity);
             odersDtoList.add(ordersDto);
-        }
+
+        });
 
         return odersDtoList;
     }

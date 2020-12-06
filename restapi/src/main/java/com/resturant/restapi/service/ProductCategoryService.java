@@ -2,6 +2,8 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
+import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,14 +16,16 @@ public class ProductCategoryService {
     @Autowired
     ProductCategoryRepository productcategoryRepository;
 
-    public List<ProductCategory> getAll(){
+    public List<ProductCategoryDto> getAll(){
 
-        return productcategoryRepository.findAll();
+
+        return ProductsCategoryDtoConverter.prodCategoryListToProdCategoryDtoList(productcategoryRepository.findAll());
     }
 
-    public ProductCategory insertCatagory(ProductCategory category){
+    public ProductCategoryDto insertCatagory(ProductCategoryDto categoryDto){
+        productcategoryRepository.save(ProductsCategoryDtoConverter.productCategoryDtoToProdCategory(categoryDto));
 
-        return productcategoryRepository.save(category);
+        return categoryDto;
     }
 
     public String deleteUser(Integer id){
@@ -33,7 +37,7 @@ public class ProductCategoryService {
 
 
 
-    public ProductCategory updateCategory(Integer id,ProductCategory category){
+    public ProductCategoryDto updateCategory(Integer id,ProductCategoryDto category){
 
         Optional<ProductCategory> entity=productcategoryRepository.findById(id);
 
@@ -48,7 +52,7 @@ public class ProductCategoryService {
             entity.get().setName(category.getName());
 
             productcategoryRepository.save(entity.get());
-            return entity.get();
+            return category;
         }
     }
 

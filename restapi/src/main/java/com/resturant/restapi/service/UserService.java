@@ -62,11 +62,11 @@ public class UserService {
 
         userRepository.deleteById(id);
 
-        return "success";
+        return "Success";
     }
 
 
-    public Users updateUser(Integer id, Users users){
+    public UsersDto updateUser(Integer id, UsersDto usersDto){
         Optional<Users> entity = userRepository.findById(id);
 
         if (!entity.isPresent()) {
@@ -74,18 +74,22 @@ public class UserService {
             return null;}
         else{
 
-            entity.get().setId(id);
-            entity.get().setUSERNAME(users.getUSERNAME());
-            entity.get().setPassword(users.getPassword());
 
+
+            entity.get().setId(id);
+            entity.get().setUSERNAME(usersDto.getUSERNAME());
+            entity.get().setPassword(usersDto.getPassword());
 
             userRepository.save(entity.get());
 
-            return entity.get();
+            UsersDto response=UserDtoConverter.userToUserDto(entity.get());
+
+            return response;
         }
     }
 
     public List<AUTHORITIES> getAllAuth(){
+
 
         return authRepository.findAll();
     }

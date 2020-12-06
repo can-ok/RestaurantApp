@@ -66,7 +66,7 @@ public class TableServiceTest {
     }
 
     @Test
-    public void shoulGetTablebyId() {
+    public void shouldGetTablebyId() {
         int id=1;
         when(tableRepository.findById(1)).thenReturn(Optional.of(tables));
 

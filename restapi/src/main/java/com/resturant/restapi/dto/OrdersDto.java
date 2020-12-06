@@ -33,4 +33,7 @@ public class OrdersDto {
     private String paymentType;
 
     private String orderTable;
+
+    private String waiterId;
+
 }

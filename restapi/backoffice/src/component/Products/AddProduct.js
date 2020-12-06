@@ -81,7 +81,7 @@ class AddProduct extends Component {
             </FormGroup>
 
             <FormGroup>
-             <select id = "dropdown" name="selectValue" value={this.state.selectValue}  onChange={this.handleInputChange}>
+             <select id = "dropdown" name="selectValue" value={this.state.selectValue}   onChange={this.handleInputChange}>
                 {optionList}
               </select>
               </FormGroup>

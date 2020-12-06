@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
 @RestController
@@ -47,6 +48,12 @@ public class TableController {
     public TablesDto getTablesCategory(@PathVariable int id){
 
         return tableService.getTablebyId(id);
+    }
+
+    @GetMapping(path = "/getResvervedTable")
+    public List<Map<String,String>> getReservedTable(){
+
+        return tableService.getResvervedTable();
     }
 
 }

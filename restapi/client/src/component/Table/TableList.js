@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import TableService from '../../api/TableService';
-import {Link} from 'react-router-dom'
+import WaiterService from '../../api/WaiterService';
+import Modal from './Modal';
 
 import './Table.css'
 
 class TableList extends Component {
     state = { tablesCategory:[],
-              tables:[]
+              tables:[],
+              showModal:false,
+              waiters:[],
+              reservedTables:[]
                 }
 
 
@@ -21,13 +25,47 @@ class TableList extends Component {
 
             this.setState({
                 tablesCategory:data
+            });
+        })
+
+        WaiterService.getAllWaiters().then((response)=>{
+
+            this.setState({
+                waiters:response.data
             })
         })
+
+        TableService.getReserved().then((response)=>response.json())
+        .then((data)=>{
+            
+            this.setState({
+                reservedTables:data
+            })
+        })
+       
+        .catch((err)=>{
+            console.log(err)
+        })
+
+    }
+
+
+    checkTableReserved=(tableName)=>{
+        let {reservedTables}=this.state;
+
+        for(let i=0; i<reservedTables.length; i++){
+
+            if(reservedTables[i].Table==tableName){
+                return [true,reservedTables[i].Count];
+            }
+        }
+
+        return [false,0];
     }
 
     showCards=(table)=>{
 
-       if(table.title=='Ayakta'){
+       if(table.title==='Ayakta'){
         this.selectTable(table.title)
 
        }
@@ -39,30 +77,50 @@ class TableList extends Component {
 
         for(let count=1; count<=table.tableCount; count++){
             
-            tables.push(`Masa ${count}`)
+           let [status,prodCount]=this.checkTableReserved(`${table.title} ${count}`);
+           
+           let tableObject={'name':`${table.title} ${count}`,
+                            'reservedStatus':status,
+                            'count':prodCount}
+            tables.push(tableObject)
             
         }
         
-
         this.setState({
-
-            tables
-        })
+            tables })
         }
     }
 
 
     selectTable=(tableName)=>{
         localStorage.setItem("table",tableName)
+        
+        this.setState({
+            showModal:true
+        })
 
-        window.location="/" 
+    }
+
+    selectReservedTable=(tableName)=>{
+        
+        alert('Secili Masa',tableName)
+    }
+
+    selectWaiter=(value)=>{
+       
+        console.log(value)
+        this.setState({showModal:false})
+    
+        sessionStorage.setItem('waiter',value.id)
+
+        window.location="/products" 
+
     }
 
 
-
-
     render() { 
-
+        
+        
          const tablesList=this.state.tablesCategory.map((item)=>
 
          <tr key={item.id} className="table-row" onClick={()=>this.showCards(item)}>
@@ -70,32 +128,34 @@ class TableList extends Component {
          </tr>
         ) 
 
-
         const tablesCard=this.state.tables;
-
         let cards;
 
         if(tablesCard){
 
-            
             cards=tablesCard.map((item)=>{
                 
-
-              return(<div className="col-md-4 mr-2 ml-2 mt-2 border" onClick={()=>this.selectTable(item)} >
-
-                  
-          
-              <h5 className="row justify-content-center">
-              {item}
-              </h5>
-              </div>)
+              if(!item.reservedStatus){
+                return(<div key={item.name} className="col-md-4  border Card" onClick={()=>this.selectTable(item.name)} > 
+                
+                <h5 className="align-items-center">
+                {item.name}
+                </h5>
+                </div>)
+              }
+              else{
+                return(<div key={item.name} className="col-md-4  border Cardreserved" onClick={()=>this.selectReservedTable(item.name)} >
+                    
+                     <div className="float-right count">{item.count}</div>
+                     <h5 className="align-items-center">{item.name}</h5>
+                </div>)
+              }
 
             })
         
 
         }
 
-        console.log(cards)
 
         return (<div>
             
@@ -121,11 +181,14 @@ class TableList extends Component {
 
             </div>
 
+                
             </div>
-
-           
-
-
+            
+           { this.state.showModal&& <Modal open={this.state.showModal} 
+                                        waiters={this.state.waiters}  selectWaiter={this.selectWaiter}
+                                        onClose={()=>this.setState({showModal:false})}>
+                
+            </Modal>}
 
         </div>
 

@@ -2,28 +2,23 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.ProductCategory;
-import com.resturant.restapi.converter.DtoConverter;
+import com.resturant.restapi.converter.ProductDtoConverter;
 import com.resturant.restapi.dto.DrinkDto;
-import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.repository.DrinksRepository;
 import com.resturant.restapi.repository.FoodRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.security.core.parameters.P;
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.any;
 import static org.junit.Assert.*;
@@ -71,7 +66,7 @@ public class ProductsServiceSetAndUpdateTest {
     public void shouldNotInsertFood() {
         // ın that scenario we assume that catagory doesnt exit so it goes fail
         Mockito.when(drinksRepository.save(any())).thenReturn(drink);
-        String response=productsService.insertDrink(DtoConverter.convertDrinktoDrinkDto(drink),1);
+        String response=productsService.insertDrink(ProductDtoConverter.convertDrinktoDrinkDto(drink),1);
 
         assertNotNull(response);
         assertEquals(response,"fail");
@@ -84,7 +79,7 @@ public class ProductsServiceSetAndUpdateTest {
 
         Mockito.when(drinksRepository.save(any())).thenReturn(drink);
 
-        String response=productsService.insertDrink(DtoConverter.convertDrinktoDrinkDto(drink),1);
+        String response=productsService.insertDrink(ProductDtoConverter.convertDrinktoDrinkDto(drink),1);
 
         assertNotNull(response);
         assertEquals(response,"Success");
@@ -103,7 +98,7 @@ public class ProductsServiceSetAndUpdateTest {
 
         when(drinksRepository.save(any())).thenReturn(drink);
 
-        DrinkDto dto=productsService.updateDrink(id,DtoConverter.convertDrinktoDrinkDto(drink));
+        DrinkDto dto=productsService.updateDrink(id, ProductDtoConverter.convertDrinktoDrinkDto(drink));
 
         assertNotNull(dto);
 
@@ -119,7 +114,7 @@ public class ProductsServiceSetAndUpdateTest {
 
         when(drinksRepository.save(any())).thenReturn(drink);
 
-        DrinkDto dto=productsService.updateDrink(id,DtoConverter.convertDrinktoDrinkDto(drink));
+        DrinkDto dto=productsService.updateDrink(id, ProductDtoConverter.convertDrinktoDrinkDto(drink));
 
 
         assertNull(dto);

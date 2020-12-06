@@ -1,15 +1,16 @@
 package com.resturant.restapi.service;
 
+import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.converter.TableDtoConverter;
 import com.resturant.restapi.dto.TablesDto;
+import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.TableRepository;
 import javafx.scene.control.Tab;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TableService {
@@ -17,12 +18,39 @@ public class TableService {
     @Autowired
     TableRepository tableRepository;
 
+    @Autowired
+    OrdersRepository ordersRepository;
+
+
     public List<TablesDto> getAllTables(){
 
         List<TablesDto>  tablesListDto= TableDtoConverter.tableListToTableDto(tableRepository.findAll());
         return tablesListDto;
     }
 
+
+
+    public List<Map<String,String>> getResvervedTable(){
+
+
+        List<Map<String,String>> reservedListd=new ArrayList<>();
+
+
+        List<Orders> orders=ordersRepository.findAll();
+
+
+        orders.stream().forEach(order->{
+            Map<String,String> tablesOrder=new HashMap<>();
+            tablesOrder.put("Table",order.getOrderTable());
+            tablesOrder.put("Count",order.getProductCount().toString());
+
+            reservedListd.add(tablesOrder);
+
+        });
+
+
+        return reservedListd;
+    }
 
     public TablesDto insertTable(TablesDto tablesDto){
 

@@ -3,4 +3,61 @@
 .table-row{
     cursor:pointer;
     }
-    
+
+
+.Modal {
+
+    color: darkcyan;
+    width: 350px;
+    height: 200px;
+}
+
+.Modal select{
+    width: 200px;
+    margin-top:10%;
+    font-size: large;
+    border:darkcyan 2px solid;
+    border-radius: 10px;
+}
+
+
+.Modal button{
+    margin-top:10%;
+    background-color:darkcyan;
+}
+
+.CardItem{
+
+    max-height:  40rem;
+    overflow-y: scroll;
+    text-align: center;
+
+
+  }
+
+.Card{
+
+    margin: 1% 2%;
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+
+}
+
+
+.Cardreserved{
+
+    margin: 1% 2%;
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    background-color: red;
+
+}
+.Cardreserved .count{
+
+    width: 25px;
+    height: 25px;
+    background-color: black;
+    color: red;
+}

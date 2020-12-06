@@ -94,6 +94,24 @@ class TableService{
         return response;
     }
 
+    getReserved(){
+
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", this.token);
+ 
+ 
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        };
+        
+
+        let response=fetch('http://localhost:8080/table/getResvervedTable',requestOptions)
+
+        return response;
+
+    }
 
   
  

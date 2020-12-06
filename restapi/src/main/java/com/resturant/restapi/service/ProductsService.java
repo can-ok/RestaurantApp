@@ -2,12 +2,11 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
-import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
-import com.resturant.restapi.converter.DtoConverter;
+import com.resturant.restapi.converter.ProductDtoConverter;
 import com.resturant.restapi.dto.DrinkDto;
 import com.resturant.restapi.dto.FoodDto;
-import com.resturant.restapi.dto.ProductCategoryDto;
+import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.repository.DrinksRepository;
 import com.resturant.restapi.repository.FoodRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
@@ -44,18 +43,22 @@ public class ProductsService {
 
 
 
-    public List<? extends Product> getSpecificCategory(int ProductCategoryId){
+    public List<? extends ProductDto> getSpecificCategory(int ProductCategoryId){
 
         List<Food> listfood=foodRepository.findFoodByProductcategoryId(ProductCategoryId);
         List<Drink> listdrink=drinksRepository.findDrinkByProductcategoryId(ProductCategoryId);
 
+        List<FoodDto> foodDtoList=new ArrayList<>();
+        List<DrinkDto> drinkDtoList=new ArrayList<>();
+
         if(!listfood.isEmpty())
         {
-            return listfood;
+
+            return ProductDtoConverter.convertFoodListtoDtoList(foodDtoList,listfood);
         }
         else if(!listdrink.isEmpty())
         {
-            return listdrink;
+            return ProductDtoConverter.convertDrinkListToDrinDtoList(drinkDtoList,listdrink);
         }
         else {
 
@@ -70,7 +73,7 @@ public class ProductsService {
         List<FoodDto> foodDtoList=new ArrayList<>();
 
 
-        foodDtoList=DtoConverter.convertFoodListtoDtoList(foodDtoList,foodRepository.findAll());
+        foodDtoList= ProductDtoConverter.convertFoodListtoDtoList(foodDtoList,foodRepository.findAll());
 
 
         return foodDtoList;
@@ -82,7 +85,7 @@ public class ProductsService {
 
         if(productcategory.isPresent()){
 
-            Food food=DtoConverter.convertFoodDtoToFood(dtoFood,productcategory);
+            Food food= ProductDtoConverter.convertFoodDtoToFood(dtoFood,productcategory);
             foodRepository.save(food);
             return "Success";
         }
@@ -95,7 +98,7 @@ public class ProductsService {
 
         if(productcategory.isPresent()){
 
-            Drink drink=DtoConverter.convertDrinkDtoToDrink(drinkDto,productcategory);
+            Drink drink= ProductDtoConverter.convertDrinkDtoToDrink(drinkDto,productcategory);
             drinksRepository.save(drink);
             return "Success";
         }
@@ -112,7 +115,7 @@ public class ProductsService {
         }
         else{
 
-            FoodDto foodDto=DtoConverter.convertFoodtoFoodDto(optinalEntity.get());
+            FoodDto foodDto= ProductDtoConverter.convertFoodtoFoodDto(optinalEntity.get());
             return foodDto;
         }
 
@@ -129,7 +132,7 @@ public class ProductsService {
 
         else{
 
-            DrinkDto drinkDto=DtoConverter.convertDrinktoDrinkDto(optinalEntity.get());
+            DrinkDto drinkDto= ProductDtoConverter.convertDrinktoDrinkDto(optinalEntity.get());
             return drinkDto;
         }
     }

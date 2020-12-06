@@ -2,6 +2,7 @@ package com.resturant.restapi.controller;
 
 
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,13 @@ public class ProductCategoryController {
     ProductCategoryService categoryService;
 
     @GetMapping("/getAll")
-    public List<ProductCategory> getAllCategories(){
+    public List<ProductCategoryDto> getAllCategories(){
 
         return categoryService.getAll();
     }
 
     @PostMapping("/save")
-    public ProductCategory getAllCategories(@RequestBody ProductCategory productcategory){
+    public ProductCategoryDto getAllCategories(@RequestBody ProductCategoryDto productcategory){
 
         return categoryService.insertCatagory(productcategory);
     }
@@ -36,7 +37,7 @@ public class ProductCategoryController {
     }
 
     @PutMapping("/update/{id}")
-    public ProductCategory updateCategory(@PathVariable int id,@RequestBody ProductCategory category)
+    public ProductCategoryDto updateCategory(@PathVariable int id,@RequestBody ProductCategoryDto category)
     {
 
         return categoryService.updateCategory(id,category);

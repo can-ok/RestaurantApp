@@ -40,6 +40,13 @@ class Production extends Component {
             console.error("Error :",error)
         })
 
+        
+        if(localStorage.getItem('table')===null || sessionStorage.getItem('waiter')===null){
+            
+            this.props.history.push("/table");
+
+        }
+
     }
 
     handleChange=(event)=>{
@@ -133,8 +140,6 @@ class Production extends Component {
 
          if(this.state.categories.length>0){
             categoriesList=this.state.categories.map( (category)=>
-        
-
             <ListGroupItem  tag="button" action onClick={()=>this.getItemCategory(category.id)}>
                 <Link>{category.name} </Link>
             </ListGroupItem>
@@ -151,7 +156,7 @@ class Production extends Component {
                 </div>
 
         <div className="row">
-            <div className="col-sm float-left mt-2 ml-2 row">
+            <div className="col-2 float-left mt-2 ml-2 row">
             
             <ListGroup className="Category_List">
                 <ListGroupItem  tag="button" action  onClick={()=>this.getItems()}>
@@ -159,12 +164,6 @@ class Production extends Component {
                 </ListGroupItem>
             {categoriesList}
             </ListGroup>
-
-        
-
-            
-                
-
             </div>
 
             <div className="col-6 CardItem">
@@ -173,7 +172,7 @@ class Production extends Component {
 
              </div>
 
-            <div className="col-sm  mt-2">
+            <div className="col-4  mt-2">
 
             <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart} />
             </div>

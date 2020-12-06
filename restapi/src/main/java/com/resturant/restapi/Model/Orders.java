@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Orders implements Serializable {
+public class Orders {
 
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,8 @@ public class Orders implements Serializable {
 
     private String orderTable;
 
+
+    private String waiterId;
 
     public Integer getId() {
         return Id;
@@ -89,5 +91,13 @@ public class Orders implements Serializable {
 
     public void setOrderTable(String orderTable) {
         this.orderTable = orderTable;
+    }
+
+    public String getWaiterId() {
+        return waiterId;
+    }
+
+    public void setWaiterId(String waiterId) {
+        this.waiterId = waiterId;
     }
 }

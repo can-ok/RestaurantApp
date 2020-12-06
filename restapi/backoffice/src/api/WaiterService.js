@@ -1,0 +1,25 @@
+import axios from 'axios';
+
+
+class WaiterService{
+
+    getAllWaiters(){
+
+        var headers={'Authorization':this.token}
+
+
+        //http://localhost:8080/waiters/getAll
+        let response=axios.get('http://localhost:8080/waiters/getAll',{
+
+        headers:headers
+        })
+
+        return response;
+    }
+
+
+
+
+}
+
+export default new WaiterService();

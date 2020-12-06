@@ -37,22 +37,52 @@ class Config extends Component {
         const items=this.state.config;
 
         const confList=(
-                        <ul className="list-group">
-                        <li class="list-group-item"><strong>Message: </strong>{items.message} </li>
-                        <li class="list-group-item"><strong>Jpa: </strong>{items.Jpa} </li>
-                        <li class="list-group-item"><strong>dataSource: </strong>{items.dataSource} </li>
-                        <li class="list-group-item"><strong>dataSourceName: </strong> {items.dataSourceName}</li>
-                        <li class="list-group-item"><strong>h2Console: </strong>{items.hConsole} </li>
-                        <li class="list-group-item"><strong>loggingType:</strong>{items.loggingType}</li>
-                        </ul>
+                        <tbody>
+
+                        <tr>
+                        <td><strong>Message: </strong></td>
+                        <td>{items.message}</td>                        </tr>
+
+                       <tr>
+                       <td><strong>Jpa: </strong></td>
+                        <td>{items.Jpa}</td>       </tr>
+
+                        <tr>
+                       <td><strong>dataSource: </strong></td>
+                        <td>{items.dataSource}</td>       </tr>
+
+                        <tr>
+                       <td><strong>dataSourceName: </strong></td>
+                        <td>{items.dataSourceName}</td>       </tr>
+                        <tr>
+                       <td><strong>h2Console: </strong></td>
+                        <td>{items.hConsole}</td>       </tr>
+
+                        <tr>
+                       <td><strong>loggingType: </strong></td>
+                        <td>{items.loggingType}</td>  </tr>
+
+                       </tbody>
+
+
 
         )
 
         return ( <div>
 
+                <table className="table">
+                    <thead>
+                        <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                        </tr>
+
+                    </thead>
+                    {confList}
+
+                </table>
             
             
-            {confList}
         </div>  );
     }
 }

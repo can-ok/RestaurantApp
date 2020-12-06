@@ -77,8 +77,8 @@ class FoodList extends Component {
                         <td><Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link> </td>
                         <td>{item.price.toString()}</td>
     
-                        <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
-                        <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
+                        <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Edit</Link></td>
+                        <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Delete </Button></td>
              </tr>)
         
         }

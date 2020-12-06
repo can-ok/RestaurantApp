@@ -20,7 +20,7 @@ export default class Basket extends Component {
     handleBaskesIncrement=(item,cartItems)=>{
 
      for (let i in cartItems) {
-        if ((cartItems[i].id == item.id) && (cartItems[i].productCategory == item.productCategory )) {
+        if ((cartItems[i].id == item.id) && (cartItems[i].productcategory.name == item.productcategory.name )) {
             cartItems[i].count++;
            break; //Stop this loop, we found it!
         }
@@ -74,7 +74,8 @@ export default class Basket extends Component {
                 "productCount":item.count,
                 "totalPrice":price,
                 "paymentType":"cash",
-                "orderTable":localStorage.getItem("table")
+                "orderTable":localStorage.getItem("table"),
+                "waiterId":sessionStorage.getItem('waiter')
             }
             
             data.push(jsonData);
@@ -108,10 +109,11 @@ export default class Basket extends Component {
 
             <li className="mt-3 border-bottom">
                 
+                
+                <label className="float-left"  onClick={()=>this.handleBaskesIncrement(item,cartItems)}><AiOutlinePlusCircle size={24} /></label>
                 <label>
-                <label className="float-left" onClick={()=>this.handleBaskesIncrement(item,cartItems)}><AiOutlinePlusCircle size={24} /></label>
                 <label>{item.title} </label>
-                <label className="">{item.count} Adet </label>
+                <label className="ml-1">{item.count} Adet </label>
                 <label className="ml-1"> {item.count*item.price} TL</label>
                 </label>
                 

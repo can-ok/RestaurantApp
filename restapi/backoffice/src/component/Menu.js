@@ -10,16 +10,21 @@ const MenuBar = (props) => {
       <Nav.Link href="/">Ürünler</Nav.Link>
       <Nav.Link href="/users">Kullanıcılar</Nav.Link>
       <Nav.Link href="/categories">Kategoriler</Nav.Link>
+      <Nav.Link href="/order">Sipariş</Nav.Link>
       <Nav.Link href="/tables">Masalar</Nav.Link>
+      <Nav.Link href="/waiters">Garsonlar</Nav.Link>
       <Nav.Link href="#pricing">Raporlar</Nav.Link>
       <Nav.Link href="#pricin2g">Yetkililer</Nav.Link>
       <Nav.Link href="/config">Config</Nav.Link>
+      </Nav>
 
-      {!token && <Nav.Link href="/login">Login</Nav.Link> }  
 
-      {token && <Nav.Link href="/logout">LogOut</Nav.Link> }  
+      <Form inline>
+      {!token && <Button style={{background:'green'}} href="/login">Login</Button> }  
 
-    </Nav>
+      {token && <Button style={{background:'red'}} href="/logout">Logout</Button> } 
+      </Form>
+
 
   </Navbar> );
 }

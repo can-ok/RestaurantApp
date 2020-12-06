@@ -40,7 +40,20 @@ insert into Food values(null , 'füme sandviç',15,'Sandviç',3 )
 --
 -- insert into TABLES values(2,true,'Bahçe',20)
 
-insert into TABLES(ID,ENABLED,TITLE,TABLE_COUNT) values(1,true,'Bahçe',20)
 
-insert into TABLES(ID,ENABLED,TITLE,TABLE_COUNT) values(3,true,'Ayakta',0)
+insert into TABLES(ID,ENABLED,TITLE,TABLE_COUNT) values(1,true,'Ayakta',0)
+insert into TABLES(ID,ENABLED,TITLE,TABLE_COUNT) values(2,true,'Bahçe',20)
 
+insert into TABLES(ID,ENABLED,TITLE,TABLE_COUNT) values(3,true,'Salon',20)
+
+
+
+insert into WAITER_TABLE(id,name) values(null ,'Waiter1')
+insert into WAITER_TABLE(id,name) values(null ,'Waiter2')
+
+
+INSERT INTO ORDERS(ID,ORDER_DATE,ORDER_TABLE,PAYMENT_TYPE ,PRODUCT_COUNT,PRODUCT_ID,TOTAL_PRICE ,WAITER_ID)  VALUES(1,'2020-12-06 17:33:51.327','Salon 1','CASH',2,1,20,'1')
+
+INSERT INTO ORDERS(ID,ORDER_DATE,ORDER_TABLE,PAYMENT_TYPE ,PRODUCT_COUNT,PRODUCT_ID,TOTAL_PRICE ,WAITER_ID)  VALUES(2,'2020-12-06 17:33:51.327','Salon 2','CASH',3,1,20,'1')
+
+INSERT INTO ORDERS(ID,ORDER_DATE,ORDER_TABLE,PAYMENT_TYPE ,PRODUCT_COUNT,PRODUCT_ID,TOTAL_PRICE ,WAITER_ID)  VALUES(3,'2020-12-06 17:33:51.327','Bahçe 2','CASH',3,1,20,'1')

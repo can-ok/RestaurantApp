@@ -10,7 +10,7 @@ import com.resturant.restapi.dto.ProductCategoryDto;
 import java.util.List;
 import java.util.Optional;
 
-public class DtoConverter {
+public class ProductDtoConverter {
 
     public static Drink convertDrinkDtoToDrink(DrinkDto dto, Optional<ProductCategory> productcategory){
 
@@ -36,10 +36,10 @@ public class DtoConverter {
     }
 
 
-    public static List<FoodDto> convertFoodListtoDtoList(List<FoodDto> dtoList,List<Food> EntityList){
+    public static List<FoodDto> convertFoodListtoDtoList(List<FoodDto> dtoList,List<Food> entityList){
 
-        for(Food entity:EntityList)
-        {
+
+        entityList.stream().forEach( entity->{
             FoodDto dto=new FoodDto();
             dto.setId(entity.getId());
             dto.setDescription(entity.getDescription());
@@ -53,8 +53,31 @@ public class DtoConverter {
             dto.setProductcategory(category);
 
             dtoList.add(dto);
-        }
+        });
 
+        return dtoList;
+    }
+
+    public static List<DrinkDto> convertDrinkListToDrinDtoList(List<DrinkDto> dtoList,List<Drink> entityList){
+
+        for(Drink entity:entityList){
+
+            DrinkDto dto=new DrinkDto();
+            dto.setId(entity.getId());
+            dto.setDescription(entity.getDescription());
+            dto.setPrice(entity.getPrice());
+            dto.setTitle(entity.getTitle());
+
+            ProductCategoryDto category=new ProductCategoryDto();
+            category.setId(entity.getProductcategory().getId());
+            category.setName(entity.getProductcategory().getName());
+
+            dto.setProductcategory(category);
+
+            dtoList.add(dto);
+
+
+        }
         return dtoList;
     }
 

@@ -30,7 +30,7 @@ public class ProductsController {
     }
 
     @GetMapping(path="/getAll")
-    private List<? extends ProductDto> getAllProducts(){
+    public List<? extends ProductDto> getAllProducts(){
 
         return new ArrayList<ProductDto>() {{
             addAll(productsService.getAllDrinks());
@@ -94,18 +94,11 @@ public class ProductsController {
     }
 
     @GetMapping(path="/category/{id}")
-    public List<? extends Product> retrivebyProductCategor(@PathVariable int id){
+    public List<? extends ProductDto> retrivebyProductCategor(@PathVariable int id){
 
         return productsService.getSpecificCategory(id);
     }
 
-//    @GetMapping(path="/getCategories")
-//    public List<String> retriveAllCategories()
-//    {
-//        return new ArrayList<String>() {{
-//            addAll(productsService.getAllCategoriesDrink());
-//            addAll(productsService.getAllCategoriesFood());
-//        }};
-//    }
+
 
 }

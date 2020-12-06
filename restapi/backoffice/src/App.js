@@ -2,6 +2,7 @@
 import {BrowserRouter as Router,Route,NavLink,Switch} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import React, { Component } from 'react';
 
 import Products from './component/Products';
 import ProductDescription from './component/Products/ProductDescription';
@@ -23,9 +24,11 @@ import Config from './component/Configuration';
 
 import TableList from './component/Table/TableList';
 
-import React, { Component } from 'react';
 import AddTable from './component/Table/AddTable';
 import EditTable from './component/Table/EditTable';
+
+import WaiterList from './component/Waiter/WaiterList';
+import OrderList from './component/Order/OrderList';
 
 class App extends Component {
   state = { token:null }
@@ -69,6 +72,8 @@ class App extends Component {
             <Route exact path="/tables" component={TableList} />
             <Route exact path="/addTable" component={AddTable} />
             <Route exact path="/editTable/:id" component={EditTable} />
+            <Route exact path="/waiters" component={WaiterList}/>
+            <Route exact path="/order" component={OrderList} />
         </Switch>
       </Router>
       </div>

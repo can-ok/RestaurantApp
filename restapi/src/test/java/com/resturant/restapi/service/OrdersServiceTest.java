@@ -1,8 +1,6 @@
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.Orders;
-import com.resturant.restapi.converter.DtoConverter;
-import com.resturant.restapi.converter.OrdersDtoConvert;
+import com.resturant.restapi.converter.OrdersDtoConverter;
 import com.resturant.restapi.dto.OrdersDto;
 import com.resturant.restapi.repository.OrdersRepository;
 import org.junit.Before;
@@ -13,17 +11,12 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrdersServiceTest {
@@ -49,7 +42,7 @@ public class OrdersServiceTest {
 
     @Test
     public void saveOrder() {
-        when(ordersRepository.save(any())).thenReturn(OrdersDtoConvert.ordersDtoToOrders(ordersDto));
+        when(ordersRepository.save(any())).thenReturn(OrdersDtoConverter.ordersDtoToOrders(ordersDto));
         OrdersDto dtoResult=ordersService.saveOrder(ordersDto);
 
         assertEquals(dtoResult,ordersDto);
@@ -59,7 +52,7 @@ public class OrdersServiceTest {
     @Test
     public void saveOrders() {
     
-        when(ordersRepository.saveAll(any())).thenReturn(OrdersDtoConvert.ordersDtoListToOrderList(ordersDtoList));
+        when(ordersRepository.saveAll(any())).thenReturn(OrdersDtoConverter.ordersDtoListToOrderList(ordersDtoList));
 
         List<OrdersDto> dtoResultList=ordersService.saveOrders(ordersDtoList);
 
@@ -71,7 +64,7 @@ public class OrdersServiceTest {
     @Test
     public void getOrders() {
 
-        when(ordersRepository.findAll()).thenReturn(OrdersDtoConvert.ordersDtoListToOrderList(ordersDtoList));
+        when(ordersRepository.findAll()).thenReturn(OrdersDtoConverter.ordersDtoListToOrderList(ordersDtoList));
 
         List<OrdersDto> dtoResultList=ordersService.getOrders();
 

@@ -58,22 +58,26 @@ class App extends Component {
       <div className="border-bottom border-3" >
             <Heading func={this.changeScreen}/>
       
-            </div>
+      </div>
       
         <Router>
           <Switch>
            <Route exact path="/login" component={LoginForm}/>
               
-            <Route exact path="/"
+            <Route exact path="/products"
               render={props=>{
                       if(!localStorage.getItem("token")) return <Redirect to="/login"/>;
                       return <Products {...props}/>
               }}
             />
             <Route exact path="/listCategory/:category" component={CategoryList} />
-            <Route exact path="/menu" component={Menu}/>
+            <Route exact path={["/","/menu"]} component={Menu}/>
             <Route exact path="/logout" component={Logout} />
-            <Route exact path="/table" component={TableList} />
+            
+            <Route exact path="/table" render={props=>{
+                      if(!localStorage.getItem("token")) return <Redirect to="/login"/>;
+                      return <TableList {...props}/>
+              }} />
           </Switch>
         </Router>
         </div>
