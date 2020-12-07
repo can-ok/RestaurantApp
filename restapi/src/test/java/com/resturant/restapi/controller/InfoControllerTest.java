@@ -1,11 +1,15 @@
 package com.resturant.restapi.controller;
 
 import com.resturant.restapi.service.InfoService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -25,8 +29,17 @@ public class InfoControllerTest {
     @InjectMocks
     InfoController infoController;
 
+    Map<String,String> configList=new HashMap<>();
+
+    @Before
+    public void setConfigList(){
+        configList.put("Deneme","Deneme Value");
+    }
+
     @Test
     public void getInfolist() {
 
+        when(infoService.getConfig()).thenReturn(configList);
+        assertEquals(infoController.getInfolist(),configList);
     }
 }

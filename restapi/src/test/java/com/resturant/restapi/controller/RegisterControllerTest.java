@@ -1,6 +1,7 @@
 package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.Users;
+import com.resturant.restapi.converter.UserDtoConverter;
 import com.resturant.restapi.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class RegisterControllerTest {
     public void register() {
         when(userService.register(any())).thenReturn(map);
 
-        Map<String,String> resutMap=registerController.register(user);
+        Map<String,String> resutMap=registerController.register(UserDtoConverter.userToUserDto(user));
 
         assertEquals(map.get("name"),resutMap.get("name"));
     }

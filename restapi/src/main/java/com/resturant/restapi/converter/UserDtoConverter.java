@@ -10,13 +10,13 @@ import java.util.List;
 public class UserDtoConverter {
 
 
-    public static Users  userDtoToUser(UsersDto usersDto){
+    public static Users userDtoToUser(UsersDto usersDto){
 
         Users users=new Users();
         users.setUSERNAME(usersDto.getUSERNAME());
         users.setPassword("{noop}"+usersDto.getPassword());
         users.setEnabled(usersDto.isEnabled());
-
+        users.setId(usersDto.getId());
         return users;
     }
 
@@ -24,18 +24,30 @@ public class UserDtoConverter {
 
         List<UsersDto> usersDtoList=new ArrayList<>();
 
-        for(Users entity:entityList){
 
-            UsersDto usersDto=new UsersDto();
-            usersDto.setId(entity.getId());
-            usersDto.setUSERNAME(entity.getUSERNAME());
-            usersDto.setEnabled(entity.isEnabled());
-            usersDto.setAUTHORITY(entity.getAUTHORITY());
+        entityList.forEach(entity->{
+
+            UsersDto usersDto=userToUserDto(entity);
             usersDtoList.add(usersDto);
-        }
+        });
+        
 
         return usersDtoList;
     }
+
+    public static List<Users> userDtoListToUserList(List<UsersDto> dtoList){
+
+        List<Users> usersList=new ArrayList<>();
+
+        dtoList.forEach(item->{
+
+            Users user=userDtoToUser(item);
+
+            usersList.add(user);
+        });
+        return usersList;
+    }
+
 
     public static UsersDto userToUserDto(Users user){
 

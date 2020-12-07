@@ -39,6 +39,18 @@ public class WaiterDtoConverter {
         return waiter;
     }
 
+    public static List<Waiter> waiterDtoListToWaiterList(List<WaiterDto> waiterDtoList){
+
+        List<Waiter> waiterList=new ArrayList<>();
+
+        waiterDtoList.forEach(element->{
+
+            Waiter waiter=waiterDtoToWaiter(element);
+            waiterList.add(waiter);
+        });
+        return waiterList;
+    }
+
 
 
 

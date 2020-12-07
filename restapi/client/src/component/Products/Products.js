@@ -46,6 +46,19 @@ class Production extends Component {
             this.props.history.push("/table");
 
         }
+        else{
+        //get items from localStorage
+        let item=localStorage.getItem(localStorage.getItem('table'))
+        if(item!=null){
+            item=JSON.parse(item)
+            this.setState({
+                cartItems:item.products
+            })
+            }
+       
+        }
+
+       
 
     }
 
@@ -84,11 +97,10 @@ class Production extends Component {
                 items:response.data
             })
     
-        }
-        )
-        .catch((error) => {
+        }).catch((error) => {
             console.error('Error:', error);
             });
+
     }
 
 
@@ -97,8 +109,8 @@ class Production extends Component {
 
         this.setState(state=>{
 
-            
             const cartItems=state.cartItems.filter(element=> (element.title !== item.title))
+            this.setbasket(cartItems)
             return {cartItems}
         });
 
@@ -120,20 +132,68 @@ class Production extends Component {
             cartItemList = this.state.cartItems.map((item, i) =>
               i === itemFoundIndex ? { ...item, count: item.count+1 } : item
             );
+
+            //override
+           
+
+            this.setbasket(cartItemList);
+
           }
             else {
                 // shallow copy into new array, append new item
                 cartItemList = [...this.state.cartItems, {...product,count:1}];
+                console.log("cari")
+
+              
+                this.setbasket(cartItemList)
+                
               }
 
         this.setState({ cartItems:cartItemList });
+    }
 
-    
-  
+
+    setbasket=(cartItemList)=>{
+
+        let item=localStorage.getItem(localStorage.getItem('table'))
+        item=JSON.parse(item)
+        let basketItem;
+        //console.log(item.table)
+        
+        //if contains table already
+
+        if(item===null){
+            basketItem={
+                'table':localStorage.getItem('table'),
+                'products':cartItemList
+            };
+            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+
+        }
+        else{
+            if(item.table==localStorage.getItem('table')){
+
+                basketItem={
+                    'table':localStorage.getItem('table'),
+                    'products':cartItemList
+                };
+               
+            }
+           
+
+            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+
+        }
+        
+
+      
     }
     
 
     render() { 
+        let item=localStorage.getItem(localStorage.getItem('table'))
+        item=JSON.parse(item)
+        console.log(item)
         
 
         let categoriesList=null;

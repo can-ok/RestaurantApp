@@ -22,6 +22,8 @@ export default class Basket extends Component {
      for (let i in cartItems) {
         if ((cartItems[i].id == item.id) && (cartItems[i].productcategory.name == item.productcategory.name )) {
             cartItems[i].count++;
+            this.setbasket(cartItems)
+
            break; //Stop this loop, we found it!
         }
       }
@@ -48,6 +50,8 @@ export default class Basket extends Component {
                }
                else{
                 cartItems[i].count--;
+                
+                this.setbasket(cartItems)
                }
                 
               break; //Stop this loop, we found it!
@@ -59,7 +63,45 @@ export default class Basket extends Component {
          })
    
    
-       }
+    }
+
+
+
+    setbasket=(cartItemList)=>{
+
+        let item=localStorage.getItem(localStorage.getItem('table'))
+        item=JSON.parse(item)
+        let basketItem;
+        //console.log(item.table)
+        
+        //if contains table already
+
+        if(item===null){
+            basketItem={
+                'table':localStorage.getItem('table'),
+                'products':cartItemList
+            };
+            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+
+        }
+        else{
+            if(item.table==localStorage.getItem('table')){
+
+                basketItem={
+                    'table':localStorage.getItem('table'),
+                    'products':cartItemList
+                };
+               
+            }
+           
+
+            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+
+        }
+        
+
+      
+    }
 
     
     handleClick=(event,price,items)=>{
@@ -93,8 +135,13 @@ export default class Basket extends Component {
         .catch((err)=>{
             console.error(err)
         })
-            
+
+
         
+        localStorage.removeItem(localStorage.getItem('table'))
+        localStorage.removeItem('table')
+
+        window.location='/menu'
     }
         
 

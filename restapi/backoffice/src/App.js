@@ -28,6 +28,9 @@ import AddTable from './component/Table/AddTable';
 import EditTable from './component/Table/EditTable';
 
 import WaiterList from './component/Waiter/WaiterList';
+import AddWaiter from './component/Waiter/AddWaiter';
+import EditWaiter from './component/Waiter/EditWaiter';
+
 import OrderList from './component/Order/OrderList';
 
 class App extends Component {
@@ -73,6 +76,9 @@ class App extends Component {
             <Route exact path="/addTable" component={AddTable} />
             <Route exact path="/editTable/:id" component={EditTable} />
             <Route exact path="/waiters" component={WaiterList}/>
+            <Route exact path="/addWaiter" component={AddWaiter}/>
+            <Route exact path="/editWaiter/:id" component={EditWaiter}/>
+
             <Route exact path="/order" component={OrderList} />
         </Switch>
       </Router>

@@ -76,8 +76,18 @@ class TableList extends Component {
         //console.log(table)
 
         for(let count=1; count<=table.tableCount; count++){
+        let status,prodCount;
+
+        if(localStorage.getItem(`${table.title} ${count}`)){
+            console.log(`${table.title} ${count}`)
+            status=true
+            prodCount=0
+            JSON.parse(localStorage.getItem(`${table.title} ${count}`)).products.forEach(element => {
+                prodCount+=element.count
+            });
+        }
             
-           let [status,prodCount]=this.checkTableReserved(`${table.title} ${count}`);
+                                 
            
            let tableObject={'name':`${table.title} ${count}`,
                             'reservedStatus':status,

@@ -74,8 +74,6 @@ public class UserService {
             return null;}
         else{
 
-
-
             entity.get().setId(id);
             entity.get().setUSERNAME(usersDto.getUSERNAME());
             entity.get().setPassword(usersDto.getPassword());
@@ -98,7 +96,7 @@ public class UserService {
     //handle register
 
 
-    public Map<String,String > register(Users user){
+    public Map<String,String> register(UsersDto user){
 
         //System.out.println(user.getUSERNAME());
         HashMap<String, String> map = new HashMap<>();
@@ -122,7 +120,7 @@ public class UserService {
         }
         else {
 
-            return map;
+            return null;
         }
 
     }

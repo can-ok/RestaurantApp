@@ -44,7 +44,7 @@ public class WaiterService {
 
         if(waiterOptional.isPresent()){
             waiterRepository.delete(waiterOptional.get());
-            return "Succes";
+            return "Success";
         }
         return "Fail";
     }

@@ -1,9 +1,11 @@
 package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Drink;
+import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.converter.ProductDtoConverter;
 import com.resturant.restapi.dto.DrinkDto;
+import com.resturant.restapi.dto.FoodDto;
 import com.resturant.restapi.repository.DrinksRepository;
 import com.resturant.restapi.repository.FoodRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
@@ -59,6 +61,23 @@ public class ProductsServiceSetAndUpdateTest {
         // add list
     }
 
+    private Food food=new Food();
+
+
+
+    @Before
+    public void setUpFoodEntity(){
+        food.setTitle("deneme");
+        food.setId(1);
+        food.setTitle("title");
+        food.setPrice(10);
+        food.setDescription("Deneme Item");
+
+        productCategory.setName("deneme");
+        productCategory.setId(1);
+        food.setProductcategory(productCategory);
+    }
+
 
 
 
@@ -88,7 +107,15 @@ public class ProductsServiceSetAndUpdateTest {
     @Test
     public void updateFood() {
 
+        int id=1;
+        Mockito.when(foodRepository.findById(id)).thenReturn(Optional.empty());
 
+        when(foodRepository.save(any())).thenReturn(food);
+
+        FoodDto dto=productsService.updateFood(id, ProductDtoConverter.convertFoodtoFoodDto(food));
+
+
+        assertNull(dto);
     }
 
     @Test

@@ -19,6 +19,18 @@ class WaiterList extends Component {
         })
 
     }
+
+
+    
+    handle_detele=(id)=>{
+        
+        const waiters=this.state.waiters.filter(item=> item.id !== id)
+        this.setState({waiters})
+
+        WaiterService.deleteWaiter(id).then((response)=>console.log(response))
+        .catch((err)=>console.error(err))
+    }
+
     render() { 
         const {waiters}=this.state;
 
@@ -28,7 +40,7 @@ class WaiterList extends Component {
                 <tr key={item.id} >
                 <td>{item.id}</td>
                 <td>{item.name}</td>
-                <td><Link to={`/editTable/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
+                <td><Link to={`/editWaiter/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
                 <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
                 </tr>
 
@@ -40,8 +52,8 @@ class WaiterList extends Component {
         return ( 
             <div>
             <div className="mb-3">
-            <strong>Table List</strong>
-            <Link className="btn float-right" to="/addTable"><GrFormAdd size='1rem'/><strong>Add Table</strong></Link>
+            <strong>Garson List</strong>
+            <Link className="btn float-right" to="/addWaiter"><GrFormAdd size='1rem'/><strong>Ekle Garson</strong></Link>
 
             </div>
             <table className="table">
