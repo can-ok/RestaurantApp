@@ -23,7 +23,7 @@ public class DrinkBuilder extends Builder{
         drink.setId(this.id);
         drink.setTitle(this.title);
         drink.setDescription(this.description);
-        drink.setProductcategory(this.productCategoryategory);
+        //drink.setProductcategory(this.productCategoryategory);
         drink.setId(this.id);
         return drink;
     }

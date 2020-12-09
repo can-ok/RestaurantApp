@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 import ProductsService from '../../api/ProductsService'
+import Select from 'react-select';
+import CategoryService from '../../api/CategoryService';
 
 
 class EditProduct extends Component {
@@ -10,7 +12,11 @@ class EditProduct extends Component {
         itemTitle:"",
         itemDescription:"",
         productCategory:"",
-        price:"",  }
+        price:"",
+        optionsCategory:[],
+        selectedCategories:[]
+
+    }
 
 
     componentDidMount(){
@@ -36,13 +42,27 @@ class EditProduct extends Component {
                 id:data.id,
                 itemDescription:data.description,
                 productCategory:data.productCategory,
-                price:data.price
+                price:data.price,
             })
 
         })
         .catch((error) => {
             console.error('Error:', error);
         });
+
+
+
+        
+        CategoryService.getCategories()
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+
+            this.setState({
+            optionsCategory:data
+            })
+        })
 
 
     }
@@ -58,12 +78,26 @@ class EditProduct extends Component {
     
     }
 
+    handleSelectChange=(items)=>{
+        //console.log("selected",items)
+        let is= Array.isArray(items)? items.map(item=>{
+            
+            //console.log(item)
+            return(item)
+        }):[]
+        console.log("is",is)
+
+        this.setState({
+            selectedCategories:is
+        })
+    }
+
     handleUpdate=()=>{
 
-        let id=this.props.match.params.id
+        //let id=this.props.match.params.id
         let type=this.props.match.params.type
 
-        ProductsService.updateProduct(id,type,this.state)
+        ProductsService.updateProduct(type,this.state)
         .then((response)=>{
             
         
@@ -78,8 +112,12 @@ class EditProduct extends Component {
 
     render() { 
 
-        const {itemTitle,itemDescription,productCategory,price}=this.state;
-
+        const {itemTitle,itemDescription,selectedCategories,price}=this.state;
+        
+        const categoryOptions=this.state.optionsCategory.map((item)=>{
+            return({label:item.name,id:item.id})
+        })
+        
         return (   <div>
 
             <Form>
@@ -93,8 +131,11 @@ class EditProduct extends Component {
               <Input name="itemDescription" type="text"  onChange={this.handleInputChange} value={itemDescription}/></Label>
             </FormGroup>
             <FormGroup>
-              <Label>Category:
-              <Input name="productCategory" type="text"  onChange={this.handleInputChange} value={productCategory}/></Label>
+            <Label>Category:
+              
+            </Label>
+            <Select options={categoryOptions} value={selectedCategories}  onChange={this.handleSelectChange} isMulti isClearable/>
+
             </FormGroup>
             <FormGroup>
               <Label>Price:

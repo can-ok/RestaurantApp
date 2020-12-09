@@ -48,19 +48,34 @@ class ProductsService{
         myHeaders.append("Authorization",this.token);
         myHeaders.append("Content-Type", "application/json");
 
+        const productCategory=item.selectValue.map((itemObject)=>{
+            var category=itemObject.split(',')
+            
+            var rObj={"id":category[0],"name":category[1]};
+            return rObj
+        });
+
+
         var data={
             "title":item.itemTitle,
             "description":item.itemDescription,
             "price":item.price,
-            "productCategory":item.productCategory
+            "productcategory":productCategory
+
             };
 
-        let categoryId=item.selectValue;
+        console.log(productCategory)
+        console.log(data)
+       
+
+        console.log(productCategory)
+
+        ///let categoryId=1;
         
         //http://localhost:8080/products/add/food/1
 
         
-        let response=fetch(`http://localhost:8080/products/add/${type}/${categoryId}`,{
+        let response=fetch(`http://localhost:8080/products/add/${type}`,{
 
         method: 'POST',
         headers: myHeaders,
@@ -68,7 +83,7 @@ class ProductsService{
         })
 
         return response;
-    }
+    } 
 
 
     getProductbyId(id,type){
@@ -92,22 +107,34 @@ class ProductsService{
 
     }
 
-    updateProduct(id,type,item){
+    updateProduct(type,item){
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", this.token);
         myHeaders.append("Content-Type", "application/json");
 
+        console.log(item)
+        console.log(item.selectedCategories)
+
+
+        const productCategory=item.selectedCategories.map((itemObject)=>{
+            
+            var rObj={"id":itemObject.id,"name":itemObject.label};
+            return rObj
+        });
+
+        console.log("pro",productCategory)
 
         var data={
+            "id":item.id,
             "title":item.itemTitle,
             "description":item.itemDescription,
             "price":item.price,
-            "productCategory":item.productCategory
+            "productcategory":productCategory
             };
         
-               //http://localhost:8080/products/update/drink/1
-        let response=fetch(`http://localhost:8080/products/update/${type}/${id}`,{
+              //http://localhost:8080/products/update/drink/1
+        let response=fetch(`http://localhost:8080/products/update/${type}/`,{
 
             method: 'PUT',
             headers:myHeaders,
@@ -115,7 +142,7 @@ class ProductsService{
         })
 
 
-        return response;
+        return response; 
     }
 
 

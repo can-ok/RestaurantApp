@@ -1,7 +1,9 @@
 package com.resturant.restapi.Model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -22,13 +24,14 @@ public class ProductCategory {
 
     private String name;
 
-    @OneToMany(mappedBy = "productcategory")
-    @JsonIgnore
-    private Set<Drink> Drinkproducts=new HashSet<>();
 
-    @OneToMany(mappedBy = "productcategory")
     @JsonIgnore
-    private Set<Food> Foodproducts=new HashSet<>();
+    @ManyToMany(mappedBy = "productcategory")
+    private Set<Drink> Drinkproducts;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "foodcategory")
+    private Set<Food> Foodproducts;
 
     public ProductCategory(Integer id, String name) {
         this.id = id;
@@ -51,9 +54,23 @@ public class ProductCategory {
         this.name = name;
     }
 
+    public Set<Drink> getDrinkproducts() {
+        return Drinkproducts;
+    }
 
+    public void setDrinkproducts(Set<Drink> drinkproducts) {
+        this.Drinkproducts = drinkproducts;
+    }
 
-    //for hold recursion
+    public Set<Food> getFoodproducts() {
+        return Foodproducts;
+    }
+
+    public void setFoodproducts(Set<Food> foodproducts) {
+        this.Foodproducts = foodproducts;
+    }
+
+//for hold recursion
 
 //
 //    public void setDrinkproducts(Set<Drink> drinkproducts) {

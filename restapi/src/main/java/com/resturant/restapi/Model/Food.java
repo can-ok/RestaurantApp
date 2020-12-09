@@ -1,11 +1,14 @@
 package com.resturant.restapi.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,21 +29,18 @@ public class Food extends Product implements Serializable {
     private Integer price;
 
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="category_id")
-    private ProductCategory productcategory;
-
-
+    //@JsonManagedReference
+    @ManyToMany()
+    @JoinTable(name="TBL_CATEGORY_FOOD",joinColumns = @JoinColumn(name="product_id"),inverseJoinColumns = @JoinColumn(name="category_id"))
+    private Set<ProductCategory> foodcategory=new HashSet<>();
 
 
-
-    public ProductCategory getProductcategory() {
-        return productcategory;
+    public Set<ProductCategory> getFoodcategory() {
+        return foodcategory;
     }
 
-    public void setProductcategory(ProductCategory productcategory) {
-        this.productcategory = productcategory;
+    public void setFoodcategory(Set<ProductCategory> foodcategory) {
+        this.foodcategory = foodcategory;
     }
 
     public Integer getId() {

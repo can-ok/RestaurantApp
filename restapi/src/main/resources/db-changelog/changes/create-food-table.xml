@@ -15,20 +15,33 @@
             <column name="description" type="VARCHAR(255)"></column>
             <column name="price" type="int(10)"></column>
 
-            <column name="category_id" type="int(10)" >
-                <constraints nullable="false" foreignKeyName="fk_food_category" references="PRODUCT_CATEGORY(id)"/>
-            </column>
         </createTable>
     </changeSet>
 
 
     <changeSet id="12" author="can.okan">
+        <createTable tableName="TBL_CATEGORY_FOOD">
+            <column name="product_id" type="int(10)">
+                <constraints nullable="false" foreignKeyName="fk_food" references="Food(id)"/>
+            </column>
+
+            <column name="category_id" type="int(10)" >
+                <constraints nullable="false" foreignKeyName="fk_food_category" references="PRODUCT_CATEGORY(id)"/>
+            </column>
+
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="13" author="can.okan">
         <insert tableName="Food">
             <column name="id" valueNumeric="1"></column>
             <column name="title" value="Profiterol"></column>
             <column name="description" value="çikolatalı tatlı"></column>
             <column name="price" valueNumeric="20"></column>
-            <column name="category_id" value="2" ></column>
         </insert>
 
         <insert tableName="Food">
@@ -36,7 +49,6 @@
             <column name="title" value="Cheesecake"></column>
             <column name="description" value="oreo Cheesecake"></column>
             <column name="price" valueNumeric="30"></column>
-            <column name="category_id" value="2" ></column>
         </insert>
 
         <insert tableName="Food">
@@ -44,7 +56,6 @@
             <column name="title" value="Döner"></column>
             <column name="description" value="et döner"></column>
             <column name="price" valueNumeric="25"></column>
-            <column name="category_id" value="3" ></column>
         </insert>
 
 
@@ -53,11 +64,45 @@
             <column name="title" value="Sandviç"></column>
             <column name="description" value="füme sandviç"></column>
             <column name="price" valueNumeric="15"></column>
-            <column name="category_id" value="3" ></column>
         </insert>
 
 
     </changeSet>
+
+<!--
+    <changeSet id="15" author="can.okan">
+        <insert tableName="TBL_CATEGORY_FOOD">
+            <column name="product_id" valueNumeric="1"></column>
+            <column name="category_id" valueNumeric="2"></column>
+            <column name="id" valueNumeric="1"></column>
+
+        </insert>
+
+
+        <insert tableName="TBL_CATEGORY_FOOD">
+            <column name="product_id" valueNumeric="2"></column>
+            <column name="category_id" valueNumeric="2"></column>
+            <column name="id" valueNumeric="2"></column>
+
+        </insert>
+
+        <insert tableName="TBL_CATEGORY_FOOD">
+            <column name="product_id" valueNumeric="3"></column>
+            <column name="category_id" valueNumeric="2"></column>
+            <column name="id" valueNumeric="3"></column>
+
+        </insert>
+
+
+        <insert tableName="TBL_CATEGORY_FOOD">
+            <column name="product_id" valueNumeric="4"></column>
+            <column name="category_id" valueNumeric="2"></column>
+            <column name="id" valueNumeric="4"></column>
+
+        </insert>
+
+
+    </changeSet> -->
 
 
 </databaseChangeLog>

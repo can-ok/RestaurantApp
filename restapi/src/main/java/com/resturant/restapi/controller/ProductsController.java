@@ -31,27 +31,27 @@ public class ProductsController {
 
         return new ArrayList<ProductDto>() {{
             addAll(productsService.getAllDrinks());
-            addAll(productsService.getAllFoods());
         }};
     }
+//
+//    @GetMapping(path = "/food")
+//    public List<FoodDto> getAllFoods(){
+//
+//        return productsService.getAllFoods();
+//    }
 
-    @GetMapping(path = "/food")
-    public List<FoodDto> getAllFoods(){
-
-        return productsService.getAllFoods();
-    }
-
-    @PostMapping(path ="/add/food/{categoryId}")
-    public String addFood(@RequestBody FoodDto foodDto,@PathVariable int categoryId){
-
-        return productsService.insertFood(foodDto,categoryId);
-    }
+//    @PostMapping(path ="/add/food/{categoryId}")
+//    public String addFood(@RequestBody FoodDto foodDto,@PathVariable int categoryId){
+//
+//        return productsService.insertFood(foodDto,categoryId);
+//    }
 
 
-    @PostMapping(path ="/add/drink/{categoryId}")
-    public String addDrink(@RequestBody DrinkDto drinkDTO, @PathVariable int categoryId){
+    @PostMapping(path ="/add/drink")
+    public String addDrink(@RequestBody DrinkDto drinkDTO){
 
-        return productsService.insertDrink(drinkDTO,categoryId);
+
+        return productsService.insertDrink(drinkDTO);
     }
 
     @GetMapping(path = "/drink/{id}")
@@ -59,18 +59,18 @@ public class ProductsController {
 
         return productsService.getDrinkById(id);
     }
+//
+//    @GetMapping(path = "/food/{id}")
+//    public FoodDto retriveFood(@PathVariable Integer id){
+//
+//        return productsService.getFoodById(id);
+//    }
 
-    @GetMapping(path = "/food/{id}")
-    public FoodDto retriveFood(@PathVariable Integer id){
-
-        return productsService.getFoodById(id);
-    }
-
-    @DeleteMapping(path = "/delete/food/{id}")
-    public List<FoodDto> deleteFood(@PathVariable Integer id){
-
-        return productsService.deleteFood(id);
-    }
+//    @DeleteMapping(path = "/delete/food/{id}")
+//    public List<FoodDto> deleteFood(@PathVariable Integer id){
+//
+//        return productsService.deleteFood(id);
+//    }
 
     @DeleteMapping(path = "/delete/drink/{id}")
     public List<DrinkDto> deleteDrink(@PathVariable Integer id){
@@ -78,16 +78,16 @@ public class ProductsController {
         return productsService.deleteDrink(id);
     }
 
-    @PutMapping(path = "/update/food/{id}")
-    public FoodDto updateFood(@RequestBody FoodDto foodDto,@PathVariable Integer id){
+//    @PutMapping(path = "/update/food/{id}")
+//    public FoodDto updateFood(@RequestBody FoodDto foodDto,@PathVariable Integer id){
+//
+//        return productsService.updateFood(id,foodDto);
+//    }
 
-        return productsService.updateFood(id,foodDto);
-    }
+    @PutMapping(path = "/update/drink/")
+    public DrinkDto updateDrink(@RequestBody DrinkDto drinkDto){
 
-    @PutMapping(path = "/update/drink/{id}")
-    public DrinkDto updateDrink(@RequestBody DrinkDto drinkDto, @PathVariable Integer id){
-
-        return productsService.updateDrink(id,drinkDto);
+        return productsService.updateDrink(drinkDto);
     }
 
     @GetMapping(path="/category/{id}")

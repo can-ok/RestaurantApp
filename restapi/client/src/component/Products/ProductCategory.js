@@ -18,8 +18,7 @@ class CategoryList extends Component {
    
     const specificCategory=this.props.match.params.category
     let appContext=this.context;
-    let token=appContext.appState.token
-    console.log(token)
+    let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
     
     
     CategoryService.token=token;

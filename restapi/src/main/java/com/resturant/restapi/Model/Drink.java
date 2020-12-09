@@ -1,11 +1,14 @@
 package com.resturant.restapi.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,10 +27,10 @@ public class Drink extends Product implements Serializable {
 
 
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="category_id")
-    private ProductCategory productcategory;
+    //@JsonManagedReference
+    @ManyToMany()
+    @JoinTable(name="TBL_CATEGORY_DRINK",joinColumns = @JoinColumn(name="product_id"),inverseJoinColumns = @JoinColumn(name="category_id"))
+    private Set<ProductCategory> productcategory=new HashSet<>();
 
 
     public Integer getId() {
@@ -39,9 +42,6 @@ public class Drink extends Product implements Serializable {
     }
 
 
-    public void setProductcategory(ProductCategory productcategory) {
-        this.productcategory = productcategory;
-    }
 
     @Override
     public String getTitle() {
@@ -73,14 +73,16 @@ public class Drink extends Product implements Serializable {
         this.description = description;
     }
 
-
-
     public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public ProductCategory getProductcategory() {
+
+    public Set<ProductCategory> getProductcategory() {
         return productcategory;
     }
 
+    public void setProductcategory(Set<ProductCategory> productcategory) {
+        this.productcategory = productcategory;
+    }
 }

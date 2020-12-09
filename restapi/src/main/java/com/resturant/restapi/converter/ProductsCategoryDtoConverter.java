@@ -4,7 +4,9 @@ import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.dto.ProductCategoryDto;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProductsCategoryDtoConverter {
 
@@ -19,9 +21,9 @@ public class ProductsCategoryDtoConverter {
 
     }
 
-    public static List<ProductCategoryDto> prodCategoryListToProdCategoryDtoList(List<ProductCategory> productCategories){
+    public static Set<ProductCategoryDto> prodCategoryListToProdCategoryDtoList(Set<ProductCategory> productCategories){
 
-        List<ProductCategoryDto> productCategoryDtoList=new ArrayList<>();
+        Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
 
         productCategories.forEach((entity)->{
 
@@ -34,9 +36,40 @@ public class ProductsCategoryDtoConverter {
     }
 
 
-    public static List<ProductCategory> prodCategoryDtoListToProductCategoryList(List<ProductCategoryDto> productCategoriesDto){
 
-        List<ProductCategory> productCategory=new ArrayList<>();
+    public static Set<ProductCategoryDto> prodCategoryListToProdCategoryDtoSet(List<ProductCategory> productCategories){
+
+        Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
+
+        productCategories.forEach((entity)->{
+
+            ProductCategoryDto productCategoryDto=productCategoryToCategoryDto(entity);
+
+            productCategoryDtoList.add(productCategoryDto);
+
+        });
+        return productCategoryDtoList;
+    }
+
+
+    public static List<ProductCategory> prodCategoryDtoSetToProdCategoryList(Set<ProductCategoryDto> productCategories){
+
+        List<ProductCategory> productCategoryList=new ArrayList<>();
+
+        productCategories.forEach((entity)->{
+
+            ProductCategory productCategory=productCategoryDtoToProdCategory(entity);
+
+            productCategoryList.add(productCategory);
+
+        });
+        return productCategoryList;
+    }
+
+
+    public static Set<ProductCategory> prodCategoryDtoListToProductCategoryList(Set<ProductCategoryDto> productCategoriesDto){
+
+        Set<ProductCategory> productCategory=new HashSet<>();
 
         productCategoriesDto.forEach((entity)->{
 

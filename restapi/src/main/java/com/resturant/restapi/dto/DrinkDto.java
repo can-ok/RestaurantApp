@@ -1,9 +1,12 @@
 package com.resturant.restapi.dto;
 
+import com.resturant.restapi.Model.ProductCategory;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +21,7 @@ public class DrinkDto extends ProductDto{
 
     private Integer price;
 
-    private ProductCategoryDto productcategory;
+    private Set<ProductCategoryDto> productcategory=new HashSet<>();
 
 
 
@@ -55,11 +58,11 @@ public class DrinkDto extends ProductDto{
         this.price = price;
     }
 
-    public ProductCategoryDto getProductcategory() {
+    public Set<ProductCategoryDto> getProductcategory() {
         return productcategory;
     }
 
-    public void setProductcategory(ProductCategoryDto productcategory) {
+    public void setProductcategory(Set<ProductCategoryDto> productcategory) {
         this.productcategory = productcategory;
     }
 }

@@ -72,12 +72,14 @@ class DrinkList extends Component {
 
         <tr key={item.id}>
                     <td>{item.id}</td>
-                    <td><Link to={`/description/${"drinkDTO"}/${item.id}`} >{item.title} </Link></td>
+                    <td><Link to={`/description/${"drink"}/${item.id}`} >{item.title} </Link></td>
                     <td>{item.description}</td>
-                    <td><Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link></td>
+                    <td>
+                    {item.productcategory.map((category)=><Link onClick={()=>this.handle_filterProducts(category.name)} >{category.name} </Link>  )}
+                        <Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link></td>
                     <td>{item.price.toString()}</td>
 
-                    <td><Link to={`/update/${"drinkDto"}/${item.id}`}   className="btn btn-warning">Edit</Link></td>
+                    <td><Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning">Edit</Link></td>
                     <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)}> Delete </Button></td>
          </tr>
           );

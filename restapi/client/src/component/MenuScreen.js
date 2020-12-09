@@ -11,7 +11,7 @@ class Menu extends Component {
     render() { 
 
         let appContext=this.context;
-        let tokenContext=appContext.appState.token;
+        let tokenContext=appContext.appState.token? appContext.appState.token:localStorage.getItem('token')
         console.log(appContext)
         return (  <div>
 

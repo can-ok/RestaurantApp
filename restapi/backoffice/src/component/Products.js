@@ -16,7 +16,7 @@ class Products extends Component {
 
             <div> 
                 <DrinkList/>
-                <FoodList/>
+              { /* <FoodList/> */}
         
             </div>
         </div> );

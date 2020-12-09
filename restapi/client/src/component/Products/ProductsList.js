@@ -23,7 +23,7 @@ const ProductList = (props) => {
     </h5>
 
     <Link  to={`/listCategory/${item.productCategory}`} className="row justify-content-center">
-    <label className="row justify-content-center">{item.productcategory.name}</label>
+    <label className="row justify-content-center">{item.productcategory.map((category)=>category.name) }</label>
     </Link>
     <label className="row justify-content-center">{item.price.toString()} tl</label>
 

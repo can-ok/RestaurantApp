@@ -71,10 +71,11 @@ class FoodList extends Component {
         if(items.length>0){
             listTable= items.map( (item)=>
             <tr key={item.id}>
+
                         <td>{item.id}</td>
                         <td><Link to={`/description/${"food"}/${item.id}`} >{item.title} </Link></td>
                         <td>{item.description}</td>
-                        <td><Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link> </td>
+                        <td> {item.foodcategory.map((category)=><Link onClick={()=>this.handle_filterProducts(category.name)} >{category.name}</Link>  )} </td>
                         <td>{item.price.toString()}</td>
     
                         <td><Link to={`/update/${"food"}/${item.id}`} className="btn btn-warning">Edit</Link></td>

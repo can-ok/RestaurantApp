@@ -72,7 +72,12 @@ export default class Basket extends Component {
 
     setbasket=(cartItemList)=>{
 
-        let item=localStorage.getItem(localStorage.getItem('table'))
+        let appContext=this.context;
+        let tableContext=appContext.appState.table
+        console.log("table context",tableContext)
+
+        
+        let item=localStorage.getItem(tableContext)
         item=JSON.parse(item)
         let basketItem;
         //console.log(item.table)
@@ -81,24 +86,24 @@ export default class Basket extends Component {
 
         if(item===null){
             basketItem={
-                'table':localStorage.getItem('table'),
+                'table':tableContext,
                 'products':cartItemList
             };
-            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+            localStorage.setItem(tableContext,JSON.stringify(basketItem))
 
         }
         else{
-            if(item.table==localStorage.getItem('table')){
+            if(item.table==tableContext){
 
                 basketItem={
-                    'table':localStorage.getItem('table'),
+                    'table':tableContext,
                     'products':cartItemList
                 };
                
             }
            
 
-            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+            localStorage.setItem(tableContext,JSON.stringify(basketItem))
 
         }
         
@@ -110,6 +115,13 @@ export default class Basket extends Component {
     handleClick=(event,price,items)=>{
         var data=[]
 
+
+        let appContext=this.context;
+        let token=appContext.appState.token? appContext.appState.token:localStorage.getItem('token')
+
+        let tableContext=appContext.appState.table
+        let waiterContext=appContext.appState.waiter
+
         items.forEach(item => {
             //delete item
             this.props.handleRemoveFromCart(event,item)
@@ -119,16 +131,15 @@ export default class Basket extends Component {
                 "productCount":item.count,
                 "totalPrice":price,
                 "paymentType":"cash",
-                "orderTable":localStorage.getItem("table"),
-                "waiterId":sessionStorage.getItem('waiter')
+                "orderTable":tableContext,
+                "waiterId":waiterContext
             }
             
             data.push(jsonData);
         });
 
-        let appContext=this.context;
-        let token=appContext.appState.token
-        console.log(token)
+       
+
         
         OrdersService.token=token;
         
@@ -138,18 +149,28 @@ export default class Basket extends Component {
             console.log(response)
            
             alert("Sipariş verildi")
+            
+             //clean context
+            let appState={...this.context.appState}
+            appState.table=null
+            this.context.setAppState(appState)
+                
+            localStorage.removeItem(tableContext)
         })
         
         .catch((err)=>{
             console.error(err)
         })
 
+       
+
+       
 
         
-        localStorage.removeItem(localStorage.getItem('table'))
-        localStorage.removeItem('table')
 
-        this.props.history.push("/menu")
+        //localStorage.removeItem('table')
+
+        //this.props.history.push("/menu")
 
        // window.location='/menu'
     }

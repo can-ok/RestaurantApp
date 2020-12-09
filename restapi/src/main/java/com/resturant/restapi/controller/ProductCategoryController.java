@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
@@ -19,7 +20,7 @@ public class ProductCategoryController {
     ProductCategoryService categoryService;
 
     @GetMapping("/getAll")
-    public List<ProductCategoryDto> getAllCategories(){
+    public Set<ProductCategoryDto> getAllCategories(){
 
         return categoryService.getAll();
     }

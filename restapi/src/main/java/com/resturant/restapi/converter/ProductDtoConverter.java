@@ -1,5 +1,6 @@
 package com.resturant.restapi.converter;
 
+import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.dto.DrinkDto;
@@ -11,10 +12,9 @@ import java.util.Optional;
 
 public class ProductDtoConverter {
 
-    public static com.resturant.restapi.Model.Drink convertDrinkDtoToDrink(DrinkDto dto, Optional<ProductCategory> productcategory){
+    public static Drink convertDrinkDtoToDrink(Drink entity ,DrinkDto dto, Optional<ProductCategory> productcategory){
 
-        com.resturant.restapi.Model.Drink entity=new com.resturant.restapi.Model.Drink();
-        entity.setProductcategory(productcategory.get());
+        entity.getProductcategory().add(productcategory.get());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setTitle(dto.getTitle());
@@ -26,7 +26,7 @@ public class ProductDtoConverter {
     public static Food convertFoodDtoToFood(FoodDto dto, Optional<ProductCategory> productcategory){
 
         Food entity=new Food();
-        entity.setProductcategory(productcategory.get());
+        entity.getFoodcategory().add(productcategory.get());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setTitle(dto.getTitle());
@@ -45,11 +45,14 @@ public class ProductDtoConverter {
             dto.setPrice(entity.getPrice());
             dto.setTitle(entity.getTitle());
 
-            ProductCategoryDto category=new ProductCategoryDto();
-            category.setId(entity.getProductcategory().getId());
-            category.setName(entity.getProductcategory().getName());
 
-            dto.setProductcategory(category);
+
+            dto.setFoodcategory(ProductsCategoryDtoConverter.prodCategoryListToProdCategoryDtoList(entity.getFoodcategory()));
+//           ProductCategoryDto category=new ProductCategoryDto();
+//            category.setId(entity.getProductcategory().getId());
+//            category.setName(entity.getProductcategory().getName());
+
+            //dto.getFoodcategory(entity.getFoodcategory());
 
             dtoList.add(dto);
         });
@@ -67,11 +70,12 @@ public class ProductDtoConverter {
             dto.setPrice(entity.getPrice());
             dto.setTitle(entity.getTitle());
 
-            ProductCategoryDto category=new ProductCategoryDto();
-            category.setId(entity.getProductcategory().getId());
-            category.setName(entity.getProductcategory().getName());
+//            ProductCategoryDto category=new ProductCategoryDto();
+//            category.setId(entity.getProductcategory().());
+//            category.setName(entity.getProductcategory().getName());
 
-            dto.setProductcategory(category);
+            //dto.setProductcategory(category);
+            dto.setProductcategory(ProductsCategoryDtoConverter.prodCategoryListToProdCategoryDtoList(entity.getProductcategory()));
 
             dtoList.add(dto);
 
@@ -87,12 +91,12 @@ public class ProductDtoConverter {
         dto.setDescription(entity.getDescription());
         dto.setPrice(entity.getPrice());
         dto.setTitle(entity.getTitle());
-
+/*
         ProductCategoryDto category=new ProductCategoryDto();
         category.setId(entity.getProductcategory().getId());
-        category.setName(entity.getProductcategory().getName());
+        category.setName(entity.getProductcategory().getName());*/
 
-        dto.setProductcategory(category);
+        //dto.setFoodcategory(entity.getFoodcategory());
 
         return dto;
     }
@@ -106,11 +110,11 @@ public class ProductDtoConverter {
         dto.setPrice(entity.getPrice());
         dto.setTitle(entity.getTitle());
 
-        ProductCategoryDto category=new ProductCategoryDto();
-        category.setId(entity.getProductcategory().getId());
-        category.setName(entity.getProductcategory().getName());
+//        ProductCategoryDto category=new ProductCategoryDto();
+//        category.setId(entity.getProductcategory().getId());
+//        category.setName(entity.getProductcategory().getName());
 
-        dto.setProductcategory(category);
+        //dto.setProductcategory(category);
 
         return dto;
     }

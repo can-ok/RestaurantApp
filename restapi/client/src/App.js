@@ -18,28 +18,13 @@ import TableList from './component/Table/TableList';
 
 import AppContext,{ContextWrapper} from './AppContext';
 
-
-
-
-
-  /* changeScreen=()=>{
-
-    let menuScrenStatus=this.state.menuScrenStatus? false:true;
-    console.log(menuScrenStatus)
-    
-    this.setState({
-      menuScrenStatus
-    })
-  }
- */
-
-
   const App = () => {
 
     const [appState,setAppState]=useState(
         {
           token:null,
-          table:null
+          table:null,
+          waiter:null
         }
       );
 
@@ -48,48 +33,45 @@ import AppContext,{ContextWrapper} from './AppContext';
 
     const [MenuScreenStatus, setMenuScreenStatus] = useState(false);
 
-    const context=appState.token
+    const context=appState.token? appState.token:localStorage.getItem('token')
     console.log(context)
 
     return ( <div className="App container">
-                <AppContext.Provider value={{appState,setAppState}}>
+          <AppContext.Provider value={{appState,setAppState}}>
 
-               
-               
+            <Router>
+            <div className="border-bottom border-3" >
+                  <Heading/>
+            </div>
 
-                <Router>
-                <div className="border-bottom border-3" >
-                      <Heading/>
-                </div>
+            <Switch>
 
-                <Switch>
+          
+              <Route exact path="/login" component={LoginForm}/>
+                
+              <Route exact path="/products"
+                render={props=>{
+                        if(!context) return <Redirect to="/login"/>;
+                        return <Products {...props}/>
+                }}
+              />
+              <Route exact path="/listCategory/:category" component={CategoryList} />
+              <Route exact path={["/","/menu"]} component={Menu}/>
+              <Route exact path="/logout" component={Logout} />
+              
+              <Route exact path="/table" render={props=>{
+                        if(!context) return <Redirect to="/login"/>;
+                        return <TableList {...props}/>
+                }} />
+              
+            </Switch>
 
-               
-                  <Route exact path="/login" component={LoginForm}/>
-                    
-                  <Route exact path="/products"
-                    render={props=>{
-                            if(!appState.token) return <Redirect to="/login"/>;
-                            return <Products {...props}/>
-                    }}
-                  />
-                  <Route exact path="/listCategory/:category" component={CategoryList} />
-                  <Route exact path={["/","/menu"]} component={Menu}/>
-                  <Route exact path="/logout" component={Logout} />
-                  
-                  <Route exact path="/table" render={props=>{
-                            if(!appState.token) return <Redirect to="/login"/>;
-                            return <TableList {...props}/>
-                    }} />
-                  
-                </Switch>
+            </Router>
 
-                </Router>
+          </AppContext.Provider>
 
-                </AppContext.Provider>
+        </div>
 
-                </div>
-    
     
     );
   }

@@ -27,10 +27,12 @@ class Production extends Component {
         
 
         let appContext=this.context;
-        let token=appContext.appState.token
+        let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
         let tableContext=appContext.appState.table;
-        console.log(token)
 
+        let waiterContext=appContext.appState.waiter
+        
+        console.log(tableContext)
         CategoryService.token=token;
         ProductService.token=token;
 
@@ -54,7 +56,7 @@ class Production extends Component {
         })
 
         
-        if(tableContext===null || sessionStorage.getItem('waiter')===null){
+        if(tableContext===null || waiterContext===null){
             
             this.props.history.push("/table");
 
@@ -211,9 +213,9 @@ class Production extends Component {
         let appContext=this.context;
         let tableContext=appContext.appState.table;
 
-        let item=localStorage.getItem(tableContext)
+        /* let item=localStorage.getItem(tableContext)
         item=JSON.parse(item)
-        console.log(item)
+        console.log(item) */
         
 
         let categoriesList=null;

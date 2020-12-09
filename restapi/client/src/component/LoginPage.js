@@ -1,16 +1,16 @@
-
 import {Form,FormGroup,Label,Input, Button} from 'reactstrap';
 import React, { Component } from 'react';
 
 import AuthService from '../api/AuthService';
-
-
 import AppContext from '../AppContext';
+
+import Switch from "react-switch";
 
 
 class LoginForm extends Component {
     state = { username:"",
-              password:""
+              password:"",
+              checked:false
             }
 
     static contextType=AppContext;
@@ -28,6 +28,10 @@ class LoginForm extends Component {
             let appState={...this.context.appState}
             appState.token="BASIC "+response.data.auth
             this.context.setAppState(appState)
+
+            if(this.state.checked){
+                localStorage.setItem("token",appState.token)
+            }
             
            this.props.history.push("/")
             //window.location="/"; //full reload
@@ -35,6 +39,8 @@ class LoginForm extends Component {
 
             console.log(err)
         })
+
+        
 
         //this.context.setAppState("ING")
 
@@ -53,6 +59,10 @@ class LoginForm extends Component {
     }
 
 
+    handleCheck=(checked)=>{
+        this.setState({ checked });
+    }
+
     render() { 
 
         let appContext=this.context;
@@ -69,7 +79,11 @@ class LoginForm extends Component {
                     <Input name="password" type="text" onChange={this.handleInputChange}/>
                     </Label>
                 </FormGroup>
-                <Button onClick={this.mySubmitHandler} className="btn btn-success">Submit</Button>
+                
+                <h4>Remember Me <Switch title="Remember Me" onChange={this.handleCheck} checked={this.state.checked}/></h4> <br/>
+                 
+                 <Button  onClick={this.mySubmitHandler} className="btn btn-success">Submit</Button>
+
 
             </Form>
 

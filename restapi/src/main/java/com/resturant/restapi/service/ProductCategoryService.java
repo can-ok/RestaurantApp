@@ -10,16 +10,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductCategoryService {
     @Autowired
     ProductCategoryRepository productcategoryRepository;
 
-    public List<ProductCategoryDto> getAll(){
+    public Set<ProductCategoryDto> getAll(){
 
 
-        return ProductsCategoryDtoConverter.prodCategoryListToProdCategoryDtoList(productcategoryRepository.findAll());
+        return ProductsCategoryDtoConverter.prodCategoryListToProdCategoryDtoSet(productcategoryRepository.findAll());
     }
 
     public ProductCategoryDto insertCatagory(ProductCategoryDto categoryDto){

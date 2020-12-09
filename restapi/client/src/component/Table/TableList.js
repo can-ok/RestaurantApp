@@ -25,7 +25,7 @@ class TableList extends Component {
         
 
         let appContext=this.context;
-        let token=appContext.appState.token
+        let token=appContext.appState.token? appContext.appState.token:localStorage.getItem('token')
         console.log(token)
         
         TableService.token=token;
@@ -144,8 +144,12 @@ class TableList extends Component {
        
         console.log(value)
         this.setState({showModal:false})
-    
-        sessionStorage.setItem('waiter',value.id)
+        
+        let appState={...this.context.appState}
+        appState.waiter=value.id
+        this.context.setAppState(appState)
+
+        //sessionStorage.setItem('waiter',value.id)
 
 
         this.props.history.push("/products")

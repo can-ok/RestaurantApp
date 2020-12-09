@@ -11,7 +11,7 @@ class AddProduct extends Component {
               productCategory:"",
               price:"",
               options:[],
-              selectValue:1
+              selectValue:[""]
             }
 
 
@@ -19,14 +19,40 @@ class AddProduct extends Component {
 
 
     handleInputChange=(event)=>{
-        const target = event.target;
-        const name = target.name;
-    
+      const target = event.target;
+      const name = target.name;
+
+       
         this.setState({
     
             [name]:event.target.value
         })
         
+        
+    }
+
+    handleInputSelectChange=(event)=>{
+      const target = event.target;
+      const name = target.name;
+
+      const options=target.options;
+
+      var value=[];
+
+      for (var i = 0, l =options.length; i < l; i++) {
+        if (options[i].selected) {
+          value.push(options[i].value);
+        }
+      }
+
+      console.log(value)
+
+      this.setState({
+    
+        [name]:value
+    }) 
+
+
         
     }
 
@@ -66,7 +92,7 @@ class AddProduct extends Component {
     render() { 
 
         const optionList=this.state.options.map((item)=>{
-          return(<option key={item.id} value={item.id}>{item.name}</option>)
+          return(<option key={item.id} value={[item.id,item.name]}>{item.name}</option>)
         })
 
         return ( <Form>
@@ -81,7 +107,7 @@ class AddProduct extends Component {
             </FormGroup>
 
             <FormGroup>
-             <select id = "dropdown" name="selectValue" value={this.state.selectValue}   onChange={this.handleInputChange}>
+             <select id = "dropdown" name="selectValue" multiple={true} value={this.state.selectValue}   onChange={this.handleInputSelectChange}>
                 {optionList}
               </select>
               </FormGroup>
