@@ -1,7 +1,7 @@
 
 import { GiHamburgerMenu} from 'react-icons/gi';
 
-const HamburgerMenu = (props) => {
+const HamburgerMenu = () => {
     return ( 
         <div className="float-right">
             <GiHamburgerMenu size={24}/>

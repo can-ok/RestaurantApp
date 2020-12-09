@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+   
+    <changeSet id="5" author="can.okan">
+        <createTable tableName="Users">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="USERNAME" type="VARCHAR(255)"></column>
+            <column name="PASSWORD" type="VARCHAR(255)"></column>
+            <column name="ENABLED" type="BOOLEAN"></column>
+            <column name="AUTHORITY" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="can.okan">
+        <insert tableName="Users">
+            <column name="USERNAME" value="user1"/>
+            <column name="PASSWORD" value="{noop}pass1"/>
+            <column name="ENABLED" valueBoolean="true"/>
+            <column name="AUTHORITY" value="ROLE_USER"/>
+
+        </insert>
+    </changeSet>
+
+    <changeSet id="7" author="can.okan">
+        <insert tableName="Users">
+            <column name="USERNAME" value="admin"/>
+            <column name="PASSWORD" value="{noop}admin123"/>
+            <column name="ENABLED" valueBoolean="true"/>
+            <column name="AUTHORITY" value="ROLE_ADMIN"/>
+
+        </insert>
+    </changeSet>
+
+
+
+</databaseChangeLog>

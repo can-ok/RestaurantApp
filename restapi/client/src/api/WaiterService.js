@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class WaiterService{
 
-    token=localStorage.getItem('token')
+    static token=""
     
 
     getAllWaiters(){

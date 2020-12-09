@@ -1,9 +1,6 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.dto.DrinkDto;
-import com.resturant.restapi.Model.Food;
-import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.dto.FoodDto;
 import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.service.ProductsService;
@@ -88,7 +85,7 @@ public class ProductsController {
     }
 
     @PutMapping(path = "/update/drink/{id}")
-    public DrinkDto updateDrink(@RequestBody DrinkDto drinkDto,@PathVariable Integer id){
+    public DrinkDto updateDrink(@RequestBody DrinkDto drinkDto, @PathVariable Integer id){
 
         return productsService.updateDrink(id,drinkDto);
     }

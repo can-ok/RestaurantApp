@@ -5,10 +5,15 @@ import React, { Component } from 'react';
 import AuthService from '../api/AuthService';
 
 
+import AppContext from '../AppContext';
+
+
 class LoginForm extends Component {
     state = { username:"",
               password:""
             }
+
+    static contextType=AppContext;
 
 
     mySubmitHandler=()=>{
@@ -19,14 +24,20 @@ class LoginForm extends Component {
             /* console.log(response)
             console.log(response.data.auth) */
 
-            localStorage.setItem("token","BASIC "+response.data.auth)
-
-           // this.props.history.push("/")
-            window.location="/"; //full reload
+            //localStorage.setItem("token","BASIC "+response.data.auth)
+            let appState={...this.context.appState}
+            appState.token="BASIC "+response.data.auth
+            this.context.setAppState(appState)
+            
+           this.props.history.push("/")
+            //window.location="/"; //full reload
         }).catch((err)=>{
 
             console.log(err)
         })
+
+        //this.context.setAppState("ING")
+
     }        
 
     handleInputChange=(event)=>{
@@ -37,11 +48,16 @@ class LoginForm extends Component {
     
             [name]:event.target.value
         })
+
     
     }
 
 
     render() { 
+
+        let appContext=this.context;
+        console.log(appContext)
+        
         return ( 
             <Form>
                 <FormGroup>

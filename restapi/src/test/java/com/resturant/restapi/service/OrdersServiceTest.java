@@ -1,5 +1,6 @@
 package com.resturant.restapi.service;
 
+import com.resturant.restapi.builder.OrdersDtoBuilder;
 import com.resturant.restapi.converter.OrdersDtoConverter;
 import com.resturant.restapi.dto.OrdersDto;
 import com.resturant.restapi.repository.OrdersRepository;
@@ -27,15 +28,14 @@ public class OrdersServiceTest {
     @InjectMocks
     private OrdersService ordersService;
 
-    private OrdersDto ordersDto=new OrdersDto();
+    private OrdersDto ordersDto;
 
     private List<OrdersDto> ordersDtoList=new ArrayList<>();
 
     @Before
     public void setUp() throws Exception{
-        ordersDto.setOrderTable("Masa1");
-        ordersDto.setProductId(1);
-        ordersDto.setId(1);
+        ordersDto=new OrdersDtoBuilder().id(1).paymentType("cash").orderTable("Masa 1").productCount(5)
+                .totalPrice(100).productId(1).waiterId("1").build();
 
         ordersDtoList.add(ordersDto);
     }

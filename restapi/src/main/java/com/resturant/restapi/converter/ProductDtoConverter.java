@@ -1,6 +1,5 @@
 package com.resturant.restapi.converter;
 
-import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.dto.DrinkDto;
@@ -12,9 +11,9 @@ import java.util.Optional;
 
 public class ProductDtoConverter {
 
-    public static Drink convertDrinkDtoToDrink(DrinkDto dto, Optional<ProductCategory> productcategory){
+    public static com.resturant.restapi.Model.Drink convertDrinkDtoToDrink(DrinkDto dto, Optional<ProductCategory> productcategory){
 
-        Drink entity=new Drink();
+        com.resturant.restapi.Model.Drink entity=new com.resturant.restapi.Model.Drink();
         entity.setProductcategory(productcategory.get());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
@@ -58,9 +57,9 @@ public class ProductDtoConverter {
         return dtoList;
     }
 
-    public static List<DrinkDto> convertDrinkListToDrinDtoList(List<DrinkDto> dtoList,List<Drink> entityList){
+    public static List<DrinkDto> convertDrinkListToDrinDtoList(List<DrinkDto> dtoList, List<com.resturant.restapi.Model.Drink> entityList){
 
-        for(Drink entity:entityList){
+        for(com.resturant.restapi.Model.Drink entity:entityList){
 
             DrinkDto dto=new DrinkDto();
             dto.setId(entity.getId());
@@ -99,7 +98,7 @@ public class ProductDtoConverter {
     }
 
 
-    public static DrinkDto convertDrinktoDrinkDto(Drink entity){
+    public static DrinkDto convertDrinktoDrinkDto(com.resturant.restapi.Model.Drink entity){
 
         DrinkDto dto=new DrinkDto();
         dto.setId(entity.getId());

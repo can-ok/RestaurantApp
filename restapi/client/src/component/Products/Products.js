@@ -9,6 +9,9 @@ import Basket from "../Basket";
 import ProductService from '../../api/ProductService';
 import CategoryService from '../../api/CategoryService';
 
+
+import AppContext from '../../AppContext';
+
 class Production extends Component {
     state = {  items:[] ,
                value:"",
@@ -18,9 +21,19 @@ class Production extends Component {
 
 
 
+    static contextType=AppContext;
 
     componentDidMount(){
         
+
+        let appContext=this.context;
+        let token=appContext.appState.token
+        let tableContext=appContext.appState.table;
+        console.log(token)
+
+        CategoryService.token=token;
+        ProductService.token=token;
+
         this.getItems()
 
         //http://localhost:8080/getCategories
@@ -41,14 +54,14 @@ class Production extends Component {
         })
 
         
-        if(localStorage.getItem('table')===null || sessionStorage.getItem('waiter')===null){
+        if(tableContext===null || sessionStorage.getItem('waiter')===null){
             
             this.props.history.push("/table");
 
         }
         else{
         //get items from localStorage
-        let item=localStorage.getItem(localStorage.getItem('table'))
+        let item=localStorage.getItem(tableContext)
         if(item!=null){
             item=JSON.parse(item)
             this.setState({
@@ -155,7 +168,10 @@ class Production extends Component {
 
     setbasket=(cartItemList)=>{
 
-        let item=localStorage.getItem(localStorage.getItem('table'))
+        let appContext=this.context;
+        let tableContext=appContext.appState.table;
+
+        let item=localStorage.getItem(tableContext)
         item=JSON.parse(item)
         let basketItem;
         //console.log(item.table)
@@ -164,24 +180,24 @@ class Production extends Component {
 
         if(item===null){
             basketItem={
-                'table':localStorage.getItem('table'),
+                'table':tableContext,
                 'products':cartItemList
             };
-            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+            localStorage.setItem(tableContext,JSON.stringify(basketItem))
 
         }
         else{
-            if(item.table==localStorage.getItem('table')){
+            if(item.table==tableContext){
 
                 basketItem={
-                    'table':localStorage.getItem('table'),
+                    'table':tableContext,
                     'products':cartItemList
                 };
                
             }
            
-
-            localStorage.setItem(localStorage.getItem('table'),JSON.stringify(basketItem))
+            
+            localStorage.setItem(tableContext,JSON.stringify(basketItem))
 
         }
         
@@ -191,7 +207,11 @@ class Production extends Component {
     
 
     render() { 
-        let item=localStorage.getItem(localStorage.getItem('table'))
+
+        let appContext=this.context;
+        let tableContext=appContext.appState.table;
+
+        let item=localStorage.getItem(tableContext)
         item=JSON.parse(item)
         console.log(item)
         
@@ -211,7 +231,7 @@ class Production extends Component {
         return ( <div>
 
                 <div className="row">
-                <h5 className='ml-3 mt-2 border'> <strong>Durum:</strong> { localStorage.getItem('table')}</h5>
+                <h5 className='ml-3 mt-2 border'> <strong>Durum:</strong> {tableContext}</h5>
 
                 </div>
 

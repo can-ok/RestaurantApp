@@ -77,7 +77,7 @@ class DrinkList extends Component {
                     <td><Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link></td>
                     <td>{item.price.toString()}</td>
 
-                    <td><Link to={`/update/${"drink"}/${item.id}`}   className="btn btn-warning">Edit</Link></td>
+                    <td><Link to={`/update/${"drinkDto"}/${item.id}`}   className="btn btn-warning">Edit</Link></td>
                     <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)}> Delete </Button></td>
          </tr>
           );
@@ -90,7 +90,7 @@ class DrinkList extends Component {
 
             <div className="mb-3">
             <strong>Drink List</strong> 
-            <Link className="btn float-right" to="/add/drinkDTO"><GrFormAdd size='1rem'/><strong>Add Drink</strong></Link>
+            <Link className="btn float-right" to="/add/drinkDto"><GrFormAdd size='1rem'/><strong>Add Drink</strong></Link>
 
             </div>
 

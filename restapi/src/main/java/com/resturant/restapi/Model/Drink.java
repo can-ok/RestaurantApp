@@ -24,9 +24,6 @@ public class Drink extends Product implements Serializable {
 
 
 
-    public void setProductcategory(ProductCategory productcategory) {
-        this.productcategory = productcategory;
-    }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="category_id")
@@ -42,6 +39,9 @@ public class Drink extends Product implements Serializable {
     }
 
 
+    public void setProductcategory(ProductCategory productcategory) {
+        this.productcategory = productcategory;
+    }
 
     @Override
     public String getTitle() {

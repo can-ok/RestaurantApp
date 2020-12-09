@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "PRODUCT_CATEGORY")
 public class ProductCategory {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,8 +1,5 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.Model.Drink;
-import com.resturant.restapi.Model.Food;
-import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.dto.DrinkDto;
 import com.resturant.restapi.dto.FoodDto;
 import com.resturant.restapi.dto.ProductCategoryDto;
@@ -19,7 +16,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
@@ -42,12 +38,12 @@ public class ProductsControllerTest {
     private ProductsController productsController;
 
 
-    List<DrinkDto> drinkDtoList=new ArrayList<>();
+    List<DrinkDto> drinkDtoDtoList =new ArrayList<>();
 
     @Before
     public void setUpDrinksList(){
         ProductCategoryDto productCategory=new ProductCategoryDto(1,"deneme");
-        drinkDtoList.add(new DrinkDto(1,"deneme","deneme descrtip",20,productCategory));
+        drinkDtoDtoList.add(new DrinkDto(1,"deneme","deneme descrtip",20,productCategory));
     }
 
 
@@ -71,7 +67,7 @@ public class ProductsControllerTest {
 
     @Before
     public void setUpRepos(){
-        when(productsService.getAllDrinks()).thenReturn(drinkDtoList);
+        when(productsService.getAllDrinks()).thenReturn(drinkDtoDtoList);
         when(productsService.getAllFoods()).thenReturn(foodsDtoList);
     }
 
@@ -85,7 +81,7 @@ public class ProductsControllerTest {
 
     @Test
     public void shouldgetAllDrinks() {
-        when(productsService.getAllDrinks()).thenReturn(drinkDtoList);
+        when(productsService.getAllDrinks()).thenReturn(drinkDtoDtoList);
 
         assertNotNull(productsController.getAllDrinks());
         verify(productsService,times(1)).getAllDrinks();
@@ -114,7 +110,7 @@ public class ProductsControllerTest {
 
         assertNotNull(prodResult);
 
-        assertEquals(prodResult.size(),drinkDtoList.size()+foodsDtoList.size());
+        assertEquals(prodResult.size(), drinkDtoDtoList.size()+foodsDtoList.size());
     }
 
     @Test
@@ -163,7 +159,7 @@ public class ProductsControllerTest {
     @Test
     public void deleteDrink() {
 
-        when(productsService.deleteDrink(any())).thenReturn(drinkDtoList);
+        when(productsService.deleteDrink(any())).thenReturn(drinkDtoDtoList);
         assertNotNull(productsController.deleteDrink(any()));
         verify(productsService,times(1)).deleteDrink(any());
 

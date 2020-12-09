@@ -5,6 +5,8 @@ import { Label } from 'reactstrap';
 
 import OrdersService from '../api/OrdersService';
 
+import AppContext from '../AppContext';
+
 
 export default class Basket extends Component {
     constructor(props){
@@ -14,6 +16,7 @@ export default class Basket extends Component {
         };
       }
 
+      static contextType=AppContext;
 
    
 
@@ -123,6 +126,11 @@ export default class Basket extends Component {
             data.push(jsonData);
         });
 
+        let appContext=this.context;
+        let token=appContext.appState.token
+        console.log(token)
+        
+        OrdersService.token=token;
         
         OrdersService.saveOrders(data)
         .then((response)=>{
@@ -141,7 +149,9 @@ export default class Basket extends Component {
         localStorage.removeItem(localStorage.getItem('table'))
         localStorage.removeItem('table')
 
-        window.location='/menu'
+        this.props.history.push("/menu")
+
+       // window.location='/menu'
     }
         
 

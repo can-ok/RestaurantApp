@@ -25,17 +25,15 @@ public class Food extends Product implements Serializable {
 
     private Integer price;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="category_id")
     private ProductCategory productcategory;
+
+
+
+
 
     public ProductCategory getProductcategory() {
         return productcategory;
@@ -45,7 +43,13 @@ public class Food extends Product implements Serializable {
         this.productcategory = productcategory;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void setPrice(Integer price) {
         this.price = price;

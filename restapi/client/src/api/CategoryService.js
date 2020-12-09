@@ -3,7 +3,7 @@
 class CategoryService{
 
 
-    token=localStorage.getItem("token");
+    static token=""
 
     getCategories(){
        var myHeaders = new Headers();

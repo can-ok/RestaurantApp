@@ -33,6 +33,8 @@ import EditWaiter from './component/Waiter/EditWaiter';
 
 import OrderList from './component/Order/OrderList';
 
+import Media from './component/Media/Media';
+
 class App extends Component {
   state = { token:null }
 
@@ -78,7 +80,7 @@ class App extends Component {
             <Route exact path="/waiters" component={WaiterList}/>
             <Route exact path="/addWaiter" component={AddWaiter}/>
             <Route exact path="/editWaiter/:id" component={EditWaiter}/>
-
+            <Route exact path="/media/" component={Media}/>
             <Route exact path="/order" component={OrderList} />
         </Switch>
       </Router>

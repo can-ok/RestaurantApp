@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import CategoryService from '../../api/CategoryService';
 import '../../App.css'
+
+import AppContext from '../../AppContext';
 
 class CategoryList extends Component {
     state = { 
@@ -8,13 +11,19 @@ class CategoryList extends Component {
         status:false
      }
 
+    static contextType=AppContext;
 
     componentDidMount(){
 
    
     const specificCategory=this.props.match.params.category
-
-
+    let appContext=this.context;
+    let token=appContext.appState.token
+    console.log(token)
+    
+    
+    CategoryService.token=token;
+    
     
     fetch(`http://localhost:8080/category/${specificCategory}`)
     .then((response)=>{

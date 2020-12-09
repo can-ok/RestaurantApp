@@ -20,7 +20,7 @@ public class Tables {
     private Boolean enabled;
 
 
-
+    @Column(name="TABLECOUNT")
     private Integer tableCount;
 
     public Integer getTableCount() {

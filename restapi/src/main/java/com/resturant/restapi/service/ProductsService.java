@@ -1,6 +1,5 @@
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.converter.ProductDtoConverter;
@@ -36,9 +35,9 @@ public class ProductsService {
 
     public List<DrinkDto> getAllDrinks(){
 
-        List<DrinkDto> dtoDrinkList=(List<DrinkDto>)(List<?>) drinksRepository.findAll();
+        List<DrinkDto> dtoDrinkDtoList =(List<DrinkDto>)(List<?>) drinksRepository.findAll();
 
-        return dtoDrinkList;
+        return dtoDrinkDtoList;
     }
 
 
@@ -46,10 +45,10 @@ public class ProductsService {
     public List<? extends ProductDto> getSpecificCategory(int ProductCategoryId){
 
         List<Food> listfood=foodRepository.findFoodByProductcategoryId(ProductCategoryId);
-        List<Drink> listdrink=drinksRepository.findDrinkByProductcategoryId(ProductCategoryId);
+        List<com.resturant.restapi.Model.Drink> listdrink=drinksRepository.findDrinkByProductcategoryId(ProductCategoryId);
 
         List<FoodDto> foodDtoList=new ArrayList<>();
-        List<DrinkDto> drinkDtoList=new ArrayList<>();
+        List<DrinkDto> drinkDtoDtoList =new ArrayList<>();
 
         if(!listfood.isEmpty())
         {
@@ -58,7 +57,7 @@ public class ProductsService {
         }
         else if(!listdrink.isEmpty())
         {
-            return ProductDtoConverter.convertDrinkListToDrinDtoList(drinkDtoList,listdrink);
+            return ProductDtoConverter.convertDrinkListToDrinDtoList(drinkDtoDtoList,listdrink);
         }
         else {
 
@@ -98,7 +97,7 @@ public class ProductsService {
 
         if(productcategory.isPresent()){
 
-            Drink drink= ProductDtoConverter.convertDrinkDtoToDrink(drinkDto,productcategory);
+            com.resturant.restapi.Model.Drink drink= ProductDtoConverter.convertDrinkDtoToDrink(drinkDto,productcategory);
             drinksRepository.save(drink);
             return "Success";
         }
@@ -123,7 +122,7 @@ public class ProductsService {
 
 
     public DrinkDto getDrinkById(Integer id){
-        Optional<Drink> optinalEntity=drinksRepository.findById(id);
+        Optional<com.resturant.restapi.Model.Drink> optinalEntity=drinksRepository.findById(id);
 
         if(!optinalEntity.isPresent()){
 
@@ -159,19 +158,19 @@ public class ProductsService {
 
     public List<DrinkDto> deleteDrink(Integer id){
 
-        List<DrinkDto> drinks=new ArrayList<>();
+        List<DrinkDto> drinkDtos =new ArrayList<>();
 
-        Optional<Drink> drinkEntity=drinksRepository.findById(id);
+        Optional<com.resturant.restapi.Model.Drink> drinkEntity=drinksRepository.findById(id);
         if(drinkEntity.isPresent()){
 
             drinkEntity.get().setProductcategory(null);
 
             drinksRepository.delete(drinkEntity.get());
-            drinks=getAllDrinks();
+            drinkDtos =getAllDrinks();
 
         }
 
-        return drinks;
+        return drinkDtos;
 
 
 
@@ -198,8 +197,8 @@ public class ProductsService {
         }
     }
 
-    public DrinkDto updateDrink(Integer id,DrinkDto drinkDto){
-        Optional<Drink> optinalDrink = drinksRepository.findById(id);
+    public DrinkDto updateDrink(Integer id, DrinkDto drinkDto){
+        Optional<com.resturant.restapi.Model.Drink> optinalDrink = drinksRepository.findById(id);
 
         if (!optinalDrink.isPresent()) {
             System.out.println("Sonuç bulunamadı");

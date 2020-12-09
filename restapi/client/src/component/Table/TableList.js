@@ -5,6 +5,10 @@ import Modal from './Modal';
 
 import './Table.css'
 
+
+import AppContext from '../../AppContext';
+
+
 class TableList extends Component {
     state = { tablesCategory:[],
               tables:[],
@@ -13,10 +17,18 @@ class TableList extends Component {
               reservedTables:[]
                 }
 
-
+    static contextType=AppContext;
 
 
     componentDidMount(){
+
+        
+
+        let appContext=this.context;
+        let token=appContext.appState.token
+        console.log(token)
+        
+        TableService.token=token;
 
         TableService.getTables().then((response)=>{
 
@@ -27,6 +39,11 @@ class TableList extends Component {
                 tablesCategory:data
             });
         })
+
+
+       
+        
+        WaiterService.token=token;
 
         WaiterService.getAllWaiters().then((response)=>{
 
@@ -66,6 +83,7 @@ class TableList extends Component {
     showCards=(table)=>{
 
        if(table.title==='Ayakta'){
+
         this.selectTable(table.title)
 
        }
@@ -103,7 +121,11 @@ class TableList extends Component {
 
 
     selectTable=(tableName)=>{
-        localStorage.setItem("table",tableName)
+        //localStorage.setItem("table",tableName)
+
+        let appState={...this.context.appState}
+        appState.table=tableName;
+        this.context.setAppState(appState)
         
         this.setState({
             showModal:true
@@ -113,7 +135,9 @@ class TableList extends Component {
 
     selectReservedTable=(tableName)=>{
         
-        alert('Secili Masa',tableName)
+        this.props.history.push("/products")
+
+        //window.location="/products" 
     }
 
     selectWaiter=(value)=>{
@@ -123,7 +147,10 @@ class TableList extends Component {
     
         sessionStorage.setItem('waiter',value.id)
 
-        window.location="/products" 
+
+        this.props.history.push("/products")
+
+        //window.location="/products" 
 
     }
 

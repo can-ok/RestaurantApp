@@ -1,27 +1,24 @@
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.Drink;
-import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.builder.DrinkBuilder;
+import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.dto.DrinkDto;
+import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.repository.DrinksRepository;
 import com.resturant.restapi.repository.FoodRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.nullable;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.junit.Assert.*;
@@ -42,18 +39,15 @@ class ProductsServiceTest {
 
 
 
-    private List<Drink> drinkList=new ArrayList<>();
-
-    private Drink drink=new Drink();
-
+    List<Drink> drinkList=new ArrayList<>();
+    private Drink drink;
     @BeforeEach
     public void setUp() throws Exception{
-        drink.setTitle("deneme");
-        drink.setId(1);
-        drink.setTitle("title");
-        drink.setPrice(10);
-        drink.setDescription("adsad");
-        drink.setProductcategory(new ProductCategory(1,"dneme"));
+
+        drink=new DrinkBuilder().id(1).title("deneme")
+                .description("deneme").price(1).productcategory(new ProductCategory(1,"dneme"))
+        .build();
+
         // add list
         drinkList.add(drink);
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="11" author="can.okan">
+        <createTable tableName="Drink">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"></column>
+            <column name="description" type="VARCHAR(255)"></column>
+            <column name="price" type="int(10)"></column>
+
+            <column name="category_id" type="int(10)" >
+                <constraints nullable="false" foreignKeyName="fk_drink_category" references="PRODUCT_CATEGORY(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    
+    <changeSet id="12" author="can.okan">
+        <insert tableName="Drink">
+            <column name="id" valueNumeric="1"></column>
+            <column name="title" value="Cola Zero"></column>
+            <column name="description" value="sekersiz mesrubat"></column>
+            <column name="price" valueNumeric="3"></column>
+            <column name="category_id" value="1" ></column>
+        </insert>
+        <insert tableName="Drink">
+            <column name="id" valueNumeric="2"></column>
+            <column name="title" value="Coco-Cola"></column>
+            <column name="description" value="mesrubat"></column>
+            <column name="price" valueNumeric="3"></column>
+            <column name="category_id" value="1" ></column>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

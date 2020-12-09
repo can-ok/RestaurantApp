@@ -14,7 +14,7 @@ public class AUTHORITIES implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name= "USERNAME")

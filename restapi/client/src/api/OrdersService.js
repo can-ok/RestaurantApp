@@ -2,7 +2,7 @@
 
 class OrdersService{
 
-    token=localStorage.getItem("token")
+    static token=""
 
     saveOrders(data){
 

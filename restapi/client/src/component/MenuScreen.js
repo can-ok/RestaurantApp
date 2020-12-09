@@ -2,13 +2,17 @@
 import {Link} from 'react-router-dom';
 import '../::/../App.css'
 import React, { Component } from 'react';
+import AppContext from '../AppContext';
 
 class Menu extends Component {
     state = {  }
+    static contextType=AppContext;
+
     render() { 
 
-
-
+        let appContext=this.context;
+        let tokenContext=appContext.appState.token;
+        console.log(appContext)
         return (  <div>
 
 
@@ -40,7 +44,7 @@ class Menu extends Component {
 
                 </div>   
 
-               { localStorage.getItem('token') && <div className="row ">
+               { tokenContext&& <div className="row ">
 
                     <Link className="col-sm div1 m-2">
                    
@@ -55,7 +59,7 @@ class Menu extends Component {
                     
         </div> }
 
-        { !localStorage.getItem('token') && <div className="row ">
+        { !tokenContext && <div className="row ">
 
                     <Link className="col-sm div1 m-2">
                    

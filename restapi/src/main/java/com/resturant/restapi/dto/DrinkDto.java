@@ -3,6 +3,8 @@ package com.resturant.restapi.dto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Table;
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class DrinkDto extends ProductDto{

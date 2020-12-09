@@ -1,6 +1,5 @@
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.converter.ProductDtoConverter;
@@ -40,7 +39,7 @@ public class ProductsServiceSetAndUpdateTest {
     @InjectMocks
     private ProductsService productsService;
 
-    private Drink drink=new Drink();
+    private com.resturant.restapi.Model.Drink drink=new com.resturant.restapi.Model.Drink();
 
 
     private ProductCategory productCategory=new ProductCategory();

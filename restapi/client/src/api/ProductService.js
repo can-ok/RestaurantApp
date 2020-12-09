@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class ProductService{
 
-    token=localStorage.getItem("token")
+    static token=""
 
    getCategories(){
 

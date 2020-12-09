@@ -53,11 +53,11 @@ public class UserDtoConverter {
 
         UsersDto userDto=new UsersDto();
 
-
+        userDto.setId(user.getId());
         userDto.setUSERNAME(user.getUSERNAME());
-        userDto.setPassword(userDto.getPassword());
-        userDto.setEnabled(userDto.isEnabled());
-
+        userDto.setPassword(user.getPassword());
+        userDto.setEnabled(user.isEnabled());
+        userDto.setAUTHORITY(user.getAUTHORITY());
         return userDto;
     }
 

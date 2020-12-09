@@ -1,7 +1,7 @@
 
 
 class TableService{
-    token=localStorage.getItem("token");
+    static token=""
 
 
     getTables(){

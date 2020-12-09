@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "USERS")
+@Entity(name = "Users")
 public class Users  implements Serializable {
 
 
@@ -22,8 +22,6 @@ public class Users  implements Serializable {
     private String Password;
     @Column(name = "ENABLED")
     private boolean Enabled;
-
-
 
 
     private String 	AUTHORITY;
