@@ -1,9 +1,7 @@
 package com.resturant.restapi.builder;
 
-import com.resturant.restapi.Model.Drink;
+import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
-import com.resturant.restapi.dto.DrinkDto;
-import com.resturant.restapi.dto.ProductCategoryDto;
 
 public class DrinkBuilder extends Builder{
 
@@ -18,14 +16,14 @@ public class DrinkBuilder extends Builder{
     private ProductCategory productCategoryategory;
 
     @Override
-    public Drink build() {
-        Drink drink =new Drink();
-        drink.setId(this.id);
-        drink.setTitle(this.title);
-        drink.setDescription(this.description);
+    public Product build() {
+        Product product =new Product();
+        product.setId(this.id);
+        product.setTitle(this.title);
+        product.setDescription(this.description);
         //drink.setProductcategory(this.productCategoryategory);
-        drink.setId(this.id);
-        return drink;
+        product.setId(this.id);
+        return product;
     }
 
     @Override

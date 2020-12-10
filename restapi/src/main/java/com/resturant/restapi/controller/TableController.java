@@ -1,8 +1,6 @@
 package com.resturant.restapi.controller;
 
 
-import com.resturant.restapi.Model.Food;
-import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.dto.TablesDto;
 import com.resturant.restapi.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;

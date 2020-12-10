@@ -13,7 +13,7 @@
     <include file="/db-changelog/changes/create-tables-table.xml"/>
     <include file="/db-changelog/changes/create-productCategory-table.xml"/>
     <include file="/db-changelog/changes/create-drinks-table.xml"/>
-    <include file="/db-changelog/changes/create-food-table.xml"/>
+<!--    <include file="/db-changelog/changes/create-food-table.xml"/>-->
     <include file="/db-changelog/changes/create-media-table.xml"/>
 
 </databaseChangeLog>

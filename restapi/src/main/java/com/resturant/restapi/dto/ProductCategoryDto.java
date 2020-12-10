@@ -1,7 +1,6 @@
 package com.resturant.restapi.dto;
 
-import com.resturant.restapi.Model.Drink;
-import com.resturant.restapi.Model.Food;
+import com.resturant.restapi.Model.Product;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -16,9 +15,8 @@ public class ProductCategoryDto {
     private String name;
 
 
-    private Set<Drink> Drinkproducts;
+    private Set<ProductDto> drinkproducts;
 
-    private Set<Food> Foodproducts;
 
 
     public Integer getId() {
@@ -38,19 +36,13 @@ public class ProductCategoryDto {
     }
 
 
-    public Set<Drink> getDrinkproducts() {
-        return Drinkproducts;
+    public Set<ProductDto> getDrinkproducts() {
+        return drinkproducts;
     }
 
-    public void setDrinkproducts(Set<Drink> drinkproducts) {
-        Drinkproducts = drinkproducts;
+    public void setDrinkproducts(Set<ProductDto> drinkproducts) {
+        this.drinkproducts = drinkproducts;
     }
 
-    public Set<Food> getFoodproducts() {
-        return Foodproducts;
-    }
 
-    public void setFoodproducts(Set<Food> foodproducts) {
-        Foodproducts = foodproducts;
-    }
 }

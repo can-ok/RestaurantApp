@@ -1,7 +1,5 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.dto.DrinkDto;
-import com.resturant.restapi.dto.FoodDto;
 import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ public class ProductsController {
 
 
     @GetMapping(path = "/drinks")
-    public List<DrinkDto> getAllDrinks(){
+    public List<ProductDto> getAllDrinks(){
 
         return productsService.getAllDrinks();
     }
@@ -33,65 +31,38 @@ public class ProductsController {
             addAll(productsService.getAllDrinks());
         }};
     }
-//
-//    @GetMapping(path = "/food")
-//    public List<FoodDto> getAllFoods(){
-//
-//        return productsService.getAllFoods();
-//    }
-
-//    @PostMapping(path ="/add/food/{categoryId}")
-//    public String addFood(@RequestBody FoodDto foodDto,@PathVariable int categoryId){
-//
-//        return productsService.insertFood(foodDto,categoryId);
-//    }
 
 
     @PostMapping(path ="/add/drink")
-    public String addDrink(@RequestBody DrinkDto drinkDTO){
+    public String addDrink(@RequestBody ProductDto productDTO){
 
 
-        return productsService.insertDrink(drinkDTO);
+        return productsService.insertDrink(productDTO);
     }
 
     @GetMapping(path = "/drink/{id}")
-    public DrinkDto retriveDrink(@PathVariable Integer id){
+    public ProductDto retriveDrink(@PathVariable Integer id){
 
         return productsService.getDrinkById(id);
     }
 //
-//    @GetMapping(path = "/food/{id}")
-//    public FoodDto retriveFood(@PathVariable Integer id){
-//
-//        return productsService.getFoodById(id);
-//    }
 
-//    @DeleteMapping(path = "/delete/food/{id}")
-//    public List<FoodDto> deleteFood(@PathVariable Integer id){
-//
-//        return productsService.deleteFood(id);
-//    }
 
     @DeleteMapping(path = "/delete/drink/{id}")
-    public List<DrinkDto> deleteDrink(@PathVariable Integer id){
+    public List<ProductDto> deleteDrink(@PathVariable Integer id){
 
         return productsService.deleteDrink(id);
     }
 
-//    @PutMapping(path = "/update/food/{id}")
-//    public FoodDto updateFood(@RequestBody FoodDto foodDto,@PathVariable Integer id){
-//
-//        return productsService.updateFood(id,foodDto);
-//    }
 
     @PutMapping(path = "/update/drink/")
-    public DrinkDto updateDrink(@RequestBody DrinkDto drinkDto){
+    public ProductDto updateDrink(@RequestBody ProductDto productDto){
 
-        return productsService.updateDrink(drinkDto);
+        return productsService.updateDrink(productDto);
     }
 
     @GetMapping(path="/category/{id}")
-    public List<? extends ProductDto> retrivebyProductCategor(@PathVariable int id){
+    public List<ProductDto> retrivebyProductCategor(@PathVariable int id){
 
         return productsService.getSpecificCategory(id);
     }

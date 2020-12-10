@@ -1,9 +1,6 @@
 package com.resturant.restapi.controller;
 
 
-import com.resturant.restapi.Model.Waiter;
-import com.resturant.restapi.dto.FoodDto;
-import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.dto.WaiterDto;
 import com.resturant.restapi.service.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;

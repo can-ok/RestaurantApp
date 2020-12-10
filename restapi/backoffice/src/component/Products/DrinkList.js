@@ -30,7 +30,7 @@ class DrinkList extends Component {
 
     handle_detele=(itemId)=>{
    //http://localhost:8080/delete/food/1
-   ProductsService.deleteProduct("drinkDTO",itemId)
+   ProductsService.deleteProduct("drink",itemId)
     .then((response)=>{
         
         return response.json();
@@ -92,7 +92,7 @@ class DrinkList extends Component {
 
             <div className="mb-3">
             <strong>Drink List</strong> 
-            <Link className="btn float-right" to="/add/drinkDto"><GrFormAdd size='1rem'/><strong>Add Drink</strong></Link>
+            <Link className="btn float-right" to="/add/drink"><GrFormAdd size='1rem'/><strong>Add Drink</strong></Link>
 
             </div>
 

@@ -1,6 +1,5 @@
 package com.resturant.restapi.builder;
 
-import com.resturant.restapi.Model.Drink;
 import com.resturant.restapi.dto.OrdersDto;
 
 import java.sql.Timestamp;

@@ -7,7 +7,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="11" author="can.okan">
-        <createTable tableName="Drink">
+        <createTable tableName="Product">
             <column autoIncrement="true" name="id" type="int(10)">
                 <constraints primaryKey="true"/>
             </column>
@@ -23,7 +23,7 @@
     <changeSet id="13" author="can.okan">
         <createTable tableName="TBL_CATEGORY_DRINK">
             <column name="product_id" type="int(10)">
-                <constraints nullable="false" foreignKeyName="fk_drink" references="Drink(id)"/>
+                <constraints nullable="false" foreignKeyName="fk_drink" references="Product(id)"/>
             </column>
             <column name="category_id" type="int(10)" >
                 <constraints nullable="false" foreignKeyName="fk_drink_category" references="PRODUCT_CATEGORY(id)"/>
@@ -37,34 +37,34 @@
     
     
     <changeSet id="12" author="can.okan">
-        <insert tableName="Drink">
+        <insert tableName="Product">
             <column name="id" valueNumeric="1"></column>
             <column name="title" value="Cola Zero"></column>
             <column name="description" value="sekersiz mesrubat"></column>
             <column name="price" valueNumeric="3"></column>
         </insert>
-        <insert tableName="Drink">
+        <insert tableName="Product">
             <column name="id" valueNumeric="2"></column>
             <column name="title" value="Coco-Cola"></column>
             <column name="description" value="mesrubat"></column>
             <column name="price" valueNumeric="3"></column>
         </insert>
 
-        <insert tableName="Drink">
+        <insert tableName="Product">
             <column name="id" valueNumeric="3"></column>
             <column name="title" value="Profiterol"></column>
             <column name="description" value="çikolatalı tatlı"></column>
             <column name="price" valueNumeric="20"></column>
         </insert>
 
-        <insert tableName="Drink">
+        <insert tableName="Product">
             <column name="id" valueNumeric="4"></column>
             <column name="title" value="Cheesecake"></column>
             <column name="description" value="oreo Cheesecake"></column>
             <column name="price" valueNumeric="25"></column>
         </insert>
 
-        <insert tableName="Drink">
+        <insert tableName="Product">
             <column name="id" valueNumeric="5"></column>
             <column name="title" value="Döner"></column>
             <column name="description" value="et döner"></column>

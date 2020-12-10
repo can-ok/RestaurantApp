@@ -1,15 +1,12 @@
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.Food;
 import com.resturant.restapi.Model.Waiter;
 import com.resturant.restapi.converter.WaiterDtoConverter;
-import com.resturant.restapi.dto.FoodDto;
 import com.resturant.restapi.dto.WaiterDto;
 import com.resturant.restapi.repository.WaiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
