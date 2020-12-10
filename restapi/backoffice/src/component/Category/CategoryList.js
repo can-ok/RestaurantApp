@@ -69,9 +69,9 @@ class CategoryList extends Component {
             <tr key={item.id}>
                         <td>{item.id}</td>
                         <td>{item.name}</td>
-                      
-    
-                        <td><Button onClick={()=>this.showFormUpdate(item.id)} className="btn btn-warning">Düzenle</Button></td>
+                        <td>{item.description}</td>
+                        <td><img src={'data:image/png;base64,'+item.categorymedia.fileContent} width="35" /></td>
+                        <td><Link to={`/editCategory/${item.id}`}  className="btn btn-warning">Düzenle</Link></td>
                         <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
              </tr>)
         
@@ -80,7 +80,7 @@ class CategoryList extends Component {
         <div>
         <div className="mb-3">
         <strong>Kategori</strong> 
-        <Button className="btn float-right" onClick={this.showForm}><GrFormAdd size='1rem'/><strong>Kategori Ekle</strong></Button>
+        <Link className="btn float-right" to="/addCategory"><GrFormAdd size='1rem'/><strong>Kategori Ekle</strong></Link>
 
         </div>
         <div>
@@ -90,6 +90,8 @@ class CategoryList extends Component {
                 <tr>
                 <th>ID</th>
                 <th>İsim</th>
+                <th>Açıklama</th>
+                <th>Görsel</th>
                 <th></th>
                 <th></th>
                 </tr>

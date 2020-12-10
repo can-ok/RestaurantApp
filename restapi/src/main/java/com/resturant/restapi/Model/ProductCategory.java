@@ -20,11 +20,17 @@ public class ProductCategory {
 
     private String name;
 
+    private String description;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "productcategory")
     private Set<Product> drinkproducts;
 
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "media_id")
+    private Media categorymedia;
 
 
     public ProductCategory(Integer id, String name) {
@@ -56,25 +62,19 @@ public class ProductCategory {
         this.drinkproducts = drinkproducts;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
-//for hold recursion
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-//
-//    public void setDrinkproducts(Set<Drink> drinkproducts) {
-//        Drinkproducts = drinkproducts;
-//    }
-//
-//    public Set<Drink> getDrinkproducts() {
-//        return Drinkproducts;
-//    }
-//
-//    public Set<Food> getFoodproducts() {
-//        return Foodproducts;
-//    }
-//
-//    public void setFoodproducts(Set<Food> foodproducts) {
-//        Foodproducts = foodproducts;
-//    }
+    public Media getCategorymedia() {
+        return categorymedia;
+    }
 
-
+    public void setCategorymedia(Media categorymedia) {
+        this.categorymedia = categorymedia;
+    }
 }

@@ -3,8 +3,11 @@ package com.resturant.restapi.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +22,10 @@ public class Media {
 
     @Column(length = 1000000,name="FILECONTENT")
     private byte[] fileContent;
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "categorymedia")
+//    private List<ProductCategory> productCategoryList=new ArrayList<>();
 
 
     public Integer getId() {
@@ -44,4 +51,13 @@ public class Media {
     public void setFileContent(byte[] fileContent) {
         this.fileContent = fileContent;
     }
+
+
+//    public List<ProductCategory> getProductCategoryList() {
+//        return productCategoryList;
+//    }
+//
+//    public void setProductCategoryList(List<ProductCategory> productCategoryList) {
+//        this.productCategoryList = productCategoryList;
+//    }
 }

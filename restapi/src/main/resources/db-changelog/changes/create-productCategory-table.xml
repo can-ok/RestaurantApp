@@ -13,6 +13,12 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="VARCHAR(255)"></column>
+
+            <column name="description" type="VARCHAR(255)"></column>
+
+            <column name="media_id" type="int(10)">
+                <constraints  foreignKeyName="fk_category_media" referencedColumnNames="Media(id)"></constraints>
+            </column>
         </createTable>
     </changeSet>
 
@@ -20,14 +26,22 @@
         <insert tableName="PRODUCT_CATEGORY">
             <column name="id" valueNumeric="1"></column>
             <column name="name" value="Mesrubatlar"></column>
+            <column name="description" value="Soguk Mesrubatlar"></column>
+            <column name="media_id" value="1"></column>
+
         </insert>
         <insert tableName="PRODUCT_CATEGORY">
             <column name="id" valueNumeric="2"></column>
             <column name="name" value="Tatlılar"></column>
+            <column name="description" value="Soguk Tatlılar"></column>
+            <column name="media_id" value="2"></column>
         </insert>
         <insert tableName="PRODUCT_CATEGORY">
             <column name="id" valueNumeric="3"></column>
             <column name="name" value="Yemekler"></column>
+            <column name="description" value="Ana Yemekler"></column>
+            <column name="media_id" value="1"></column>
+
         </insert>
     </changeSet>
 

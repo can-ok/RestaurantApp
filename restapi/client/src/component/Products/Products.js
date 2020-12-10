@@ -222,8 +222,8 @@ class Production extends Component {
 
          if(this.state.categories.length>0){
             categoriesList=this.state.categories.map( (category)=>
-            <ListGroupItem  tag="button" action onClick={()=>this.getItemCategory(category.id)}>
-                <Link>{category.name} </Link>
+            <ListGroupItem className="mt-3" tag="button" action onClick={()=>this.getItemCategory(category.id)}>
+                <Link>{category.name} <img src={'data:image/png;base64,'+category.categorymedia.fileContent} width="25" /></Link>
             </ListGroupItem>
             
             );

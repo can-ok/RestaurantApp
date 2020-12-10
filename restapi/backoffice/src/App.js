@@ -11,6 +11,8 @@ import EditProduct from './component/Products/EditProduct';
 
 import CategoryList from './component/Category/CategoryList';
 import AddCategory from './component/Category/AddCategory';
+import EditCategory from './component/Category/EditCategory';
+
 import MenuBar from './component/Menu'
 
 import User from './component/User'
@@ -73,6 +75,7 @@ class App extends Component {
             <Route exact path="/users/edit/:id" component={EditUser} />
             <Route exact path="/categories" component={CategoryList} />
             <Route exact path="/addCategory" component={AddCategory}/>
+            <Route exact path="/editCategory/:id" component={EditCategory}/>
             <Route exact path="/config" component={Config} />
             <Route exact path="/tables" component={TableList} />
             <Route exact path="/addTable" component={AddTable} />

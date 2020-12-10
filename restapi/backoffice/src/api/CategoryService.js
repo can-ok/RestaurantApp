@@ -23,14 +23,20 @@ class CategoryService{
        return response;
     }
 
+    getCategoryById(){
+        //doldur
+    }
 
-    addCategories(itemTitle){
+
+    addCategories(state){
         var myHeaders = new Headers();
         myHeaders.append("Authorization", this.token);
         myHeaders.append("Content-Type", "application/json");
 
         var data={
-            "name": itemTitle
+            "name": state.itemTitle,
+            "description":state.itemDescription,
+            "categorymedia":state.selectedMedia.value
 
             };
 
@@ -48,18 +54,20 @@ class CategoryService{
 
     }
 
-    updateCategory(itemTitle,itemId){
+    updateCategory(state){
         var myHeaders = new Headers();
         myHeaders.append("Authorization", this.token);
         myHeaders.append("Content-Type", "application/json");
 
         var data={
-            "id":itemId,
-            "name": itemTitle
+            "id":state.id,
+            "name": state.itemTitle,
+            "description":state.itemDescription,
+            "categorymedia":state.selectedMedia
             };
 
         //localhost:8080/category/update/1
-        let response=fetch(`http://localhost:8080/category/update/${itemId}`,{
+        let response=fetch(`http://localhost:8080/category/update/${state.id}`,{
 
             method: 'PUT',
             headers: myHeaders,

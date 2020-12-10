@@ -1,7 +1,9 @@
 package com.resturant.restapi.converter;
 
+import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.dto.ProductCategoryDto;
+import liquibase.pro.packaged.M;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,11 +14,14 @@ public class ProductsCategoryDtoConverter {
 
 
     public static ProductCategoryDto productCategoryToCategoryDto(ProductCategory productCategory){
+
         ProductCategoryDto productCategoryDto=new ProductCategoryDto();
 
         productCategoryDto.setName(productCategory.getName());
         productCategoryDto.setId(productCategory.getId());
-
+        productCategoryDto.setDescription(productCategory.getDescription());
+        //productCategoryDto.setDrinkproducts(productCategory.getDrinkproducts());
+        productCategoryDto.setCategorymedia(productCategory.getCategorymedia());
         return productCategoryDto;
 
     }
@@ -85,6 +90,10 @@ public class ProductsCategoryDtoConverter {
     public static ProductCategory productCategoryDtoToProdCategory(ProductCategoryDto productCategoryDto){
         ProductCategory productCategory=new ProductCategory();
 
+        //productCategory.setCategorymedia(productCategoryDto.getCategorymedia()); cause errror
+
+        //productCategory.setDrinkproducts(ProductDtoConverter.con(productCategoryDto.getDrinkproducts()));
+        productCategory.setDescription(productCategoryDto.getDescription());
         productCategory.setName(productCategoryDto.getName());
         productCategory.setId(productCategoryDto.getId());
 
