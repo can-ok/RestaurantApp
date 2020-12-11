@@ -39,7 +39,10 @@ class WaiterList extends Component {
             itemList=waiters.map((item)=>
                 <tr key={item.id} >
                 <td>{item.id}</td>
-                <td>{item.name}</td>
+                <td>{item.firstname}</td>
+                <td>{item.lastname}</td>
+                <td>{item.birtdate}</td>
+                <td><img src={'data:image/png;base64,'+item.media.fileContent} width="60" /></td>
                 <td><Link to={`/editWaiter/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
                 <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
                 </tr>
@@ -61,7 +64,9 @@ class WaiterList extends Component {
                     <tr>
                     <th>ID</th>
                     <th>İsim</th>
-                    
+                    <th>Soyisim</th>
+                    <th>Doğum Tarihi</th>
+                    <th>Görsel</th>
                     <th></th>
                     <th></th>
                     </tr>

@@ -11,8 +11,14 @@
         <column autoIncrement="true" name="id" type="int(10)">
             <constraints primaryKey="true"/>
         </column>
-        <column name="name" type="VARCHAR(255)"></column>
+        <column name="firstname" type="VARCHAR(255)"></column>
+        <column name="lastname" type="VARCHAR(255)"></column>
+        <column name="email" type="VARCHAR(255)"></column>
+        <column name="birtdate" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"></column>
 
+        <column name="media_id" type="int(10)">
+            <constraints foreignKeyName="fk_media_waiter" referencedColumnNames="Media(id)"></constraints>
+        </column>
     </createTable>
 
 </changeSet>
@@ -21,11 +27,19 @@
     <changeSet author="can.okan" id="2">
         <insert tableName="WAITER_TABLE">
             <column name="id" valueNumeric="1"/>
-            <column name="name" value="waiter1"/>
+            <column name="firstname" value="waiter1"/>
+            <column name="lastname" value="yazar"/>
+            <column name="email" value="email"></column>
+            <column name="birtdate" valueDate="1995-08-20"></column>
+            <column name="media_id" value="6"></column>
         </insert>
         <insert tableName="WAITER_TABLE">
             <column name="id" valueNumeric="2"/>
-            <column name="name" value="waiter2"/>
+            <column name="firstname" value="waiter2"/>
+            <column name="lastname" value="gezer"/>
+            <column name="email" value="email"></column>
+            <column name="media_id" value="7"></column>
+
         </insert>
 
 

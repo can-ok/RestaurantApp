@@ -40,7 +40,7 @@ public class WaiterServiceTest {
 
     @Before
     public void setUpDto(){
-        waiterDto.setName("user");
+        waiterDto.setFirstname("user");
         waiterDto.setId(1);
     }
 

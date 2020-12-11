@@ -26,7 +26,11 @@ class WaiterService{
 
         
         var data={
-            "name":state.waiterName
+            "firstname":state.waiterFirstName,
+            "lastname":state.waiterLastName,
+            "email":state.waiterEmail,
+            "birtdate":state.selectedDate,
+            "media":state.selectedMedia.value
         }
 
         //localhost:8080/table/add/2
@@ -49,9 +53,6 @@ class WaiterService{
         
         //http://localhost:8080/waiters/delete/1
 
-
-        
-
         let response=fetch(`http://localhost:8080/waiters/delete/${id}`,{
 
             method:'DELETE',
@@ -70,7 +71,12 @@ class WaiterService{
         myHeaders.append("Content-Type", "application/json");
 
         var data={
-            "name":state.waiterName
+            "id":id,
+            "firstname":state.waiterFirstName,
+            "lastname":state.waiterLastName,
+            "email":state.waiterEmail,
+            "birtdate":state.selectedDate,
+            "media":state.selectedMedia.value
         }
 
         let response=fetch(`http://localhost:8080/waiters/update/${id}`,{

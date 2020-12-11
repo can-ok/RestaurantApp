@@ -33,10 +33,15 @@ const Modal = ({open,onClose,waiters,selectWaiter}) => {
 
     //const waitersList=waiters.map((item)=><option key={item.id} value={item.name} >{item.name}</option>)
 
-    const waitersList=waiters.map((item)=>{
+   /*  const waitersList=waiters.map((item)=>{
        return({label:item.name,id:item.id})
-    })
+    }) */
 
+    const waitersList=waiters.map((item)=>{
+        return({label:<div><h5>{item.firstname} <img src={'data:image/png;base64,'+item.media.fileContent} width="50" /> </h5> </div> ,value:item.id}
+            )
+    })
+   
     if(!open) return null;
 
     return ( 

@@ -32,13 +32,17 @@ import EditTable from './component/Table/EditTable';
 import WaiterList from './component/Waiter/WaiterList';
 import AddWaiter from './component/Waiter/AddWaiter';
 import EditWaiter from './component/Waiter/EditWaiter';
-
 import OrderList from './component/Order/OrderList';
 
 import Media from './component/Media/Media';
 
+import AppContext from './AppContext';
+
 class App extends Component {
-  state = { token:null }
+  state = { token:null ,
+
+    
+        }
 
   componentDidMount(){
 

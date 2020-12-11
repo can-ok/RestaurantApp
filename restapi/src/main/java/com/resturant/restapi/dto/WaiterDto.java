@@ -1,5 +1,6 @@
 package com.resturant.restapi.dto;
 
+import com.resturant.restapi.Model.Media;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,8 @@ public class WaiterDto {
 
     private String email;
 
-    private Date birthDate;
+    private Date birtdate;
+
+    private Media media;
+
 }

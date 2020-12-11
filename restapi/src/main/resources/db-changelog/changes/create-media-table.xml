@@ -21,8 +21,8 @@
     <changeSet id="13" author="can.okan">
         <insert tableName="Media">
             <column name="id" valueNumeric="1"></column>
-            <column name="name" value="Small"></column>
-            <column name="FILECONTENT" valueBlobFile="../../static/small.png"></column>
+            <column name="name" value="Ana Yemek"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/main-courses.png"></column>
         </insert>
         <insert tableName="Media">
             <column name="id" valueNumeric="2"></column>
@@ -31,8 +31,30 @@
         </insert>
         <insert tableName="Media">
             <column name="id" valueNumeric="3"></column>
-            <column name="name" value="soup"></column>
+            <column name="name" value="Çorba"></column>
             <column name="FILECONTENT" valueBlobFile="../../static/soup.png"></column>
+        </insert>
+
+        <insert tableName="Media">
+            <column name="id" valueNumeric="4"></column>
+            <column name="name" value="Meşrubatlar"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/drink1.png"></column>
+        </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="5"></column>
+            <column name="name" value="Sandviç"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/Sandwich.png"></column>
+        </insert>
+
+        <insert tableName="Media">
+            <column name="id" valueNumeric="6"></column>
+            <column name="name" value="Waiter1"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/waiter1.png"></column>
+        </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="7"></column>
+            <column name="name" value="Waiter2"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/waiter2.png"></column>
         </insert>
     </changeSet>
 

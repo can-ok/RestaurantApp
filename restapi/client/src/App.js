@@ -56,7 +56,12 @@ import AppContext,{ContextWrapper} from './AppContext';
                 }}
               />
               <Route exact path="/listCategory/:category" component={CategoryList} />
-              <Route exact path={["/","/menu"]} component={Menu}/>
+              <Route exact path={["/","/menu"]} 
+                render={props=>{
+                  if(!context) return <Redirect to="/login"/>;
+                  return <Menu {...props}/>
+                  }}
+              />
               <Route exact path="/logout" component={Logout} />
               
               <Route exact path="/table" render={props=>{

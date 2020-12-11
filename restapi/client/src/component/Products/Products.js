@@ -222,9 +222,9 @@ class Production extends Component {
 
          if(this.state.categories.length>0){
             categoriesList=this.state.categories.map( (category)=>
-            <ListGroupItem className="mt-3" tag="button" action onClick={()=>this.getItemCategory(category.id)}>
-                <Link>{category.name} <img src={'data:image/png;base64,'+category.categorymedia.fileContent} width="25" /></Link>
-            </ListGroupItem>
+            <div className="mt-3  border border-primary p-3 rounded" tag="button" action onClick={()=>this.getItemCategory(category.id)}>
+                <Link>{category.name} <img src={'data:image/png;base64,'+category.categorymedia.fileContent} width="30" /></Link>
+            </div>
             
             );
         } 
@@ -241,9 +241,9 @@ class Production extends Component {
             <div className="col-2 float-left mt-2 ml-2 row">
             
             <ListGroup className="Category_List">
-                <ListGroupItem  tag="button" action  onClick={()=>this.getItems()}>
+                <div className="border border-primary p-3 rounded"  tag="button" action  onClick={()=>this.getItems()}>
                 <Link>Hepsi</Link>
-                </ListGroupItem>
+                </div>
             {categoriesList}
             </ListGroup>
             </div>

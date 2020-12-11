@@ -37,7 +37,7 @@ public class WaitersControllerTest {
 
     @Before
     public void setUpWaitersList(){
-        waiterDto.setName("waiter_deneöme");
+        waiterDto.setFirstname("waiter_deneöme");
         waiterDto.setId(1);
         waiterDtoList.add(waiterDto);
     }

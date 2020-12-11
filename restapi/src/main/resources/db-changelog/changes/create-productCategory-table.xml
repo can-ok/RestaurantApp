@@ -27,7 +27,7 @@
             <column name="id" valueNumeric="1"></column>
             <column name="name" value="Mesrubatlar"></column>
             <column name="description" value="Soguk Mesrubatlar"></column>
-            <column name="media_id" value="1"></column>
+            <column name="media_id" value="4"></column>
 
         </insert>
         <insert tableName="PRODUCT_CATEGORY">

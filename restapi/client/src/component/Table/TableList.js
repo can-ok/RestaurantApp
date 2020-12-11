@@ -140,13 +140,14 @@ class TableList extends Component {
         //window.location="/products" 
     }
 
-    selectWaiter=(value)=>{
-       
-        console.log(value)
+    selectWaiter=(item)=>{
+        
+        
+        console.log(item)
         this.setState({showModal:false})
         
         let appState={...this.context.appState}
-        appState.waiter=value.id
+        appState.waiter=item.value
         this.context.setAppState(appState)
 
         //sessionStorage.setItem('waiter',value.id)

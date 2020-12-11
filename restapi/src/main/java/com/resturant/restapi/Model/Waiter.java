@@ -28,6 +28,10 @@ public class Waiter {
 
     private String email;
 
-    private Date birthDate;
+    private Date birtdate;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="media_id")
+    private Media media;
 
 }
