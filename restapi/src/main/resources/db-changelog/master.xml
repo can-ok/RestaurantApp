@@ -9,11 +9,12 @@
     <include file="/db-changelog/changes/create-waiter-table.xml"></include>
     <include file="/db-changelog/changes/create-orders-table.xml"/>
     <include file="/db-changelog/changes/create-user-table.xml"/>
-    <include file="/db-changelog/changes/create-auth-table.xml"/>
+<!--    <include file="/db-changelog/changes/create-auth-table.xml"/>-->
     <include file="/db-changelog/changes/create-tables-table.xml"/>
     <include file="/db-changelog/changes/create-productCategory-table.xml"/>
     <include file="/db-changelog/changes/create-drinks-table.xml"/>
-<!--    <include file="/db-changelog/changes/create-food-table.xml"/>-->
     <include file="/db-changelog/changes/create-media-table.xml"/>
+    <include file="/db-changelog/changes/create-roles-table.xml"/>
+    <include file="/db-changelog/changes/create-user_roles-table.xml"/>
 
 </databaseChangeLog>

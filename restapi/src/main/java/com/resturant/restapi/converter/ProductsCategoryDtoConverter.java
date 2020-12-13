@@ -90,9 +90,6 @@ public class ProductsCategoryDtoConverter {
     public static ProductCategory productCategoryDtoToProdCategory(ProductCategoryDto productCategoryDto){
         ProductCategory productCategory=new ProductCategory();
 
-        //productCategory.setCategorymedia(productCategoryDto.getCategorymedia()); cause errror
-
-        //productCategory.setDrinkproducts(ProductDtoConverter.con(productCategoryDto.getDrinkproducts()));
         productCategory.setDescription(productCategoryDto.getDescription());
         productCategory.setName(productCategoryDto.getName());
         productCategory.setId(productCategoryDto.getId());

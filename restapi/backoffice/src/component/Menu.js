@@ -9,12 +9,12 @@ const MenuBar = (props) => {
     <Nav className="mr-auto">
       <Nav.Link href="/">Ürünler</Nav.Link>
       <Nav.Link href="/users">Kullanıcılar</Nav.Link>
+      <Nav.Link href="roles">Yetkililer</Nav.Link>
       <Nav.Link href="/categories">Kategoriler</Nav.Link>
       <Nav.Link href="/order">Sipariş</Nav.Link>
       <Nav.Link href="/tables">Masalar</Nav.Link>
       <Nav.Link href="/waiters">Garsonlar</Nav.Link>
       <Nav.Link href="#pricing">Raporlar</Nav.Link>
-      <Nav.Link href="#pricin2g">Yetkililer</Nav.Link>
       <Nav.Link href="/config">Config</Nav.Link>
       </Nav>
 

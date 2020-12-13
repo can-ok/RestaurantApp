@@ -1,6 +1,6 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.dto.AuthoritiesDto;
+import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.service.UserService;
 import org.junit.Before;
@@ -46,7 +46,7 @@ public class UserControllerTest {
 
     }
 
-    List<AuthoritiesDto> authList=new ArrayList<>();
+    List<RoleDto> authList=new ArrayList<>();
 
 
     @Test

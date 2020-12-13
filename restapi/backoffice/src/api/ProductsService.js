@@ -60,8 +60,8 @@ class ProductsService{
             "title":item.itemTitle,
             "description":item.itemDescription,
             "price":item.price,
-            "productcategory":productCategory
-
+            "productcategory":productCategory,
+            "media":item.selectedMedia.value
             };
 
         console.log(productCategory)
@@ -117,20 +117,15 @@ class ProductsService{
         console.log(item.selectedCategories)
 
 
-        const productCategory=item.selectedCategories.map((itemObject)=>{
-            
-            var rObj={"id":itemObject.id,"name":itemObject.label};
-            return rObj
-        });
-
-        console.log("pro",productCategory)
 
         var data={
             "id":item.id,
             "title":item.itemTitle,
             "description":item.itemDescription,
             "price":item.price,
-            "productcategory":productCategory
+            "productcategory":item.selectedCategories,
+            "media":item.selectedMedia.value
+
             };
         
               //http://localhost:8080/products/update/drink/1

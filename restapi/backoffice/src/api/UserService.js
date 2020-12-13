@@ -27,12 +27,14 @@ class UserSerivce{
 
         var headers={"Authorization":this.token,"Content-Type":"application/json"}
 
-        const {userName,userPass,userRole}=item;
+        const {userName,userPass,selectedRole}=item;
+
+        console.log(selectedRole.value)
         var userCandidate={
-            "userName":userName,
+            "username":userName,
             "password":userPass,
-            "authority":userRole,
-            "enabled":"true"
+            "enabled":"true",
+            "roles":selectedRole
         }
         //http://localhost:8080/users/save
 
@@ -56,11 +58,21 @@ class UserSerivce{
         return response;
     }
 
-    updateUser(id,userData){
+    updateUser(state){
 
         var headers={"Authorization":this.token,"Content-Type":"application/json"}
 
         let response;
+
+        let id=state.id
+        let userData={
+            "id":state.id,
+            "username":state.userName,
+            "password":state.userPass,
+            "authority":state.userRole,
+            "enabled":true,
+            "roles":state.selectedRole
+        }
 
 
         response=axios.put(`http://localhost:8080/users/update/${id}`,userData,{
@@ -73,7 +85,7 @@ class UserSerivce{
 
     getUserById(id){
         
-        var headers={"Authorization":this.token}
+        var headers={"Authorization":this.token,"Content-Type":"application/json"}
 
         let response;
 
@@ -83,6 +95,54 @@ class UserSerivce{
 
         return response;
     }
+
+    getAllRoles(){
+        var headers={"Authorization":this.token}
+        let response;
+
+        //http://localhost:8080/roles
+        response=axios.get("http://localhost:8080/roles",{
+            headers:headers
+        })
+
+        return response;
+
+    }
+
+    saveRole(id,name){
+        var headers={"Authorization":this.token,"Content-Type":"application/json"}
+        let response;
+
+        //http://localhost:8080/roles
+        let userData={
+            "id":id,
+            "name":name
+        }
+
+
+        axios.post(`http://localhost:8080/roles`,userData,{
+            headers:headers
+        })
+
+        return response;
+
+    }
+
+    updateRole(id,name){
+        var headers={"Authorization":this.token,"Content-Type":"application/json"}
+        let userData={
+            "id":id,
+            "name":name
+        }
+        //http://localhost:8080/roles/2
+        let response=axios.put(`http://localhost:8080/roles/${id}`,userData,{
+            headers:headers
+        })
+
+        return response;
+    }
+
+
 
 
 }

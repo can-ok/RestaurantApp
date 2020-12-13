@@ -45,7 +45,6 @@ public class ProductsController {
 
         return productsService.getDrinkById(id);
     }
-//
 
 
     @DeleteMapping(path = "/delete/drink/{id}")

@@ -1,6 +1,5 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.Model.AUTHORITIES;
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.service.UserService;
@@ -48,11 +47,11 @@ public class UserController {
 
 
 
-    @GetMapping("/getAllAuth")
-    public List<AUTHORITIES> getAllAuth(){
-
-        return userService.getAllAuth();
-    }
+//    @GetMapping("/getAllAuth")
+//    public List<AUTHORITIES> getAllAuth(){
+//
+//        return userService.getAllAuth();
+//    }
 
 
 }

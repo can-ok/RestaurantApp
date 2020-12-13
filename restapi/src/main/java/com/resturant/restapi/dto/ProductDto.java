@@ -1,5 +1,6 @@
 package com.resturant.restapi.dto;
 
+import com.resturant.restapi.Model.Media;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,7 @@ public class ProductDto {
 
     private Set<ProductCategoryDto> productcategory=new HashSet<>();
 
+    private Media media;
 
 
 
@@ -62,5 +64,13 @@ public class ProductDto {
 
     public void setProductcategory(Set<ProductCategoryDto> productcategory) {
         this.productcategory = productcategory;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
     }
 }

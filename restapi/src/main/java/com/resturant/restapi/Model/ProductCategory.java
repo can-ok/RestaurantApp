@@ -24,7 +24,7 @@ public class ProductCategory {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "productcategory")
-    private Set<Product> drinkproducts;
+    private Set<Product> products;
 
 
 
@@ -54,12 +54,12 @@ public class ProductCategory {
         this.name = name;
     }
 
-    public Set<Product> getDrinkproducts() {
-        return drinkproducts;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setDrinkproducts(Set<Product> drinkproducts) {
-        this.drinkproducts = drinkproducts;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     public String getDescription() {

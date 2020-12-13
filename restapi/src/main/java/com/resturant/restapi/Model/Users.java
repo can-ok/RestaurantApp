@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,20 +25,19 @@ public class Users  implements Serializable {
     @Column(name = "ENABLED")
     private boolean Enabled;
 
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+            name="USER_ROLES",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id")
+    )
+    private Set<Role> roles=new HashSet<>();
 
-    private String 	AUTHORITY;
 
-    public String getAUTHORITY() {
-        return AUTHORITY;
-    }
 
-    public void setAUTHORITY(String AUTHORITY) {
-        this.AUTHORITY = AUTHORITY;
-    }
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -63,5 +64,16 @@ public class Users  implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.Enabled = enabled;
+    }
+
+
+
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

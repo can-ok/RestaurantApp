@@ -1,11 +1,12 @@
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.AUTHORITIES;
+import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.Model.Users;
+import com.resturant.restapi.converter.RoleDtoConverter;
 import com.resturant.restapi.converter.UserDtoConverter;
 import com.resturant.restapi.dto.UsersDto;
-import com.resturant.restapi.repository.AuthoritiesRepository;
 
+import com.resturant.restapi.repository.RolesRepository;
 import com.resturant.restapi.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -19,24 +20,22 @@ public class UserService {
     UsersRepository userRepository;
 
     @Autowired
-    AuthoritiesRepository authRepository;
+    private RolesRepository rolesRepository;
 
     public UsersDto insertUser(UsersDto usersDto){
 
-        AUTHORITIES newAuth=new AUTHORITIES(null,usersDto.getUSERNAME(),usersDto.getAUTHORITY());
-        //we also have to insert authorzation
-        authRepository.save(newAuth);
-
 
         Users users=UserDtoConverter.userDtoToUser(usersDto);
-        //update userpass
-        //users.setPassword("{noop}"+users.getPassword());
+
+        usersDto.getRoles().stream().forEach(dtoRole->{
+            Role role = rolesRepository.findById(dtoRole.getId()).get();
+            users.getRoles().add(role);
+        });
         userRepository.save(users);
         return usersDto;
     }
 
     public List<UsersDto> getAllUser(){
-
 
         List<UsersDto> usersDtoList=UserDtoConverter.convertUsesrListoUserDtoList(userRepository.findAll());
         return usersDtoList;
@@ -77,7 +76,7 @@ public class UserService {
             entity.get().setId(id);
             entity.get().setUSERNAME(usersDto.getUSERNAME());
             entity.get().setPassword(usersDto.getPassword());
-
+            entity.get().setRoles(RoleDtoConverter.roleDtoSetToRoleSet(usersDto.getRoles()));
             userRepository.save(entity.get());
 
             UsersDto response=UserDtoConverter.userToUserDto(entity.get());
@@ -85,15 +84,6 @@ public class UserService {
             return response;
         }
     }
-
-    public List<AUTHORITIES> getAllAuth(){
-
-
-        return authRepository.findAll();
-    }
-
-
-    //handle register
 
 
     public Map<String,String> register(UsersDto user){

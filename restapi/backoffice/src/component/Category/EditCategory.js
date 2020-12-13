@@ -3,6 +3,7 @@ import {Form,FormGroup,Label,Input, Button} from 'reactstrap';
 import {Link} from "react-router-dom";
 import CategoryService from '../../api/CategoryService';
 import Select from 'react-select';
+import MediaService from '../../api/MediaService';
 
 class EditCategory extends Component {
     state = {  itemTitle:"" ,
@@ -15,9 +16,7 @@ class EditCategory extends Component {
 
     componentDidMount(){
 
-        fetch("http://localhost:8080/media/getAll",{
-            method:'GET'
-        }).then((response)=>response.json())
+       MediaService.getAllMedia()
         .then((data)=>{
             this.setState({
                 categoryMedia:data

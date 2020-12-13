@@ -16,26 +16,27 @@
             <column name="USERNAME" type="VARCHAR(255)"></column>
             <column name="PASSWORD" type="VARCHAR(255)"></column>
             <column name="ENABLED" type="BOOLEAN"></column>
-            <column name="AUTHORITY" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
 
     <changeSet id="6" author="can.okan">
         <insert tableName="Users">
+            <column name="id" valueNumeric="2"/>
             <column name="USERNAME" value="user1"/>
-            <column name="PASSWORD" value="{noop}pass1"/>
+            <column name="PASSWORD" value="$2y$12$vGv9TaBhAuOeXG.ZZJaAq.1aC1PReJcU7bWGJlFA/2X7Ko52fU6BS "/>
+            <!--admin:admin123 -->
             <column name="ENABLED" valueBoolean="true"/>
-            <column name="AUTHORITY" value="ROLE_USER"/>
 
         </insert>
     </changeSet>
 
     <changeSet id="7" author="can.okan">
         <insert tableName="Users">
+            <column name="id" valueNumeric="1"/>
             <column name="USERNAME" value="admin"/>
-            <column name="PASSWORD" value="{noop}admin123"/>
+            <column name="PASSWORD" value="$2y$12$EHa.Wvvf4sRmDYcQkJutwuY0fEaKbBdspT10bunjHN5EwIx/ULO5q"/>
+            <!-- name:admin pass:admin123 -->
             <column name="ENABLED" valueBoolean="true"/>
-            <column name="AUTHORITY" value="ROLE_ADMIN"/>
 
         </insert>
     </changeSet>

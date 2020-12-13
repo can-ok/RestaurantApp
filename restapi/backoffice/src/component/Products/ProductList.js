@@ -5,7 +5,7 @@ import {GrFormAdd} from 'react-icons/gr'
 
 import ProductsService from '../../api/ProductsService'
 
-class DrinkList extends Component {
+class ProductList extends Component {
     state = {
                 items:[] 
             }
@@ -74,6 +74,7 @@ class DrinkList extends Component {
                     <td>{item.id}</td>
                     <td><Link to={`/description/${"drink"}/${item.id}`} >{item.title} </Link></td>
                     <td>{item.description}</td>
+                    <td><img src={'data:image/png;base64,'+item.media.fileContent} width="75" /></td>
                     <td>
                     {item.productcategory.map((category)=><Link onClick={()=>this.handle_filterProducts(category.name)} >{category.name} </Link>  )}
                         <Link onClick={()=>this.handle_filterProducts(item.productcategory.name)} >{item.productcategory.name}</Link></td>
@@ -102,6 +103,7 @@ class DrinkList extends Component {
                     <th>ID</th>
                     <th>İsim</th>
                     <th>Açıklama</th>
+                    <th>Görsel</th>
                     <th>Kategori</th>
                     <th>Fiyat</th>
                     <th></th>
@@ -118,4 +120,4 @@ class DrinkList extends Component {
     }
 }
  
-export default DrinkList;
+export default ProductList;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
+import Select from 'react-select';
 
 import UserService from '../../api/UserService'
 
@@ -10,7 +10,7 @@ class EditUser extends Component {
         id:"",
         userName:"",
         userPass:"",
-        userRole:"",
+        selectedRole:[],authRoles:[],        
         enabled:"" }
 
 
@@ -35,9 +35,8 @@ class EditUser extends Component {
             console.log(response)
             this.setState({
                 id:response.data.id,
-                userName:response.data.userName,
+                userName:response.data.username,
                 userPass:response.data.password,
-                userRole:response.data.authority,
                 enabled:response.data.enabled
             })
 
@@ -47,21 +46,23 @@ class EditUser extends Component {
             console.error(err);
         })
 
+
+        UserService.getAllRoles().then((respose)=>{
+            
+            this.setState({
+                authRoles:respose.data
+            })
+
+        })
+
+       
     }
 
     handleUpdate=()=>{
 
-
-        let userData={
-            "id":this.state.id,
-            "userName":this.state.userName,
-            "password":this.state.userPass,
-            "authority":this.state.userRole,
-            "enabled":this.state.enabled
-        }
         //http://localhost:8080/users/update/1
         
-        UserService.updateUser(this.state.id,userData)
+        UserService.updateUser(this.state)
         .then((response)=>{
             
         
@@ -72,11 +73,33 @@ class EditUser extends Component {
             });
 
     }
+
+    handleSelectChange=(items)=>{
+
+        let list= Array.isArray(items)? items.map(item=>{
+            
+            //console.log(item)
+            return(item.value)
+        }):[]
+
+        console.log(list)
+
+        this.setState({
+            selectedRole:list
+        })
+
+    }
+
     
 
     render() { 
 
-        const {userName,userPass,userRole}=this.state;
+
+        const roles= this.state.selectedRole;
+
+        const {userName,userPass,authRoles}=this.state;
+
+        const authOptions=authRoles.map((item)=>{return({'label':item.name,'value':item})})
 
         return ( <Form>
            
@@ -88,10 +111,9 @@ class EditUser extends Component {
               <Label>Password:
               <Input name="userPass" type="text"  onChange={this.handleInputChange} value={userPass}/></Label>
             </FormGroup>
-            <FormGroup>
-              <Label>Authority:
-              <Input name="userRole" type="text"  onChange={this.handleInputChange} value={userRole}/></Label>
-            </FormGroup>
+           <FormGroup>
+                <Select options={authOptions} values={authOptions.filter(obj=>roles.includes(obj.value))}onChange={this.handleSelectChange} isMulti isClearable/>
+           </FormGroup>
 
             <Link to="/users" onClick={this.handleUpdate} className="btn btn-success">Submit</Link>
             <Link to="/users" className="btn btn-danger ml-2">Geri</Link>        

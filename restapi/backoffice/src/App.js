@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import React, { Component } from 'react';
 
-import Products from './component/Products';
+import ProductList from './component/Products/ProductList';
 import ProductDescription from './component/Products/ProductDescription';
 import AddProduct from './component/Products/AddProduct'
 import EditProduct from './component/Products/EditProduct';
@@ -33,6 +33,8 @@ import WaiterList from './component/Waiter/WaiterList';
 import AddWaiter from './component/Waiter/AddWaiter';
 import EditWaiter from './component/Waiter/EditWaiter';
 import OrderList from './component/Order/OrderList';
+
+import ListRoles from './component/Role/ListRole';
 
 import Media from './component/Media/Media';
 
@@ -68,7 +70,7 @@ class App extends Component {
   
       <Router>
         <Switch>
-            <Route exact path="/" component={Products}/>
+            <Route exact path="/" component={ProductList}/>
             <Route exact path="/login" component={LoginForm}/>
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/description/:type/:id" component={ProductDescription} />
@@ -89,6 +91,7 @@ class App extends Component {
             <Route exact path="/editWaiter/:id" component={EditWaiter}/>
             <Route exact path="/media/" component={Media}/>
             <Route exact path="/order" component={OrderList} />
+            <Route exact path="/roles" component={ListRoles}/>
         </Switch>
       </Router>
       </div>

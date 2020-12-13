@@ -3,20 +3,24 @@ package com.resturant.restapi.converter;
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.dto.UsersDto;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDtoConverter {
 
+    private final static BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
 
     public static Users userDtoToUser(UsersDto usersDto){
 
         Users users=new Users();
         users.setUSERNAME(usersDto.getUSERNAME());
-        users.setPassword("{noop}"+usersDto.getPassword());
+
+        users.setPassword(encoder.encode(usersDto.getPassword()));
         users.setEnabled(usersDto.isEnabled());
         users.setId(usersDto.getId());
+
         return users;
     }
 
@@ -55,9 +59,11 @@ public class UserDtoConverter {
 
         userDto.setId(user.getId());
         userDto.setUSERNAME(user.getUSERNAME());
-        userDto.setPassword(user.getPassword());
+        userDto.setPassword(encoder.encode(user.getPassword()));
+        //create converter and add AUthDot
+
+        userDto.setRoles( RoleDtoConverter.roleSetToRoleDtoSet(user.getRoles()));
         userDto.setEnabled(user.isEnabled());
-        userDto.setAUTHORITY(user.getAUTHORITY());
         return userDto;
     }
 

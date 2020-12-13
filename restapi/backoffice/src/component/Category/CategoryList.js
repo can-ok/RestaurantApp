@@ -6,7 +6,6 @@ import {GrFormAdd} from 'react-icons/gr'
 
 import CategoryService from '../../api/CategoryService';
 
-import AddCategory from './AddCategory';
 
 class CategoryList extends Component {
     state = {  categories:[],
@@ -101,7 +100,7 @@ class CategoryList extends Component {
             </tbody>
         </table> 
         </div>
-        {this.state.showComponent ? <AddCategory formStatus={this.state.formStatus} updateId={this.state.updateId} />:null}
+    
 
         </div>
 

@@ -1,11 +1,13 @@
 package com.resturant.restapi.dto;
 
+import com.resturant.restapi.Model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class UsersDto {
     private String USERNAME;
     private String Password;
     private boolean Enabled;
-    private String 	AUTHORITY;
+    private Set<RoleDto> roles=new HashSet<>();
 
 
 }

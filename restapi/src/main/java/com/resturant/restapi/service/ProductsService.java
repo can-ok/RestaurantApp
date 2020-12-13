@@ -1,18 +1,23 @@
 package com.resturant.restapi.service;
 
+import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.converter.ProductDtoConverter;
 import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
 import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.dto.ProductDto;
+import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.ProductRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,11 +34,14 @@ public class ProductsService {
     @Autowired
     ProductCategoryRepository productcategoryRepository;
 
-
+    @Autowired
+    MediaRepository mediaRepository;
 
     public List<ProductDto> getAllDrinks(){
 
         List<ProductDto> productDtoList =new ArrayList<>();
+
+        //PageRequest pageable= PageRequest.of(0,3);
 
         productDtoList = ProductDtoConverter.convertDrinkListToDrinDtoList(productDtoList, productRepository.findAll());
 
@@ -74,10 +82,10 @@ public class ProductsService {
         for(ProductCategoryDto productcategoryDto: productDto.getProductcategory())
         {
             Optional<ProductCategory> productcategory=productcategoryRepository.findById(productcategoryDto.getId());
-
+            Optional<Media> media=mediaRepository.findById(productDto.getMedia().getId());
             if(productcategory.isPresent()){
 
-                product =ProductDtoConverter.convertDrinkDtoToDrink(product, productDto,productcategory);
+                product =ProductDtoConverter.convertDrinkDtoToDrink(product, productDto,productcategory,media.get());
 
 
             }
@@ -112,12 +120,12 @@ public class ProductsService {
 
         List<ProductDto> productDtos =new ArrayList<>();
 
-        Optional<Product> drinkEntity= productRepository.findById(id);
-        if(drinkEntity.isPresent()){
+        Optional<Product> productEntity= productRepository.findById(id);
+        if(productEntity.isPresent()){
 
-            //drinkEntity.get().setProductcategory(null);
-
-            productRepository.delete(drinkEntity.get());
+            productEntity.get().setProductcategory(null);
+            productEntity.get().setMedia(null);
+            productRepository.delete(productEntity.get());
             productDtos =getAllDrinks();
 
         }
@@ -145,9 +153,16 @@ public class ProductsService {
             optinalDrink.get().setPrice(productDto.getPrice());
             optinalDrink.get().setTitle(productDto.getTitle());
 
-            List<ProductCategory> prodList=ProductsCategoryDtoConverter.prodCategoryDtoSetToProdCategoryList(productDto.getProductcategory());
-            optinalDrink.get().setProductcategory(ProductsCategoryDtoConverter.prodCategoryDtoListToProductCategoryList(productDto.getProductcategory()));
 
+            productDto.getProductcategory().forEach(productCategoryDto -> {
+
+                Optional<ProductCategory> productcategory=productcategoryRepository.findById(productCategoryDto.getId());
+                optinalDrink.get().getProductcategory().add(productcategory.get());
+            });
+
+
+            Optional<Media> media=mediaRepository.findById(productDto.getMedia().getId());
+            optinalDrink.get().setMedia(media.get());
             productRepository.save(optinalDrink.get());
 
             return productDto;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+
+    <changeSet id="5" author="can.okan">
+        <createTable tableName="USER_ROLES">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="user_id" type="int(10)">
+
+                <constraints nullable="false" foreignKeyName="fk_user_role" references="Users(id)" />
+            </column>
+
+            <column name="role_id" type="int(10)">
+
+                <constraints nullable="false" foreignKeyName="fk_role_user" references="ROLES(id)" />
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="16" author="can.okan">
+        <insert tableName="USER_ROLES">
+            <column name="id" valueNumeric="1"></column>
+            <column name="user_id" valueNumeric="1"></column>
+            <column name="role_id" valueNumeric="1"></column>
+
+        </insert>
+        <insert tableName="USER_ROLES">
+            <column name="id" valueNumeric="2"></column>
+            <column name="user_id" valueNumeric="2"></column>
+            <column name="role_id" valueNumeric="2"></column>
+
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

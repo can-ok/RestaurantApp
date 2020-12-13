@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 import ProductsService from '../../api/ProductsService';
+import Select from 'react-select';
+import MediaService from '../../api/MediaService';
 
 import CategoryService from '../../api/CategoryService';
 
@@ -11,7 +13,9 @@ class AddProduct extends Component {
               productCategory:"",
               price:"",
               options:[],
-              selectValue:[""]
+              mediaOptions:[],
+              selectValue:[""],
+              selectedMedia:[]
             }
 
 
@@ -70,13 +74,20 @@ class AddProduct extends Component {
         })
       })
 
+      MediaService.getAllMedia()
+      .then((response)=>response.json())
+      .then((data)=>{
+        this.setState({
+          mediaOptions:data
+        })
+      })
+
     }
 
 
     mySubmitHandler=()=>{
 
         const type=this.props.match.params.type;
-     
 
         ProductsService.addProduct(this.state,type)
         .then((response)=>{
@@ -88,11 +99,22 @@ class AddProduct extends Component {
         
     }
 
+    handleSelectChange=(item)=>{
+        
+      this.setState({
+          selectedMedia:item
+      })
+  }
+
 
     render() { 
 
         const optionList=this.state.options.map((item)=>{
           return(<option key={item.id} value={[item.id,item.name]}>{item.name}</option>)
+        })
+
+        const mediaList=this.state.mediaOptions.map((option)=>{
+          return({'label':<div>{option.name}  <img src={'data:image/png;base64,'+option.fileContent} width="30" /></div> ,value:option})
         })
 
         return ( <Form>
@@ -111,6 +133,9 @@ class AddProduct extends Component {
                 {optionList}
               </select>
               </FormGroup>
+            <FormGroup>
+            <Select className="col-md-4" options={mediaList} value={this.state.selectedMedia}  onChange={this.handleSelectChange}  />
+            </FormGroup>
 
             <FormGroup>
               <Label>Price:

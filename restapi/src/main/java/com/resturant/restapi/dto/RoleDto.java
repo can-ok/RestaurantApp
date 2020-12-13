@@ -12,11 +12,10 @@ import javax.persistence.Column;
 @AllArgsConstructor
 @Getter
 @Setter
-public class AuthoritiesDto {
+public class RoleDto {
 
     private Integer id;
 
-    private String username;
+    private String name;
 
-    private String 	AUTHORITY;
 }

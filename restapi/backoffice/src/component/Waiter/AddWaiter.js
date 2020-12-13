@@ -60,6 +60,7 @@ class AddWaiter extends Component {
     }
     handleSelectChange=(item)=>{
         
+        console.log(item)
         this.setState({
             selectedMedia:item
         })

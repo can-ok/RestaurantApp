@@ -28,9 +28,14 @@ public class Product implements Serializable {
 
 
     //@JsonManagedReference
-    @ManyToMany()
-    @JoinTable(name="TBL_CATEGORY_DRINK",joinColumns = @JoinColumn(name="product_id"),inverseJoinColumns = @JoinColumn(name="category_id"))
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="TBL_CATEGORY_Product",joinColumns = @JoinColumn(name="product_id"),inverseJoinColumns = @JoinColumn(name="category_id"))
     private Set<ProductCategory> productcategory=new HashSet<>();
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "media_id")
+    private Media media;
 
 
     public Integer getId() {
@@ -77,5 +82,13 @@ public class Product implements Serializable {
 
     public void setProductcategory(Set<ProductCategory> productcategory) {
         this.productcategory = productcategory;
+    }
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public void setMedia(Media media) {
+        this.media = media;
     }
 }

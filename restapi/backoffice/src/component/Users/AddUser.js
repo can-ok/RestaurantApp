@@ -1,13 +1,28 @@
 import React, { Component } from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
+import Select from 'react-select';
 
 import UserSerivce from '../../api/UserService';
 
 import axios from 'axios';
 
 class AddUser extends Component {
-    state = { userName:"",userPass:"",userRole:"" }
+    state = { userName:"",userPass:"",selectedRole:[],authRoles:[] }
+
+
+    componentDidMount(){
+
+        UserSerivce.getAllRoles().then((respose)=>{
+            
+            this.setState({
+                authRoles:respose.data
+            })
+
+        })
+
+    }
+
 
 
     mySubmitHandler=()=>{
@@ -32,8 +47,34 @@ class AddUser extends Component {
         })
     }
 
+    handleSelectChange=(items)=>{
+
+        let list= Array.isArray(items)? items.map(item=>{
+            
+            //console.log(item)
+            return(item.value)
+        }):[]
+
+        console.log(list)
+
+        this.setState({
+            selectedRole:list
+        })
+
+    }
 
     render() {
+
+        const roles= this.state.selectedRole;
+
+        const authOptions=this.state.authRoles.map((item)=>{
+            return({'label':item.name,'value':item})
+
+        })
+
+
+       
+
         return ( <Form>
            
             <FormGroup>
@@ -44,9 +85,12 @@ class AddUser extends Component {
               <Label>Password:
               <Input name="userPass" type="text"  onChange={this.handleInputChange}/></Label>
             </FormGroup>
+
+            <Select options={authOptions} values={authOptions.filter(obj=>roles.includes(obj.value))}  onChange={this.handleSelectChange} isMulti isClearable/>
+
             <FormGroup>
-              <Label>Role:
-              <Input name="userRole" type="text"  onChange={this.handleInputChange}/></Label>
+             
+
             </FormGroup>
 
             <Link to="/users" onClick={this.mySubmitHandler} className="btn btn-success">Submit</Link>

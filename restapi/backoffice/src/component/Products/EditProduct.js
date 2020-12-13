@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import ProductsService from '../../api/ProductsService'
 import Select from 'react-select';
 import CategoryService from '../../api/CategoryService';
+import MediaService from '../../api/MediaService';
 
 
 class EditProduct extends Component {
@@ -14,7 +15,9 @@ class EditProduct extends Component {
         productCategory:"",
         price:"",
         optionsCategory:[],
-        selectedCategories:[]
+        selectedCategories:[],
+        mediaOptions:[],
+        selectedMedia:[]
 
     }
 
@@ -64,6 +67,15 @@ class EditProduct extends Component {
             })
         })
 
+        MediaService.getAllMedia()
+        .then((response)=>response.json())
+        .then((data)=>{
+          this.setState({
+            mediaOptions:data
+          })
+        })
+  
+
 
     }
 
@@ -80,15 +92,15 @@ class EditProduct extends Component {
 
     handleSelectChange=(items)=>{
         //console.log("selected",items)
-        let is= Array.isArray(items)? items.map(item=>{
+        let list= Array.isArray(items)? items.map(item=>{
             
             //console.log(item)
-            return(item)
+            return(item.value)
         }):[]
-        console.log("is",is)
+
 
         this.setState({
-            selectedCategories:is
+            selectedCategories:list
         })
     }
 
@@ -115,8 +127,13 @@ class EditProduct extends Component {
         const {itemTitle,itemDescription,selectedCategories,price}=this.state;
         
         const categoryOptions=this.state.optionsCategory.map((item)=>{
-            return({label:item.name,id:item.id})
+            return({'label':item.name,'value':item})
         })
+
+        const mediaList=this.state.mediaOptions.map((option)=>{
+            return({'label':<div>{option.name}  <img src={'data:image/png;base64,'+option.fileContent} width="30" /></div> ,value:option})
+          })
+  
         
         return (   <div>
 
@@ -131,12 +148,17 @@ class EditProduct extends Component {
               <Input name="itemDescription" type="text"  onChange={this.handleInputChange} value={itemDescription}/></Label>
             </FormGroup>
             <FormGroup>
-            <Label>Category:
-              
-            </Label>
-            <Select options={categoryOptions} value={selectedCategories}  onChange={this.handleSelectChange} isMulti isClearable/>
-
+            <Label>Category: </Label>
+            <Select options={categoryOptions} value={categoryOptions.filter(obj=>selectedCategories.includes(obj.value))}  onChange={this.handleSelectChange} isMulti isClearable/>
             </FormGroup>
+
+            <FormGroup>
+            <Label>Media:
+              </Label>
+            <Select options={mediaList} value={this.state.selectedMedia}  onChange={(e)=>{this.setState({selectedMedia:e})}} isClearable/>
+            </FormGroup>
+
+
             <FormGroup>
               <Label>Price:
               <Input name="price" type="text"  onChange={this.handleInputChange} value={price}/></Label>
