@@ -76,8 +76,6 @@ import AppContext,{ContextWrapper} from './AppContext';
           </AppContext.Provider>
 
         </div>
-
-    
     );
   }
    

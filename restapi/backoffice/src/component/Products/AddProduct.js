@@ -134,6 +134,9 @@ class AddProduct extends Component {
               </select>
               </FormGroup>
             <FormGroup>
+            <Label>Media:
+              
+              </Label>
             <Select className="col-md-4" options={mediaList} value={this.state.selectedMedia}  onChange={this.handleSelectChange}  />
             </FormGroup>
 

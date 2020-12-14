@@ -3,10 +3,11 @@ import TableService from '../../api/TableService';
 import {GrFormAdd} from 'react-icons/gr'
 import {Link} from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import PageLoader from '../PageLoader';
 
 
 class TableList extends Component {
-    state = { tables:[] }
+    state = { tables:[],loading:true }
 
     
     componentDidMount(){
@@ -17,7 +18,8 @@ class TableList extends Component {
         }).then((data)=>{
 
             this.setState({
-                tables:data
+                tables:data,
+                loading:false
             })
         })
     }
@@ -52,6 +54,7 @@ class TableList extends Component {
         }
         
         return ( <div>
+            <PageLoader loading={this.state.loading} />
 
             <div className="mb-3">
             <strong>Table List</strong>

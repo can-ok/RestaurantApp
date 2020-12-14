@@ -3,9 +3,10 @@ import WaiterService from '../../api/WaiterService';
 import {GrFormAdd} from 'react-icons/gr'
 import {Link} from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import PageLoader from '../PageLoader';
 
 class WaiterList extends Component {
-    state = { waiters:[]  }
+    state = { waiters:[],loading:true  }
 
     componentDidMount(){
         
@@ -13,7 +14,8 @@ class WaiterList extends Component {
         then((response)=>{
 
             this.setState({
-                waiters:response.data
+                waiters:response.data,
+                loading:false
             })
 
         })
@@ -42,7 +44,7 @@ class WaiterList extends Component {
                 <td>{item.firstname}</td>
                 <td>{item.lastname}</td>
                 <td>{item.birtdate}</td>
-                <td><img src={'data:image/png;base64,'+item.media.fileContent} width="60" /></td>
+                <td><img src={'data:image/png;base64,'+item.media.fileContent} width="60" alt="waiter"/></td>
                 <td><Link to={`/editWaiter/${item.id}`} className="btn btn-warning">Düzenle</Link></td>
                 <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
                 </tr>
@@ -54,6 +56,8 @@ class WaiterList extends Component {
 
         return ( 
             <div>
+            <PageLoader loading={this.state.loading} />
+
             <div className="mb-3">
             <strong>Garson List</strong>
             <Link className="btn float-right" to="/addWaiter"><GrFormAdd size='1rem'/><strong>Ekle Garson</strong></Link>

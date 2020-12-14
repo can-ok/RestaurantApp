@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {GrFormAdd} from 'react-icons/gr'
 import {Button, FormGroup, Label,Form,Input} from 'reactstrap';
+import PageLoader from '../PageLoader';
 
 
 import UserSerivce from '../../api/UserService';
@@ -9,7 +10,8 @@ import UserSerivce from '../../api/UserService';
 class UserList extends Component {
     state = { 
             users:[],
-            userRoleValue:""
+            userRoleValue:"",
+            loading:true
             }
 
 
@@ -19,7 +21,8 @@ class UserList extends Component {
         .then((response)=>{
 
             this.setState({
-                users:response.data
+                users:response.data,
+                loading:false
             })
 
         })
@@ -89,6 +92,7 @@ class UserList extends Component {
         return ( 
 
             <div>
+                <PageLoader loading={this.state.loading} />
 
                 <div className="row">
 

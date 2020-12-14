@@ -7,12 +7,15 @@ import {Link} from 'react-router-dom';
 import EditRole from './EditRole';
 import AddRole from './AddRole';
 import CategoryService from '../../api/CategoryService';
+import PageLoader from '../PageLoader';
 
 class ListRoles extends Component {
     state = { roles:[],
               editStatus:false,
               addStatus:false,
-              selectedItem:null
+              selectedItem:null,
+              loading:true
+
                }
 
     componentDidMount(){
@@ -22,7 +25,9 @@ class ListRoles extends Component {
 
             this.setState({
 
-                roles:response.data
+                roles:response.data,
+                loading:false
+
             })
         })
 
@@ -45,6 +50,8 @@ class ListRoles extends Component {
             return ( 
             
                 <div>
+                <PageLoader loading={this.state.loading} />
+
                <div className="mb-3">
                <strong>Role</strong> 
                <a className="btn float-right" onClick={(e)=>this.setState({addStatus:true})} ><GrFormAdd size='1rem'/><strong>Role Ekle</strong></a>

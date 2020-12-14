@@ -1,6 +1,5 @@
 
 import {Link} from 'react-router-dom';
-import {Button,ListGroup, ListGroupItem} from 'reactstrap';
 
 import '../../App.css'
 
@@ -15,7 +14,7 @@ const ProductList = (props) => {
     <div className="col-md-4 mr-2 ml-2 mt-2 border">
 
         
-    <img src="https://cdn.shopify.com/s/files/1/0070/7032/files/camera_56f176e3-ad83-4ff8-82d8-d53d71b6e0fe.jpg?v=1527089512" width="100" height="80" />
+    <img src={'data:image/png;base64,'+item.media.fileContent} width="100" height="100" />
     
 
     <h5 className="row justify-content-center">
@@ -32,7 +31,7 @@ const ProductList = (props) => {
 
     <div className="row justify-content-center">
     
-       <button className="btn btn-secondary mt-2  btn-block" onClick={(e) => props.handleAddToCart(e, item)}>Ekle <GrFormAdd size={32} color="red"/> </button>
+       <button className="btn btn-primary mt-2  btn-block" onClick={(e) => props.handleAddToCart(e, item)}>Ekle <GrFormAdd size={32} color="red"/> </button>
 
         </div>
     </div>

@@ -42,8 +42,6 @@ import AppContext from './AppContext';
 
 class App extends Component {
   state = { token:null ,
-
-    
         }
 
   componentDidMount(){
@@ -89,7 +87,7 @@ class App extends Component {
             <Route exact path="/waiters" component={WaiterList}/>
             <Route exact path="/addWaiter" component={AddWaiter}/>
             <Route exact path="/editWaiter/:id" component={EditWaiter}/>
-            <Route exact path="/media/" component={Media}/>
+            <Route exact path="/media" component={Media}/>
             <Route exact path="/order" component={OrderList} />
             <Route exact path="/roles" component={ListRoles}/>
         </Switch>

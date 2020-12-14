@@ -10,6 +10,7 @@ import com.resturant.restapi.repository.RolesRepository;
 import com.resturant.restapi.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -85,6 +86,7 @@ public class UserService {
         }
     }
 
+    private final static BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
 
     public Map<String,String> register(UsersDto user){
 
@@ -93,20 +95,22 @@ public class UserService {
         String pass=user.getPassword();
 
         //update user name
-        user.setPassword("{noop}"+user.getPassword());
-        Optional<Users> entity= userRepository.getUserByNameANDPass(user.getUSERNAME(),user.getPassword());
+        //user.setPassword("{noop}"+user.getPassword());
+
+        Optional<Users> entity= userRepository.getUsersByUSERNAME(user.getUSERNAME());
 
         if(entity.isPresent()){
 
+            //if(encoder.matches(entity.get().getPassword(),user.getPassword())){
+                map.put("name",user.getUSERNAME());
+                //map.put("password",user.getPassword());
 
-            map.put("name",user.getUSERNAME());
-            //map.put("password",user.getPassword());
+                String originalInput = user.getUSERNAME()+":"+pass;
+                String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
+                map.put("auth",encodedString);
 
-            String originalInput = user.getUSERNAME()+":"+pass;
-            String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-            map.put("auth",encodedString);
+                return map;
 
-            return map;
         }
         else {
 

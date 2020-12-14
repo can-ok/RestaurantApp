@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {ListGroup,ListGroupItem,Button} from 'reactstrap';
 import {GrFormAdd} from 'react-icons/gr'
+import PageLoader from '../PageLoader';
 
 import CategoryService from '../../api/CategoryService';
 
@@ -10,7 +11,9 @@ import CategoryService from '../../api/CategoryService';
 class CategoryList extends Component {
     state = {  categories:[],
             showComponent: false,
-            updateId:null
+            updateId:null,
+            loading:true
+
             }
 
 
@@ -22,7 +25,8 @@ class CategoryList extends Component {
         }).then((data)=>{
 
             this.setState({
-                categories:data
+                categories:data,
+                loading:false
             })
         })
 
@@ -77,6 +81,8 @@ class CategoryList extends Component {
         }
         return ( 
         <div>
+        <PageLoader loading={this.state.loading} />
+
         <div className="mb-3">
         <strong>Kategori</strong> 
         <Link className="btn float-right" to="/addCategory"><GrFormAdd size='1rem'/><strong>Kategori Ekle</strong></Link>

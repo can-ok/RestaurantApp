@@ -5,6 +5,7 @@ import Modal from './Modal';
 
 import './Table.css'
 
+import PageLoader from '../PageLoader.js';
 
 import AppContext from '../../AppContext';
 
@@ -14,7 +15,7 @@ class TableList extends Component {
               tables:[],
               showModal:false,
               waiters:[],
-              reservedTables:[]
+              loading:true
                 }
 
     static contextType=AppContext;
@@ -36,7 +37,9 @@ class TableList extends Component {
         }).then((data)=>{
 
             this.setState({
-                tablesCategory:data
+                tablesCategory:data,
+                loading:false
+
             });
         })
 
@@ -48,38 +51,17 @@ class TableList extends Component {
         WaiterService.getAllWaiters().then((response)=>{
 
             this.setState({
-                waiters:response.data
+                waiters:response.data,
+                loading:false
             })
         })
 
-        TableService.getReserved().then((response)=>response.json())
-        .then((data)=>{
-            
-            this.setState({
-                reservedTables:data
-            })
-        })
        
-        .catch((err)=>{
-            console.log(err)
-        })
 
     }
 
 
-    checkTableReserved=(tableName)=>{
-        let {reservedTables}=this.state;
-
-        for(let i=0; i<reservedTables.length; i++){
-
-            if(reservedTables[i].Table==tableName){
-                return [true,reservedTables[i].Count];
-            }
-        }
-
-        return [false,0];
-    }
-
+  
     showCards=(table)=>{
 
        if(table.title==='Ayakta'){
@@ -134,6 +116,10 @@ class TableList extends Component {
     }
 
     selectReservedTable=(tableName)=>{
+        
+        let appState={...this.context.appState}
+        appState.table=tableName;
+        this.context.setAppState(appState)
         
         this.props.history.push("/products")
 
@@ -200,9 +186,10 @@ class TableList extends Component {
 
 
         return (<div>
-            
+             <PageLoader loading={this.state.loading} />
         <div className="row mt-2 ">
- 
+        
+
             <div className="col float-left ">
 
             <table className="table table-bordered table-condensed table-striped table-hover">

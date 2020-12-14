@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {Label, ListGroup, ListGroupItem} from 'reactstrap';
+import {ListGroup} from 'reactstrap';
 import '../../App.css'
-
 import ProductList from "./ProductsList";
 import Basket from "../Basket";
 
 import ProductService from '../../api/ProductService';
 import CategoryService from '../../api/CategoryService';
 
+import PageLoader from '../PageLoader.js';
 
 import AppContext from '../../AppContext';
 
@@ -16,7 +16,9 @@ class Production extends Component {
     state = {  items:[] ,
                value:"",
                categories:[],
-               cartItems:[]             
+               cartItems:[],
+               loading:true
+         
     }
 
 
@@ -47,7 +49,8 @@ class Production extends Component {
         }).then((data)=>{
 
             this.setState({
-                categories:data
+                categories:data,
+                loading:false
             })
         })
         .catch((error)=>{
@@ -67,7 +70,8 @@ class Production extends Component {
         if(item!=null){
             item=JSON.parse(item)
             this.setState({
-                cartItems:item.products
+                cartItems:item.products,
+                loading:false
             })
             }
        
@@ -231,6 +235,7 @@ class Production extends Component {
 
     
         return ( <div>
+                <PageLoader loading={this.state.loading} />
 
                 <div className="row">
                 <h5 className='ml-3 mt-2 border'> <strong>Durum:</strong> {tableContext}</h5>

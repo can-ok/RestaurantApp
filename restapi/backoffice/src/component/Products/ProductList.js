@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {Button} from 'reactstrap';
 import {GrFormAdd} from 'react-icons/gr'
-
 import ProductsService from '../../api/ProductsService'
+
+import PageLoader from '../PageLoader';
 
 class ProductList extends Component {
     state = {
-                items:[] 
+                items:[] ,
+                loading:true
             }
 
     componentDidMount(){
@@ -18,7 +20,8 @@ class ProductList extends Component {
         }).then((data)=>{
 
             this.setState({
-                items:data
+                items:data,
+                loading:false
             });
         }).catch((error)=>{
 
@@ -90,7 +93,7 @@ class ProductList extends Component {
 
         return ( <div>
 
-
+            <PageLoader loading={this.state.loading} />
             <div className="mb-3">
             <strong>Drink List</strong> 
             <Link className="btn float-right" to="/add/drink"><GrFormAdd size='1rem'/><strong>Add Drink</strong></Link>

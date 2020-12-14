@@ -1,5 +1,5 @@
-
 import React, { Component } from 'react';
+import './media.css'
 
 class Media extends Component {
     state = { selectedfile:null,
@@ -59,20 +59,30 @@ class Media extends Component {
     render() {
         
         let imageList=this.state.imageFiles.map((image)=>
-        <li id={image.id}>
+        
+        <div className="col-md-3 mr-2 ml-2 mt-2 border">
+        <h5 className="row justify-content-center">  {image.name}  </h5>
 
-        <img src={'data:image/png;base64,'+image.fileContent} width="150" /></li>)
+
+        <img src={'data:image/png;base64,'+image.fileContent} width="150" />
+        </div>)
         
 
     
-        return (<div>
+        return (<div className="row"> 
 
+                <div className="col-sm">
                 <input type="file" name="file" onChange={(e)=>this.onImageChange(e)} />
                 <button onClick={()=>this.onFileUpload()}>Upload Image</button>
-                <ul>
 
+                </div>
+                <div className="col-sm CardItem ">
+                <div className="row">
                 {imageList}
-                </ul>
+
+                </div>
+                </div>
+
 
             </div>  );
     }
