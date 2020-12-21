@@ -24,13 +24,13 @@ public class ProductsController {
         return productsService.getAllDrinks();
     }
 
-    @GetMapping(path="/getAll")
-    public List<? extends ProductDto> getAllProducts(){
-
-        return new ArrayList<ProductDto>() {{
-            addAll(productsService.getAllDrinks());
-        }};
-    }
+//    @GetMapping(path="/getAll")
+//    public List<? extends ProductDto> getAllProducts(){
+//
+//        return new ArrayList<ProductDto>() {{
+//            addAll(productsService.getAllDrinks());
+//        }};
+//    }
 
 
     @PostMapping(path ="/add/drink")

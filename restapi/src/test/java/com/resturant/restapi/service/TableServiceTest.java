@@ -3,6 +3,7 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.converter.TableDtoConverter;
 import com.resturant.restapi.dto.TablesDto;
+import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.TableRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,7 @@ public class TableServiceTest {
 
     @Mock
     private TableRepository tableRepository;
+
 
     @InjectMocks
     private TableService tableService;
@@ -75,6 +77,8 @@ public class TableServiceTest {
         assertEquals(tables.getId(),resultDto.getId());
 
     }
+
+
 
 
     @Test

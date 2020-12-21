@@ -3,6 +3,7 @@ package com.resturant.restapi.converter;
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.dto.ProductDto;
 
 import java.util.List;
@@ -55,10 +56,8 @@ public class ProductDtoConverter {
         dto.setPrice(entity.getPrice());
         dto.setTitle(entity.getTitle());
 
-//        ProductCategoryDto category=new ProductCategoryDto();
-//        category.setId(entity.getProductcategory().getId());
-//        category.setName(entity.getProductcategory().getName());
-
+        dto.setProductcategory(ProductsCategoryDtoConverter.prodCategoryListToProdCategoryDtoList(entity.getProductcategory()));
+        dto.setMedia(entity.getMedia());
         //dto.setProductcategory(category);
 
         return dto;

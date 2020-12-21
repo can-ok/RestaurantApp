@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import AuthService from '../api/AuthService';
 import Switch from "react-switch";
 
+import AppContext from '../AppContext';
 
 class LoginForm extends Component {
     state = { username:"",
@@ -12,6 +13,7 @@ class LoginForm extends Component {
               checked:false
             }
 
+    static contextType=AppContext;
 
     mySubmitHandler=()=>{
         
@@ -20,11 +22,23 @@ class LoginForm extends Component {
             
             /* console.log(response)
             console.log(response.data.auth) */
+            
+            let appState={...this.context.appState}
+            appState.token="BASIC "+response.data.auth
+            this.context.setAppState(appState)
 
-            localStorage.setItem("token","BASIC "+response.data.auth)
+            if(this.state.checked)
+            {
+                localStorage.setItem("token","BASIC "+response.data.auth)
+                
+                console.log("checked")
+            }
 
            // this.props.history.push("/")
-            window.location="/"; //full reload
+           // window.location="/"; //full reload
+            
+            this.props.history.push("/")
+            
         }).catch((err)=>{
 
             console.log(err)
@@ -47,6 +61,10 @@ class LoginForm extends Component {
 
 
     render() { 
+
+        let appContext=this.context;
+        console.log(appContext)
+
         return ( 
             <Form>
                 <FormGroup>

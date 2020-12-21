@@ -89,6 +89,9 @@ public class ProductsService {
 
 
             }
+            else{
+                return "Fail";
+            }
 
         }
         productRepository.save(product);

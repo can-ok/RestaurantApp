@@ -1,8 +1,7 @@
-
-import {BrowserRouter as Router,Route,NavLink,Switch} from 'react-router-dom';
+import React, { useState,useContext } from 'react';
+import AppContext,{ContextWrapper} from './AppContext';
+import {BrowserRouter as Router,Redirect,Route,Switch} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css'
-import React, { Component } from 'react';
 
 import ProductList from './component/Products/ProductList';
 import ProductDescription from './component/Products/ProductDescription';
@@ -38,64 +37,49 @@ import ListRoles from './component/Role/ListRole';
 
 import Media from './component/Media/Media';
 
-import AppContext from './AppContext';
+const App = () => {
 
-class App extends Component {
-  state = { token:null ,
-        }
+  const [appState,setAppState]=useState({ token:null});
 
-  componentDidMount(){
+  const context=appState.token? appState.token:localStorage.getItem('token')
 
-    try{
-      const token=localStorage.getItem("token");
-      this.setState({token})
-    }
-    catch(ex){
 
-      this.setState({token:null})
-    }
-   
-
-  }
-  render() { 
-    return (
-
-      <div>
+  return (   <div>
       
-      <MenuBar token={this.state.token}/>
-      {/*className="App_main" */}
-      <div className="App_main">
-  
-      <Router>
-        <Switch>
-            <Route exact path="/" component={ProductList}/>
-            <Route exact path="/login" component={LoginForm}/>
-            <Route exact path="/logout" component={Logout} />
-            <Route exact path="/description/:type/:id" component={ProductDescription} />
-            <Route exact path="/add/:type" component={AddProduct}/>
-            <Route exact path="/update/:type/:id" component={EditProduct} />
-            <Route exact path="/users/add" component={AddUser} />
-            <Route exact path="/users" component={User}/>
-            <Route exact path="/users/edit/:id" component={EditUser} />
-            <Route exact path="/categories" component={CategoryList} />
-            <Route exact path="/addCategory" component={AddCategory}/>
-            <Route exact path="/editCategory/:id" component={EditCategory}/>
-            <Route exact path="/config" component={Config} />
-            <Route exact path="/tables" component={TableList} />
-            <Route exact path="/addTable" component={AddTable} />
-            <Route exact path="/editTable/:id" component={EditTable} />
-            <Route exact path="/waiters" component={WaiterList}/>
-            <Route exact path="/addWaiter" component={AddWaiter}/>
-            <Route exact path="/editWaiter/:id" component={EditWaiter}/>
-            <Route exact path="/media" component={Media}/>
-            <Route exact path="/order" component={OrderList} />
-            <Route exact path="/roles" component={ListRoles}/>
-        </Switch>
-      </Router>
-      </div>
-      </div>  
-    );
-  }
+    <MenuBar token={context}/>
+    {/*className="App_main" */}
+    <div className="App_main">
+    <AppContext.Provider value={{appState,setAppState}}>
+
+    <Router>
+      <Switch>
+          <Route exact path="/" component={ProductList}/>
+          <Route exact path="/login" component={LoginForm}/>
+          <Route exact path="/logout" component={Logout} />
+          <Route exact path="/description/:type/:id" component={ProductDescription} />
+          <Route exact path="/add/:type" component={AddProduct}/>
+          <Route exact path="/update/:type/:id" component={EditProduct} />
+          <Route exact path="/users/add" component={AddUser} />
+          <Route exact path="/users" component={User}/>
+          <Route exact path="/users/edit/:id" component={EditUser} />
+          <Route exact path="/categories" component={CategoryList} />
+          <Route exact path="/addCategory" component={AddCategory}/>
+          <Route exact path="/editCategory/:id" component={EditCategory}/>
+          <Route exact path="/config" component={Config} />
+          <Route exact path="/tables" component={TableList} />
+          <Route exact path="/addTable" component={AddTable} />
+          <Route exact path="/editTable/:id" component={EditTable} />
+          <Route exact path="/waiters" component={WaiterList}/>
+          <Route exact path="/addWaiter" component={AddWaiter}/>
+          <Route exact path="/editWaiter/:id" component={EditWaiter}/>
+          <Route exact path="/media" component={Media}/>
+          <Route exact path="/order" component={OrderList} />
+          <Route exact path="/roles" component={ListRoles}/>
+      </Switch>
+    </Router>
+    </AppContext.Provider>
+    </div>
+    </div>  );
 }
  
 export default App;

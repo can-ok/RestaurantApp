@@ -6,6 +6,8 @@ import Select from 'react-select';
 import MediaService from '../../api/MediaService';
 
 import CategoryService from '../../api/CategoryService';
+import AppContext from '../../AppContext';
+
 
 class AddProduct extends Component {
     state = { itemTitle:"",
@@ -19,7 +21,35 @@ class AddProduct extends Component {
             }
 
 
-    //http://localhost:8080/add/drink
+    static contextType=AppContext;
+
+    componentDidMount(){
+
+      let appContext=this.context;
+      let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
+
+      CategoryService.token=token;
+
+      CategoryService.getCategories()
+      .then((response)=>{
+          return response.json()
+      })
+      .then((data)=>{
+
+        this.setState({
+          options:data
+        })
+      })
+
+      MediaService.getAllMedia()
+      .then((response)=>response.json())
+      .then((data)=>{
+        this.setState({
+          mediaOptions:data
+        })
+      })
+
+    }
 
 
     handleInputChange=(event)=>{
@@ -60,29 +90,7 @@ class AddProduct extends Component {
         
     }
 
-
-    componentDidMount(){
-
-      CategoryService.getCategories()
-      .then((response)=>{
-          return response.json()
-      })
-      .then((data)=>{
-
-        this.setState({
-          options:data
-        })
-      })
-
-      MediaService.getAllMedia()
-      .then((response)=>response.json())
-      .then((data)=>{
-        this.setState({
-          mediaOptions:data
-        })
-      })
-
-    }
+    
 
 
     mySubmitHandler=()=>{

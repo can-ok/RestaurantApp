@@ -1,4 +1,4 @@
-/*
+
 package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.ProductCategory;
@@ -13,7 +13,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 import static org.mockito.ArgumentMatchers.nullable;
@@ -32,7 +35,7 @@ public class ProductCategoryControllerTest {
     @InjectMocks
     ProductCategoryController productCategoryController;
 
-    List<ProductCategoryDto> productCategoryDtoList=new ArrayList<>();
+    Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
     ProductCategoryDto productCategoryDto=new ProductCategoryDto();
 
     @Before
@@ -85,4 +88,4 @@ public class ProductCategoryControllerTest {
 
         productCategoryDtoList.remove(productCategoryDto);
     }
-}*/
+}

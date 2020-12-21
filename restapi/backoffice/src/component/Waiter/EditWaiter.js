@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
+import AppContext from '../../AppContext';
 
 class EditWaiter extends Component {
     state = { waiterFirstName:"",
@@ -19,6 +20,26 @@ class EditWaiter extends Component {
     categoryMedia:[],
     selectedDate:""  }
 
+
+    static contextType=AppContext;
+
+    componentDidMount(){
+        
+        let appContext=this.context;
+        let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
+
+        WaiterService.token=token;
+
+        fetch("http://localhost:8080/media/getAll",{
+            method:'GET'
+        }).then((response)=>response.json())
+        .then((data)=>{
+            this.setState({
+                categoryMedia:data
+            })
+        })
+        .catch((err)=>console.log(err))
+    }
 
 
     handleInputChange=(event)=>{
@@ -31,19 +52,7 @@ class EditWaiter extends Component {
         })
     }
 
-    componentDidMount(){
-        
-        fetch("http://localhost:8080/media/getAll",{
-            method:'GET'
-        }).then((response)=>response.json())
-        .then((data)=>{
-            this.setState({
-                categoryMedia:data
-            })
-        })
-        .catch((err)=>console.log(err))
-    }
-
+  
 
     mySubmitHandler=()=>{     
         

@@ -6,13 +6,23 @@ import ProductsService from '../../api/ProductsService'
 
 import PageLoader from '../PageLoader';
 
+import AppContext from '../../AppContext';
+
 class ProductList extends Component {
     state = {
                 items:[] ,
                 loading:true
             }
+    
+    static contextType=AppContext;
 
     componentDidMount(){
+
+        let appContext=this.context;
+        let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
+
+        ProductsService.token=token;
+        
         ProductsService.getProduct("drinks")
         .then((response)=>{
             

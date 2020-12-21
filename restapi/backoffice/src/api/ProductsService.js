@@ -2,7 +2,7 @@
 
 class ProductsService{
 
-    token=localStorage.getItem("token");
+    static token=" "
 
      getProduct(name){
         var myHeaders = new Headers();

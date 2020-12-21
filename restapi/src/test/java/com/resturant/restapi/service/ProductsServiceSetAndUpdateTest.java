@@ -1,23 +1,30 @@
-/*
+
 package com.resturant.restapi.service;
 
-import com.resturant.restapi.Model.Food;
+import com.resturant.restapi.Model.Media;
+import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.builder.MediaDtoBuilder;
+import com.resturant.restapi.builder.ProductBuilder;
+import com.resturant.restapi.builder.ProductCategoryBuilder;
+import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.converter.ProductDtoConverter;
-import com.resturant.restapi.dto.DrinkDto;
-import com.resturant.restapi.dto.FoodDto;
-import com.resturant.restapi.repository.DrinksRepository;
-import com.resturant.restapi.repository.FoodRepository;
+
+import com.resturant.restapi.dto.ProductDto;
+
+import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
+import com.resturant.restapi.repository.ProductRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -28,123 +35,130 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductsServiceSetAndUpdateTest {
 
-    @Mock
-    private DrinksRepository drinksRepository;
 
     @Mock
-    private FoodRepository foodRepository;
+    private ProductRepository productRepository;
 
     @Mock
     private ProductCategoryRepository productCategoryRepository;
 
+    @Mock
+    private MediaRepository mediaRepository;
+
     @InjectMocks
     private ProductsService productsService;
 
-    private com.resturant.restapi.Model.Drink drink=new com.resturant.restapi.Model.Drink();
 
 
-    private ProductCategory productCategory=new ProductCategory();
+    private ProductCategory productCategory;
 
+    List<Product> productList =new ArrayList<>();
+    private Product product;
 
-    @Before
-    public void setUpDrinkEntity() throws Exception{
+    private ProductDto productDto;
 
-        drink.setTitle("deneme");
-        drink.setId(1);
-        drink.setTitle("title");
-        drink.setPrice(10);
-        drink.setDescription("Deneme Item");
-
-        productCategory.setName("deneme");
-        productCategory.setId(1);
-        //drink.setProductcategory(productCategory);
-        // add list
-    }
-
-    private Food food=new Food();
-
+    private  Media media;
 
 
     @Before
-    public void setUpFoodEntity(){
-        food.setTitle("deneme");
-        food.setId(1);
-        food.setTitle("title");
-        food.setPrice(10);
-        food.setDescription("Deneme Item");
+    public void setUp() throws Exception{
 
-        productCategory.setName("deneme");
-        productCategory.setId(1);
-        food.setProductcategory(productCategory);
+        Set<ProductCategory> setCategory=new HashSet<>( );
+        setCategory.add(new ProductCategoryBuilder().id(1).name("deneme").build());
+
+        byte[] fileBytes = "deneme".getBytes();
+       media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
+
+        product=new ProductBuilder().id(1).title("deneme").description("descript").price(10).productcategory(setCategory).media(media).build();
+
+        productList.add(product);
+
+        productDto= ProductDtoConverter.convertDrinktoDrinkDto(product);
+
+        productCategory=new ProductCategoryBuilder().id(1).description("deneme").name("deneme").build();
+
     }
-
 
 
 
     @Test
     public void shouldNotInsertFood() {
         // ın that scenario we assume that catagory doesnt exit so it goes fail
-        Mockito.when(drinksRepository.save(any())).thenReturn(drink);
-        String response=productsService.insertDrink(ProductDtoConverter.convertDrinktoDrinkDto(drink),1);
+
+        Mockito.when(productRepository.save(any())).thenReturn(product);
+        String response=productsService.insertDrink(ProductDtoConverter.convertDrinktoDrinkDto(product));
+
 
         assertNotNull(response);
-        assertEquals(response,"fail");
+        assertEquals(response,"Fail");
     }
 
     @Test
-    public void insertDrink() {
+    public void insertProduct() {
 
         when(productCategoryRepository.findById(any())).thenReturn(Optional.of((productCategory)));
+        when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
+        Mockito.when(productRepository.save(any())).thenReturn(product);
 
-        Mockito.when(drinksRepository.save(any())).thenReturn(drink);
-
-        String response=productsService.insertDrink(ProductDtoConverter.convertDrinktoDrinkDto(drink),1);
+        String response=productsService.insertDrink(ProductDtoConverter.convertDrinktoDrinkDto(product));
 
         assertNotNull(response);
         assertEquals(response,"Success");
     }
 
-    @Test
-    public void updateFood() {
 
-        int id=1;
-        Mockito.when(foodRepository.findById(id)).thenReturn(Optional.empty());
-
-        when(foodRepository.save(any())).thenReturn(food);
-
-        FoodDto dto=productsService.updateFood(id, ProductDtoConverter.convertFoodtoFoodDto(food));
-
-
-        assertNull(dto);
-    }
 
     @Test
     public void shouldupdateDrink() {
         int id=1;
-        Mockito.when(drinksRepository.findById(id)).thenReturn(Optional.of(drink));
+        Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(product));
 
-        when(drinksRepository.save(any())).thenReturn(drink);
-
-        DrinkDto dto=productsService.updateDrink(id, ProductDtoConverter.convertDrinktoDrinkDto(drink));
+        when(productRepository.save(any())).thenReturn(product);
+        when(productCategoryRepository.findById(any())).thenReturn(Optional.of(productCategory));
+        when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
+        ProductDto dto=productsService.updateDrink(productDto);
 
         assertNotNull(dto);
 
 
-        assertEquals(dto.getId(),drink.getId());
+        assertEquals(dto.getId(),product.getId());
     }
 
     @Test
     public void  shouldNotUpdateDrink(){
 
         int id=1;
-        Mockito.when(drinksRepository.findById(id)).thenReturn(Optional.empty());
+        Mockito.when(productRepository.findById(id)).thenReturn(Optional.empty());
 
-        when(drinksRepository.save(any())).thenReturn(drink);
+        when(productRepository.save(any())).thenReturn(product);
 
-        DrinkDto dto=productsService.updateDrink(id, ProductDtoConverter.convertDrinktoDrinkDto(drink));
+        ProductDto dto=productsService.updateDrink(productDto);
 
 
         assertNull(dto);
     }
 
-}*/
+    @Test
+    public void shouldNotDelete(){
+        int id=1;
+        Mockito.when(productRepository.findById(id)).thenReturn(Optional.empty());
+        List<ProductDto> dto=productsService.deleteDrink(id);
+
+        assertEquals(dto.size(),0);
+    }
+
+
+    @Test
+    public void shouldDelete(){
+        int id=1;
+        Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        List<ProductDto> dtoList=new ArrayList<>();
+        List<Product> prodList=Arrays.asList(product);
+        //Mockito.when(productsService.getAllDrinks()).thenReturn(ProductDtoConverter.convertDrinkListToDrinDtoList(dtoList,prodList));
+        List<ProductDto> dto=productsService.deleteDrink(id);
+
+        assertEquals(dto.size(),productList.size());
+    }
+
+}

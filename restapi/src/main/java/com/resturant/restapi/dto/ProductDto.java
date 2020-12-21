@@ -66,6 +66,7 @@ public class ProductDto {
         this.productcategory = productcategory;
     }
 
+
     public Media getMedia() {
         return media;
     }

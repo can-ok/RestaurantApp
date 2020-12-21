@@ -5,11 +5,21 @@ import {Link} from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import PageLoader from '../PageLoader';
 
+import AppContext from '../../AppContext';
+
 class WaiterList extends Component {
     state = { waiters:[],loading:true  }
 
+    static contextType=AppContext;
+
+
     componentDidMount(){
         
+        let appContext=this.context;
+        let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
+
+        WaiterService.token=token;
+
         WaiterService.getAllWaiters().
         then((response)=>{
 

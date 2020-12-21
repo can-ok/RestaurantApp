@@ -5,6 +5,7 @@ import ProductsService from '../../api/ProductsService'
 import Select from 'react-select';
 import CategoryService from '../../api/CategoryService';
 import MediaService from '../../api/MediaService';
+import AppContext from '../../AppContext';
 
 
 class EditProduct extends Component {
@@ -21,8 +22,16 @@ class EditProduct extends Component {
 
     }
 
+    static contextType=AppContext;
 
     componentDidMount(){
+
+
+        let appContext=this.context;
+        let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
+
+        ProductsService.token=token;
+        CategoryService.token=token;
 
         let id=this.props.match.params.id
         let type=this.state.type
@@ -38,8 +47,6 @@ class EditProduct extends Component {
         }
         ).then((data)=>{
 
-            
-            
             this.setState({
                 itemTitle:data.title,
                 id:data.id,

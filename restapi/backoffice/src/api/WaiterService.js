@@ -1,7 +1,9 @@
 import axios from 'axios';
-
+import context from 'react-bootstrap/esm/AccordionContext';
 
 class WaiterService{
+    
+    static token=" "
 
     getAllWaiters(){
 

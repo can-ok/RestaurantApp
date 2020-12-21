@@ -28,7 +28,6 @@ public class UserDtoConverter {
 
         List<UsersDto> usersDtoList=new ArrayList<>();
 
-
         entityList.forEach(entity->{
 
             UsersDto usersDto=userToUserDto(entity);

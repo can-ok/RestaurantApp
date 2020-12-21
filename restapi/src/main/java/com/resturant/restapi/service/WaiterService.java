@@ -28,9 +28,9 @@ public class WaiterService {
 
 
     public WaiterDto insert(WaiterDto waiterDto){
-        Media media=mediaRepository.findById(waiterDto.getMedia().getId()).get();
         if(waiterDto!=null){
 
+            Media media=mediaRepository.findById(waiterDto.getMedia().getId()).get();
             Waiter waiter=WaiterDtoConverter.waiterDtoToWaiter(waiterDto);
             waiter.setMedia(media);
             waiterRepository.save(waiter);

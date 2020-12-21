@@ -1,192 +1,133 @@
-//package com.resturant.restapi.controller;
-//
-//import com.resturant.restapi.dto.DrinkDto;
-//import com.resturant.restapi.dto.FoodDto;
-//import com.resturant.restapi.dto.ProductCategoryDto;
-//import com.resturant.restapi.dto.ProductDto;
-//import com.resturant.restapi.repository.FoodRepository;
-//import com.resturant.restapi.service.ProductsService;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.junit.MockitoJUnitRunner;
-//
-//import static org.junit.Assert.*;
-//import java.util.*;
-//
-//import static org.mockito.Mockito.doThrow;
-//import static org.mockito.Mockito.when;
-//import static org.mockito.Mockito.times;
-//import static org.mockito.Mockito.verify;
-//import static org.mockito.Matchers.any;
-//
-//
-//
-//@RunWith(MockitoJUnitRunner.class)
-//public class ProductsControllerTest {
-//
-//    @Mock
-//    private ProductsService productsService;
-//
-//    @Mock
-//    private FoodRepository foodRepository;
-//
-//
-//    @InjectMocks
-//    private ProductsController productsController;
-//
-//
-//    List<DrinkDto> drinkDtoDtoList =new ArrayList<>();
-//
-//    @Before
-//    public void setUpDrinksList(){
-//        ProductCategoryDto productCategory=new ProductCategoryDto(1,"deneme");
-//        drinkDtoDtoList.add(new DrinkDto(1,"deneme","deneme descrtip",20,productCategory));
-//    }
-//
-//
-//    DrinkDto drinkDto=new DrinkDto();
-//    @Before
-//    public void setUpDrink(){
-//        drinkDto.setId(1);
-//        ProductCategoryDto productCategory=new ProductCategoryDto(1,"deneme");
-//        //drinkDto.setProductcategory(productCategory);
-//    }
-//
-//    FoodDto foodDto=new FoodDto();
-//    @Before
-//    public void setUpFood(){
-//        foodDto.setId(1);
-//        ProductCategoryDto productCategory=new ProductCategoryDto(1,"deneme");
-//        foodDto.setProductcategory(productCategory);
-//    }
-//
-//
-//
-//    @Before
-//    public void setUpRepos(){
-//        when(productsService.getAllDrinks()).thenReturn(drinkDtoDtoList);
-//        when(productsService.getAllFoods()).thenReturn(foodsDtoList);
-//    }
-//
-//    List<FoodDto> foodsDtoList=new ArrayList<>();
-//
-//    @Before
-//    public void setUpFoodsList(){
-//        ProductCategoryDto productCategory=new ProductCategoryDto(1,"deneme");
-//        foodsDtoList.add(new FoodDto(1,"deneme","deneme descrtip",20,productCategory));
-//    }
-//
-//    @Test
-//    public void shouldgetAllDrinks() {
-//        when(productsService.getAllDrinks()).thenReturn(drinkDtoDtoList);
-//
-//        assertNotNull(productsController.getAllDrinks());
-//        verify(productsService,times(1)).getAllDrinks();
-//    }
-//
-//    @Test
-//    public void shouldNotgetAllDrinks() {
-//        when(productsService.getAllDrinks()).thenReturn(null);
-//
-//        assertNull(productsController.getAllDrinks());
-//    }
-//
-//    @Test
-//    public void shouldgetAllFoods() {
-//
-//        when(productsService.getAllFoods()).thenReturn(foodsDtoList);
-//
-//        assertNotNull(productsController.getAllFoods());
-//        verify(productsService,times(1)).getAllFoods();
-//    }
-//
-//    @Test
-//    public void shoulGetAllProducts(){
-//
-//        List<? extends ProductDto> prodResult=productsController.getAllProducts();
-//
-//        assertNotNull(prodResult);
-//
-//        assertEquals(prodResult.size(), drinkDtoDtoList.size()+foodsDtoList.size());
-//    }
-//
-//    @Test
-//    public void addFood() {
-//
-//        when(productsService.insertFood(foodDto,1)).thenReturn("Success");
-//
-//
-//        assertEquals(productsController.addFood(foodDto,1),"Success");
-//
-//        //verify(productsService,times(1)).insertFood(any(),any());
-//    }
-//
-//    @Test
-//    public void addDrink() {
-//
-//        when(productsService.insertDrink(drinkDto,1)).thenReturn("Success");
-//        assertEquals(productsController.addDrink(drinkDto,1),"Success");
-//
-//    }
-//
-//    @Test
-//    public void retriveDrink() {
-//        int id=1;
-//        when(productsService.getDrinkById(id)).thenReturn(drinkDto);
-//        assertEquals(productsController.retriveDrink(id),drinkDto);
-//
-//    }
-//
-//    @Test
-//    public void retriveFood() {
-//        int id=1;
-//
-//        when(productsService.getFoodById(id)).thenReturn(foodDto);
-//        assertEquals(productsController.retriveFood(id),foodDto);
-//    }
-//
-//    @Test
-//    public void deleteFood() {
-//
-//        when(productsService.deleteFood(any())).thenReturn(foodsDtoList);
-//        assertNotNull(productsController.deleteFood(any()));
-//        verify(productsService,times(1)).deleteFood(any());
-//    }
-//
-//    @Test
-//    public void deleteDrink() {
-//
-//        when(productsService.deleteDrink(any())).thenReturn(drinkDtoDtoList);
-//        assertNotNull(productsController.deleteDrink(any()));
-//        verify(productsService,times(1)).deleteDrink(any());
-//
-//    }
-//
-//    @Test
-//    public void updateFood() {
-//        when(productsService.updateFood(any(),any())).thenReturn(foodDto);
-//        assertEquals(productsController.updateFood(any(),any()),foodDto);
-//    }
-//
-//    @Test
-//    public void updateDrink() {
-//        when(productsService.updateDrink(any(),any())).thenReturn(drinkDto);
-//
-//        assertEquals(productsController.updateDrink(any(),any()),drinkDto);
-//
-//    }
-//
-//
-//    @Test
-//    public void retrivebyProductCategor() {
-//        int id=1;
-//        when(productsService.getSpecificCategory(id)).thenReturn(null);
-//
-//        assertNull(productsController.retrivebyProductCategor(id));
-//
-//        //verify(productsController)
-//    }
-//}
+package com.resturant.restapi.controller;
+
+
+import com.resturant.restapi.Model.Product;
+import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.builder.ProductBuilder;
+import com.resturant.restapi.builder.ProductCategoryBuilder;
+import com.resturant.restapi.converter.ProductDtoConverter;
+import com.resturant.restapi.dto.ProductDto;
+import com.resturant.restapi.service.ProductsService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import static org.junit.Assert.*;
+import java.util.*;
+
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.any;
+
+
+
+@RunWith(MockitoJUnitRunner.class)
+public class ProductsControllerTest {
+
+    @Mock
+    private ProductsService productsService;
+
+
+
+
+    @InjectMocks
+    private ProductsController productsController;
+
+
+    List<ProductDto> productDtos =new ArrayList<>();
+
+    private Product product;
+
+    private ProductDto productDto;
+    List<ProductDto> productDtoList=new ArrayList<>();
+    @Before
+    public void setUpProductsList(){
+
+
+        Set<ProductCategory> setCategory=new HashSet<>( );
+        setCategory.add(new ProductCategoryBuilder().id(1).name("deneme").build());
+
+        product=new ProductBuilder().id(1).title("deneme").description("descript").price(10).productcategory(setCategory).build();
+
+        productDto=ProductDtoConverter.convertDrinktoDrinkDto(product);
+
+    }
+
+
+
+
+    @Test
+    public void shouldgetProduct() {
+        when(productsService.getAllDrinks()).thenReturn(productDtos);
+
+        assertNotNull(productsController.getAllDrinks());
+        verify(productsService,times(1)).getAllDrinks();
+
+    }
+
+    @Test
+    public void shouldNotgetProduct() {
+        when(productsService.getAllDrinks()).thenReturn(null);
+
+        assertNull(productsController.getAllDrinks());
+    }
+
+
+
+
+
+
+    @Test
+    public void addProduct() {
+
+        when(productsService.insertDrink(productDto)).thenReturn("Success");
+        assertEquals(productsController.addDrink(productDto),"Success");
+
+    }
+
+    @Test
+    public void retriveProduct() {
+        int id=1;
+        when(productsService.getDrinkById(id)).thenReturn(productDto);
+        assertEquals(productsController.retriveDrink(id),productDto);
+
+    }
+
+
+
+
+    @Test
+    public void deleteProduct() {
+
+        when(productsService.deleteDrink(any())).thenReturn(productDtos);
+        assertNotNull(productsController.deleteDrink(any()));
+        verify(productsService,times(1)).deleteDrink(any());
+
+    }
+
+
+
+    @Test
+    public void updateProduct() {
+        when(productsService.updateDrink(any())).thenReturn(productDto);
+
+        assertEquals(productsController.updateDrink(any()),productDto);
+
+    }
+
+
+    @Test
+    public void retrivebyProductCategor() {
+        int id=1;
+        when(productsService.getSpecificCategory(id)).thenReturn(null);
+
+        assertNull(productsController.retrivebyProductCategor(id));
+
+        //verify(productsController)
+    }
+}
