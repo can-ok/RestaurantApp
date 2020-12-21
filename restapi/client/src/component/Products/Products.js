@@ -74,7 +74,6 @@ class Production extends Component {
                 loading:false
             })
             }
-       
         }
 
        

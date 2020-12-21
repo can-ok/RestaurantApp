@@ -44,14 +44,14 @@
             <column name="title" value="Cola Zero"></column>
             <column name="description" value="sekersiz mesrubat"></column>
             <column name="price" valueNumeric="3"></column>
-            <column name="media_id" valueNumeric="1"></column>
+            <column name="media_id" valueNumeric="8"></column>
         </insert>
         <insert tableName="Product">
             <column name="id" valueNumeric="2"></column>
             <column name="title" value="Coco-Cola"></column>
             <column name="description" value="mesrubat"></column>
             <column name="price" valueNumeric="3"></column>
-            <column name="media_id" valueNumeric="1"></column>
+            <column name="media_id" valueNumeric="8"></column>
 
         </insert>
 
@@ -60,7 +60,7 @@
             <column name="title" value="Profiterol"></column>
             <column name="description" value="çikolatalı tatlı"></column>
             <column name="price" valueNumeric="20"></column>
-            <column name="media_id" valueNumeric="1"></column>
+            <column name="media_id" valueNumeric="9"></column>
 
         </insert>
 
@@ -69,8 +69,7 @@
             <column name="title" value="Cheesecake"></column>
             <column name="description" value="oreo Cheesecake"></column>
             <column name="price" valueNumeric="25"></column>
-            <column name="media_id" valueNumeric="1"></column>
-
+            <column name="media_id" valueNumeric="10"></column>
         </insert>
 
         <insert tableName="Product">
@@ -78,7 +77,7 @@
             <column name="title" value="Döner"></column>
             <column name="description" value="et döner"></column>
             <column name="price" valueNumeric="22"></column>
-            <column name="media_id" valueNumeric="1"></column>
+            <column name="media_id" valueNumeric="11"></column>
 
         </insert>
 

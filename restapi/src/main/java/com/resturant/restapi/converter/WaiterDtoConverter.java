@@ -10,13 +10,15 @@ public class WaiterDtoConverter {
 
 
     public static WaiterDto waiterToWaiterDto(Waiter waiter){
-        WaiterDto waiterDto=new WaiterDto();
-        waiterDto.setId(waiter.getId());
-        waiterDto.setFirstname(waiter.getFirstname());
-        waiterDto.setLastname(waiter.getLastname());
-        waiterDto.setBirtdate(waiter.getBirtdate());
-        waiterDto.setEmail(waiter.getEmail());
-        waiterDto.setMedia(waiter.getMedia());
+//        WaiterDto waiterDto=new WaiterDto();
+//        waiterDto.setId(waiter.getId());
+//        waiterDto.setFirstname(waiter.getFirstname());
+//        waiterDto.setLastname(waiter.getLastname());
+//        waiterDto.setBirtdate(waiter.getBirtdate());
+//        waiterDto.setEmail(waiter.getEmail());
+//        waiterDto.setMedia(waiter.getMedia());
+        WaiterDto waiterDto= WaiterMapper.INSTANCE.toDto(waiter);
+
         return waiterDto;
     }
 
@@ -25,7 +27,7 @@ public class WaiterDtoConverter {
         List<WaiterDto> waiterDtoList=new ArrayList<>();
         listWaiter.forEach(waiter ->{
 
-            WaiterDto waiterDto=waiterToWaiterDto(waiter);
+           WaiterDto waiterDto=waiterToWaiterDto(waiter);
 
             waiterDtoList.add(waiterDto);
         } );
@@ -34,14 +36,16 @@ public class WaiterDtoConverter {
     }
 
     public static Waiter waiterDtoToWaiter(WaiterDto waiterDto){
-        Waiter waiter=new Waiter();
+//        Waiter waiter=new Waiter();
+//
+//        waiter.setId(waiterDto.getId());
+//        waiter.setFirstname(waiterDto.getFirstname());
+//        waiter.setLastname(waiterDto.getLastname());
+//        waiter.setBirtdate(waiterDto.getBirtdate());
+//        waiter.setEmail(waiterDto.getEmail());
+//        //waiter.setMedia(waiterDto.getMedia());
+        Waiter waiter= WaiterMapper.INSTANCE.toWaiter(waiterDto);
 
-        waiter.setId(waiterDto.getId());
-        waiter.setFirstname(waiterDto.getFirstname());
-        waiter.setLastname(waiterDto.getLastname());
-        waiter.setBirtdate(waiterDto.getBirtdate());
-        waiter.setEmail(waiterDto.getEmail());
-        //waiter.setMedia(waiterDto.getMedia());
         return waiter;
     }
 
@@ -52,6 +56,7 @@ public class WaiterDtoConverter {
         waiterDtoList.forEach(element->{
 
             Waiter waiter=waiterDtoToWaiter(element);
+
             waiterList.add(waiter);
         });
         return waiterList;

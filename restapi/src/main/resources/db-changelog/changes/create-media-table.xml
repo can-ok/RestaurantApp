@@ -56,6 +56,26 @@
             <column name="name" value="Waiter2"></column>
             <column name="FILECONTENT" valueBlobFile="../../static/waiter2.png"></column>
         </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="8"></column>
+            <column name="name" value="Cola"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/cola1.png"></column>
+        </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="9"></column>
+            <column name="name" value="Profiterol"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/profi.png"></column>
+        </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="10"></column>
+            <column name="name" value="ChessCake"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/chesscake.png"></column>
+        </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="11"></column>
+            <column name="name" value="Doner Kebab"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/doner.png"></column>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

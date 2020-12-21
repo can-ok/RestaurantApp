@@ -83,7 +83,7 @@ class AddUser extends Component {
             </FormGroup>
             <FormGroup>
               <Label>Password:
-              <Input name="userPass" type="text"  onChange={this.handleInputChange}/></Label>
+              <Input name="userPass" type="password"  onChange={this.handleInputChange}/></Label>
             </FormGroup>
 
             <Select options={authOptions} values={authOptions.filter(obj=>roles.includes(obj.value))}  onChange={this.handleSelectChange} isMulti isClearable/>

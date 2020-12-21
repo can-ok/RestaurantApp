@@ -1,13 +1,18 @@
 package com.resturant.restapi.Model;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Users")
@@ -19,11 +24,11 @@ public class Users  implements Serializable {
     private Integer id;
 
     @Column(name = "USERNAME")
-    private String USERNAME;
+    private String username;
     @Column(name = "PASSWORD")
-    private String Password;
+    private String password;
     @Column(name = "ENABLED")
-    private boolean Enabled;
+    private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
@@ -34,46 +39,4 @@ public class Users  implements Serializable {
     private Set<Role> roles=new HashSet<>();
 
 
-
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUSERNAME() {
-        return USERNAME;
-    }
-
-    public void setUSERNAME(String USERNAME) {
-        this.USERNAME = USERNAME;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        this.Password = password;
-    }
-
-    public boolean isEnabled() {
-        return Enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.Enabled = enabled;
-    }
-
-
-
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }

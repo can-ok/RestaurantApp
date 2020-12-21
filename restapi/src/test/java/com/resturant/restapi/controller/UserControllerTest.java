@@ -37,7 +37,7 @@ public class UserControllerTest {
     @Before
     public void setUserList(){
 
-        usersDto.setUSERNAME("user1");
+        usersDto.setUsername("user1");
         usersDto.setId(1);
         usersDto.setPassword("132");
         usersDto.setEnabled(true);

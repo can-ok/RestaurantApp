@@ -81,7 +81,7 @@ public class UserServiceTest {
         int id=1;
         when(usersRepository.findById(id)).thenReturn(Optional.of(UserDtoConverter.userDtoToUser(usersDto)));
         UsersDto usersResult=userService.getUser(id);
-        assertEquals(usersResult.getUSERNAME(),usersDto.getUSERNAME());
+        assertEquals(usersResult.getUsername(),usersDto.getUsername());
     }
 
     @Test

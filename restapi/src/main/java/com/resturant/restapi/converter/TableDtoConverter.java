@@ -31,10 +31,12 @@ public class TableDtoConverter {
 
     public static Tables tablesDtoToTables(Tables tables,TablesDto tablesDto){
 
-        tables.setEnabled(tablesDto.getEnabled());
-        tables.setTableCount(tablesDto.getTableCount());
-        tables.setTitle(tablesDto.getTitle());
-        tables.setId(tablesDto.getId());
+//        tables.setEnabled(tablesDto.getEnabled());
+//        tables.setTableCount(tablesDto.getTableCount());
+//        tables.setTitle(tablesDto.getTitle());
+//        tables.setId(tablesDto.getId());
+
+        tables=TableMapper.INSTANCE.toEntity(tablesDto);
 
         return tables;
     }
@@ -42,10 +44,12 @@ public class TableDtoConverter {
     public static TablesDto tablesToTablesDto(Tables tables){
 
         TablesDto tablesDto=new TablesDto();
-        tablesDto.setTitle(tables.getTitle());
-        tablesDto.setTableCount(tables.getTableCount());
-        tablesDto.setId(tables.getId());
-        tablesDto.setEnabled(tables.getEnabled());
+//        tablesDto.setTitle(tables.getTitle());
+//        tablesDto.setTableCount(tables.getTableCount());
+//        tablesDto.setId(tables.getId());
+//        tablesDto.setEnabled(tables.getEnabled());
+
+        tablesDto=TableMapper.INSTANCE.toDto(tables);
 
         return tablesDto;
     }

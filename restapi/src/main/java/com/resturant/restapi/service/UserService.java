@@ -75,7 +75,7 @@ public class UserService {
         else{
 
             entity.get().setId(id);
-            entity.get().setUSERNAME(usersDto.getUSERNAME());
+            entity.get().setUsername(usersDto.getUsername());
             entity.get().setPassword(usersDto.getPassword());
             entity.get().setRoles(RoleDtoConverter.roleDtoSetToRoleSet(usersDto.getRoles()));
             userRepository.save(entity.get());
@@ -97,15 +97,15 @@ public class UserService {
         //update user name
         //user.setPassword("{noop}"+user.getPassword());
 
-        Optional<Users> entity= userRepository.getUsersByUSERNAME(user.getUSERNAME());
+        Optional<Users> entity= userRepository.getUsersByUSERNAME(user.getUsername());
 
         if(entity.isPresent()){
 
             //if(encoder.matches(entity.get().getPassword(),user.getPassword())){
-                map.put("name",user.getUSERNAME());
+                map.put("name",user.getUsername());
                 //map.put("password",user.getPassword());
 
-                String originalInput = user.getUSERNAME()+":"+pass;
+                String originalInput = user.getUsername()+":"+pass;
                 String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
                 map.put("auth",encodedString);
 

@@ -14,10 +14,10 @@ public interface UsersRepository extends JpaRepository<Users,Integer> {
 
 //    Users findByUserName(String UserName);
 
-    @Query("Select f from Users f where f.USERNAME=:name AND f.Password=:password")
+    @Query("Select f from Users f where f.username=:name AND f.password=:password")
     Optional<Users> getUserByNameANDPass(String name,String password);
 
-    @Query("Select f from Users  f where f.USERNAME=:name")
+    @Query("Select f from Users  f where f.username=:name")
     Optional<Users> getUsersByUSERNAME(String name);
 
 }

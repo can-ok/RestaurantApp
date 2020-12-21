@@ -37,12 +37,12 @@ public class RegisterControllerTest {
 
     @Before
     public void setUser(){
-        user.setUSERNAME("user1");
+        user.setUsername("user1");
         user.setId(1);
         user.setPassword("132");
         user.setEnabled(true);
 
-        map.put("name",user.getUSERNAME());
+        map.put("name",user.getUsername());
     }
 
     @Test

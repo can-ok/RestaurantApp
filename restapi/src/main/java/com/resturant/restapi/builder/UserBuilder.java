@@ -22,7 +22,7 @@ public class UserBuilder extends Builder{
     public Users build() {
         Users user=new Users();
         user.setId(this.id);
-        user.setUSERNAME(this.USERNAME);
+        user.setUsername(this.USERNAME);
         user.setPassword(this.Password);
         user.setRoles(this.roles);
         user.setEnabled(this.Enabled);
