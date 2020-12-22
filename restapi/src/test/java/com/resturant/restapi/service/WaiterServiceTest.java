@@ -1,10 +1,12 @@
 package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Media;
+import com.resturant.restapi.Model.Waiter;
 import com.resturant.restapi.builder.MediaDtoBuilder;
 import com.resturant.restapi.builder.WaiterBuilder;
 import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.converter.WaiterDtoConverter;
+import com.resturant.restapi.converter.WaiterMapper;
 import com.resturant.restapi.dto.WaiterDto;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.WaiterRepository;
@@ -14,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.*;
@@ -36,28 +39,31 @@ public class WaiterServiceTest {
     private WaiterRepository waiterRepository;
 
     @Mock
+    WaiterMapper waiterMapper;
+
+    @Mock
     private MediaRepository mediaRepository;
 
     @InjectMocks
     private WaiterService waiterService;
 
+
+
+
     private List<WaiterDto> waiterDtoList=new ArrayList<>();
 
     private WaiterDto waiterDto=new WaiterDto();
-
+    private Waiter waiter;
     private Media media;
 
 
     @Before
     public void setUpDto(){
-
         byte[] fileBytes = "deneme".getBytes();
         media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
-//        waiterDto.setFirstname("user");
-//        waiterDto.setId(1);
-//        waiterDto.setMedia(media);
 
-       waiterDto= WaiterDtoConverter.waiterToWaiterDto(new WaiterBuilder().firstname("deneme").id(1).lastname("deneme").media(media).build());
+        waiter=new WaiterBuilder().firstname("deneme").id(1).lastname("deneme").media(media).build();
+        waiterDto= WaiterDtoConverter.waiterToWaiterDto(waiter);
     }
 
     @Before
@@ -86,8 +92,9 @@ public class WaiterServiceTest {
     @Test
     public void shouldInsert() {
         when(waiterRepository.save(any())).thenReturn(WaiterDtoConverter.waiterDtoToWaiter(waiterDto));
-
         when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
+
+        when(waiterMapper.toWaiter(waiterDto)).thenReturn(waiter);
 
         WaiterDto result=waiterService.insert(waiterDto);
         assertNotNull(result);

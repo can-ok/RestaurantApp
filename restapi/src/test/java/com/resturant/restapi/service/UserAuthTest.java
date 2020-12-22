@@ -3,6 +3,7 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.builder.RoleBuilder;
 import com.resturant.restapi.converter.RoleDtoConverter;
+import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.repository.RolesRepository;
 import com.resturant.restapi.repository.UsersRepository;
@@ -29,7 +30,7 @@ import static org.mockito.Matchers.any;
 public class UserAuthTest {
 
     @Mock
-    UsersRepository usersRepository;
+    RoleMapper roleMapper;
 
     @Mock
     RolesRepository rolesRepository;
@@ -60,7 +61,7 @@ public class UserAuthTest {
     public void getAllRole() {
 
        when(rolesRepository.findAll()).thenReturn(RoleDtoConverter.roleDtoListToRoleList(roleDtos));
-
+       when(roleMapper.toDto(any())).thenReturn(roleDto);
        assertEquals(roleService.getAll().size(),roleDtos.size());
     }
 
@@ -69,7 +70,7 @@ public class UserAuthTest {
     public void shouldGetRole() {
 
         when(rolesRepository.findById(any())).thenReturn(Optional.of(role));
-
+        when(roleMapper.toDto(any())).thenReturn(roleDto);
         assertEquals(roleService.getRole(1).getId(),roleDto.getId());
     }
 

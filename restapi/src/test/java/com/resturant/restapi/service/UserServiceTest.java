@@ -5,6 +5,7 @@ import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.builder.RoleBuilder;
 import com.resturant.restapi.builder.UserBuilder;
 import com.resturant.restapi.converter.UserDtoConverter;
+import com.resturant.restapi.converter.UserMapper;
 import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.dto.WaiterDto;
 import com.resturant.restapi.repository.RolesRepository;
@@ -31,6 +32,9 @@ import static org.mockito.Matchers.any;
 public class UserServiceTest {
     @Mock
     UsersRepository usersRepository;
+
+    @Mock
+    UserMapper userMapper;
 
     @Mock
     RolesRepository rolesRepository;
@@ -63,6 +67,8 @@ public class UserServiceTest {
     public void insertUser() {
 
         when(rolesRepository.findById(any())).thenReturn(Optional.of(role));
+        when(userMapper.toEntityWOROle(any())).thenReturn(user);
+
         UsersDto result=userService.insertUser(usersDto);
         assertEquals(usersDto.getRoles(),result.getRoles());
         assertEquals(usersDto.getId(),result.getId());
@@ -71,6 +77,7 @@ public class UserServiceTest {
     @Test
     public void shouldGetAllUser() {
         when(usersRepository.findAll()).thenReturn(UserDtoConverter.userDtoListToUserList(usersDtoList));
+        when(userMapper.toDto(any())).thenReturn(usersDto);
 
         assertNotNull(userService.getAllUser());
         assertEquals(usersDtoList.size(),userService.getAllUser().size());
@@ -80,7 +87,10 @@ public class UserServiceTest {
     public void shouldGetUser() {
         int id=1;
         when(usersRepository.findById(id)).thenReturn(Optional.of(UserDtoConverter.userDtoToUser(usersDto)));
+        when(userMapper.toDto(any())).thenReturn(usersDto);
+
         UsersDto usersResult=userService.getUser(id);
+
         assertEquals(usersResult.getUsername(),usersDto.getUsername());
     }
 
@@ -103,7 +113,7 @@ public class UserServiceTest {
     @Test
     public void updateUser() {
         when(usersRepository.findById(any())).thenReturn(Optional.of(user));
-
+        when(userMapper.toDto(any())).thenReturn(usersDto);
         assertEquals(userService.updateUser(1,usersDto).getId(),user.getId());
 
     }

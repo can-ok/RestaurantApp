@@ -23,6 +23,13 @@
 
 </changeSet>
 
+    <changeSet id="21" author="can.ok">
+        <addColumn tableName="WAITER_TABLE">
+            <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
+
+
 
     <changeSet author="can.okan" id="2">
         <insert tableName="WAITER_TABLE">

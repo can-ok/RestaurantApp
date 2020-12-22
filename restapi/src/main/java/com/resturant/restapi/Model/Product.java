@@ -3,7 +3,11 @@ package com.resturant.restapi.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +17,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
+@SQLDelete(
+        sql="UPDATE PRODUCT SET deleted= true where id=?")
+@Where(clause = "deleted=false")
 public class Product implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,57 +47,5 @@ public class Product implements Serializable {
     private Media media;
 
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price=price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-
-    public Set<ProductCategory> getProductcategory() {
-        return productcategory;
-    }
-
-    public void setProductcategory(Set<ProductCategory> productcategory) {
-        this.productcategory = productcategory;
-    }
-
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
 }

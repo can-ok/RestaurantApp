@@ -2,6 +2,7 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.converter.TableDtoConverter;
+import com.resturant.restapi.converter.TableMapper;
 import com.resturant.restapi.dto.TablesDto;
 import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.TableRepository;
@@ -29,12 +30,16 @@ public class TableServiceTest {
     @Mock
     private TableRepository tableRepository;
 
+    @Mock
+    TableMapper tableMapper;
 
     @InjectMocks
     private TableService tableService;
 
     List<Tables> tablesList =new ArrayList<>();
     Tables tables =new Tables();
+    TablesDto tablesDto;
+
     @Before
     public void setUp(){
 
@@ -43,6 +48,8 @@ public class TableServiceTest {
         tables.setTitle("Salon");
         tables.setTableCount(10);
 
+        tablesDto=TableDtoConverter.tablesToTablesDto(tables);
+
         tablesList.add(tables);
     }
 
@@ -50,16 +57,16 @@ public class TableServiceTest {
     public void shouldgetAllTables() {
 
         when(tableRepository.findAll()).thenReturn(tablesList);
+        when(tableMapper.toDto(any())).thenReturn(tablesDto);
         List<TablesDto> resultTableList=tableService.getAllTables();
 
-        assertEquals(resultTableList.equals(tablesList),tablesList);
+        assertEquals(resultTableList.size(),tablesList.size());
     }
 
     @Test
     public void insertTable() {
-
+        when(tableMapper.toEntity(any())).thenReturn(tables);
        when(tableRepository.save(any())).thenReturn(tables);
-
        TablesDto resultTableDto=tableService.insertTable(TableDtoConverter.tablesToTablesDto(tables));
 
        //assertEquals(tables,resultTableDto);
@@ -71,7 +78,7 @@ public class TableServiceTest {
     public void shouldGetTablebyId() {
         int id=1;
         when(tableRepository.findById(1)).thenReturn(Optional.of(tables));
-
+        when(tableMapper.toDto(any())).thenReturn(tablesDto);
         TablesDto resultDto=tableService.getTablebyId(id);
 
         assertEquals(tables.getId(),resultDto.getId());
@@ -103,8 +110,7 @@ public class TableServiceTest {
 
 
         TablesDto resultDto=tableService.updateTable(TableDtoConverter.tablesToTablesDto(tables),id);
-
-        assertNull(resultDto);
-        assertEquals(resultDto,tables);
+        assertNotNull(resultDto);
+        assertEquals(resultDto.getId(),tables.getId());
     }
 }

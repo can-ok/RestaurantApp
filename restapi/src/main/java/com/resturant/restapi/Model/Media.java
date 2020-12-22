@@ -2,8 +2,12 @@ package com.resturant.restapi.Model;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
+@Setter
+@SQLDelete(
+        sql="UPDATE MEDIA SET deleted= true where id=?")
+@Where(clause = "deleted=false")
 public class Media {
 
     @Id
@@ -23,41 +32,4 @@ public class Media {
     @Column(length = 1000000,name="FILECONTENT")
     private byte[] fileContent;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "categorymedia")
-//    private List<ProductCategory> productCategoryList=new ArrayList<>();
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public byte[] getFileContent() {
-        return fileContent;
-    }
-
-    public void setFileContent(byte[] fileContent) {
-        this.fileContent = fileContent;
-    }
-
-
-//    public List<ProductCategory> getProductCategoryList() {
-//        return productCategoryList;
-//    }
-//
-//    public void setProductCategoryList(List<ProductCategory> productCategoryList) {
-//        this.productCategoryList = productCategoryList;
-//    }
 }

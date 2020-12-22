@@ -4,6 +4,7 @@ import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.converter.RoleDtoConverter;
 import com.resturant.restapi.converter.UserDtoConverter;
+import com.resturant.restapi.converter.UserMapper;
 import com.resturant.restapi.dto.UsersDto;
 
 import com.resturant.restapi.repository.RolesRepository;
@@ -23,10 +24,15 @@ public class UserService {
     @Autowired
     private RolesRepository rolesRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     public UsersDto insertUser(UsersDto usersDto){
 
 
-        Users users=UserDtoConverter.userDtoToUser(usersDto);
+        Users users=userMapper.toEntityWOROle(usersDto);
+
+        users.setPassword(encoder.encode(usersDto.getPassword()));
 
         usersDto.getRoles().stream().forEach(dtoRole->{
             Role role = rolesRepository.findById(dtoRole.getId()).get();
@@ -38,7 +44,13 @@ public class UserService {
 
     public List<UsersDto> getAllUser(){
 
-        List<UsersDto> usersDtoList=UserDtoConverter.convertUsesrListoUserDtoList(userRepository.findAll());
+        List<UsersDto> usersDtoList=new ArrayList<>();
+
+        userRepository.findAll().forEach(entity->{
+            UsersDto usersDto=userMapper.toDto(entity);
+            usersDtoList.add(usersDto);
+        });
+
         return usersDtoList;
     }
 
@@ -50,8 +62,7 @@ public class UserService {
         }
         else{
 
-            UsersDto usersDto=UserDtoConverter.userToUserDto(userEntity.get());
-
+            UsersDto usersDto=userMapper.toDto(userEntity.get());
             return usersDto;
         }
 
@@ -59,9 +70,7 @@ public class UserService {
     }
 
     public String deleteUser(Integer id){
-
         userRepository.deleteById(id);
-
         return "Success";
     }
 
@@ -80,7 +89,7 @@ public class UserService {
             entity.get().setRoles(RoleDtoConverter.roleDtoSetToRoleSet(usersDto.getRoles()));
             userRepository.save(entity.get());
 
-            UsersDto response=UserDtoConverter.userToUserDto(entity.get());
+            UsersDto response=userMapper.toDto(entity.get());
 
             return response;
         }

@@ -5,10 +5,10 @@ import com.resturant.restapi.dto.WaiterDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface WaiterMapper {
 
-    WaiterMapper INSTANCE= Mappers.getMapper(WaiterMapper.class);
+//    WaiterMapper INSTANCE= Mappers.getMapper(WaiterMapper.class);
 
     WaiterDto toDto(Waiter waiter);
 

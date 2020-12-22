@@ -12,7 +12,6 @@
             <column autoIncrement="true" name="id" type="int(10)">
                 <constraints primaryKey="true"/>
             </column>
-
             <column name="USERNAME" type="VARCHAR(255)"></column>
             <column name="PASSWORD" type="VARCHAR(255)"></column>
             <column name="ENABLED" type="BOOLEAN"></column>
@@ -41,6 +40,11 @@
         </insert>
     </changeSet>
 
+    <changeSet id="21" author="can.ok">
+        <addColumn tableName="Users">
+            <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
 
 
 </databaseChangeLog>

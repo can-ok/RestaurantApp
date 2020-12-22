@@ -4,7 +4,9 @@ import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.converter.ProductDtoConverter;
+import com.resturant.restapi.converter.ProductMapper;
 import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
+import com.resturant.restapi.converter.ProductsCategoryMapper;
 import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.repository.MediaRepository;
@@ -18,10 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,15 +36,22 @@ public class ProductsService {
     @Autowired
     MediaRepository mediaRepository;
 
+    @Autowired
+    ProductMapper productMapper;
+
+    @Autowired
+    ProductsCategoryMapper productsCategoryMapper;
+
     public List<ProductDto> getAllDrinks(){
 
-        List<ProductDto> productDtoList =new ArrayList<>();
+        List<Product> productList=productRepository.findAll();
+        List<ProductDto> listProductDto=productMapper.toDtoList(productRepository.findAll());
 
-        //PageRequest pageable= PageRequest.of(0,3);
+        for(int i=0; i<productList.size(); i++){
+            listProductDto.get(i).setProductcategory(productsCategoryMapper .toProductCategoryDtoSet(productList.get(i).getProductcategory()));
+        }
 
-        productDtoList = ProductDtoConverter.convertDrinkListToDrinDtoList(productDtoList, productRepository.findAll());
-
-        return productDtoList;
+        return listProductDto;
 
     }
 
@@ -76,18 +82,16 @@ public class ProductsService {
 
 
     public String insertDrink(ProductDto productDto){
-
-        Product product =new Product();
+        Product product=productMapper.toEntity(productDto);
 
         for(ProductCategoryDto productcategoryDto: productDto.getProductcategory())
         {
             Optional<ProductCategory> productcategory=productcategoryRepository.findById(productcategoryDto.getId());
             Optional<Media> media=mediaRepository.findById(productDto.getMedia().getId());
             if(productcategory.isPresent()){
-
-                product =ProductDtoConverter.convertDrinkDtoToDrink(product, productDto,productcategory,media.get());
-
-
+                //product =ProductDtoConverter.convertDrinkDtoToDrink(product, productDto,productcategory,media.get());
+                product.getProductcategory().add(productcategory.get());
+                product.setMedia(media.get());
             }
             else{
                 return "Fail";

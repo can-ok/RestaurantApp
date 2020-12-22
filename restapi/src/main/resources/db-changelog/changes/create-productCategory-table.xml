@@ -47,6 +47,11 @@
 
 
 
+    <changeSet id="21" author="can.ok">
+        <addColumn tableName="PRODUCT_CATEGORY">
+            <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
 
 
 </databaseChangeLog>

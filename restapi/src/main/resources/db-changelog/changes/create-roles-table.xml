@@ -29,4 +29,11 @@
         </insert>
     </changeSet>
 
+
+    <changeSet id="21" author="can.ok">
+        <addColumn tableName="ROLES">
+            <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

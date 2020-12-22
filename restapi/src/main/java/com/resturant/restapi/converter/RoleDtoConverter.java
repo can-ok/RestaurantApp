@@ -23,10 +23,8 @@ public class RoleDtoConverter {
         List<Role> roleList=new ArrayList<>();
 
         roleDtoList.forEach(item->{
-
             Role role=roleDtoToRole(item);
             roleList.add(role);
-
         });
 
         return roleList;
@@ -68,12 +66,10 @@ public class RoleDtoConverter {
 
 
     public static Set<Role> roleDtoSetToRoleSet(Set<RoleDto> roleDtos){
-
         Set<Role> roles=new HashSet<>();
 
         roleDtos.forEach(item ->{
             Role role=roleDtoToRole(item);
-
             roles.add(role);
         });
 

@@ -3,6 +3,7 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.converter.TableDtoConverter;
+import com.resturant.restapi.converter.TableMapper;
 import com.resturant.restapi.dto.TablesDto;
 import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.TableRepository;
@@ -21,11 +22,20 @@ public class TableService {
     @Autowired
     OrdersRepository ordersRepository;
 
+    @Autowired
+    TableMapper tableMapper;
 
     public List<TablesDto> getAllTables(){
 
-        List<TablesDto>  tablesListDto= TableDtoConverter.tableListToTableDto(tableRepository.findAll());
-        return tablesListDto;
+        List<TablesDto> tablesDtoList=new ArrayList<>();
+
+        tableRepository.findAll().forEach(entity->{
+
+            TablesDto tablesDto=tableMapper.toDto(entity);
+            tablesDtoList.add(tablesDto);
+        });
+
+        return tablesDtoList;
     }
 
 
@@ -43,7 +53,6 @@ public class TableService {
             Map<String,String> tablesOrder=new HashMap<>();
             tablesOrder.put("Table",order.getOrderTable());
             tablesOrder.put("Count",order.getProductCount().toString());
-
             reservedListd.add(tablesOrder);
 
         });
@@ -54,8 +63,9 @@ public class TableService {
 
     public TablesDto insertTable(TablesDto tablesDto){
 
-        Tables tables=new Tables();
-        tables=TableDtoConverter.tablesDtoToTables(tables,tablesDto);
+        Tables tables;
+        tables=tableMapper.toEntity(tablesDto);
+
         tableRepository.save(tables);
 
         return tablesDto;
@@ -67,8 +77,7 @@ public class TableService {
 
         if(tableEntity.isPresent()){
 
-           TablesDto tablesDto=TableDtoConverter.tablesToTablesDto(tableEntity.get());
-
+           TablesDto tablesDto=tableMapper.toDto(tableEntity.get());
             return tablesDto;
         }
 
@@ -85,11 +94,12 @@ public class TableService {
         }
         else{
 
-            Tables tables=TableDtoConverter.tablesDtoToTables(tableEntity.get(),tablesDto);
+            tableEntity.get().setEnabled(tablesDto.getEnabled());
+            tableEntity.get().setTableCount(tablesDto.getTableCount());
+            tableEntity.get().setTitle(tablesDto.getTitle());
+            tableEntity.get().setId(tablesDto.getId());
 
-
-
-            tableRepository.save(tables);
+            tableRepository.save(tableEntity.get());
 
             return tablesDto;
         }

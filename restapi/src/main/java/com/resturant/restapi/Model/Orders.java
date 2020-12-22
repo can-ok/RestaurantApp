@@ -4,7 +4,11 @@ package com.resturant.restapi.Model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import liquibase.pro.packaged.C;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +18,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
+@SQLDelete(
+        sql="UPDATE ORDERS SET deleted=true where id=?")
+@Where(clause = "deleted=false")
 public class Orders {
 
 
@@ -45,67 +54,5 @@ public class Orders {
     @Column(name="WAITERID")
     private String waiterId;
 
-    public Integer getId() {
-        return Id;
-    }
 
-    public void setId(Integer id) {
-        Id = id;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public Integer getProductCount() {
-        return productCount;
-    }
-
-    public void setProductCount(Integer productCount) {
-        this.productCount = productCount;
-    }
-
-    public Integer getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public String getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
-    }
-
-    public String getOrderTable() {
-        return orderTable;
-    }
-
-    public void setOrderTable(String orderTable) {
-        this.orderTable = orderTable;
-    }
-
-    public String getWaiterId() {
-        return waiterId;
-    }
-
-    public void setWaiterId(String waiterId) {
-        this.waiterId = waiterId;
-    }
 }

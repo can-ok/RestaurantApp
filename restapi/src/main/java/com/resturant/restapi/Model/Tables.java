@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -13,6 +15,9 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@SQLDelete(
+        sql="UPDATE TABLES SET deleted= true where id=?")
+@Where(clause = "deleted=false")
 public class Tables {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

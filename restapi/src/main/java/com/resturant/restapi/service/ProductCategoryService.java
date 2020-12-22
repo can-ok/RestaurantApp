@@ -2,16 +2,16 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.converter.ProductMapper;
 import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
+import com.resturant.restapi.converter.ProductsCategoryMapper;
 import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProductCategoryService {
@@ -21,25 +21,40 @@ public class ProductCategoryService {
     @Autowired
     private MediaRepository mediaRepository;
 
+    @Autowired
+    ProductsCategoryMapper productsCategoryMapper;
+
     public Set<ProductCategoryDto> getAll(){
+        Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
+        productcategoryRepository.findAll().forEach(productCategory -> {
 
+            ProductCategoryDto productCategoryDto=productsCategoryMapper.toDto(productCategory);
 
-        return ProductsCategoryDtoConverter.prodCategoryListToProdCategoryDtoSet(productcategoryRepository.findAll());
+            productCategoryDtoList.add(productCategoryDto);
+        });
+        return productCategoryDtoList;
     }
 
     public ProductCategoryDto insertCatagory(ProductCategoryDto categoryDto){
         Media media=mediaRepository.findById(categoryDto.getCategorymedia().getId()).get();
-        ProductCategory productCategory = ProductsCategoryDtoConverter.productCategoryDtoToProdCategory(categoryDto);
+
+        ProductCategory productCategory = productsCategoryMapper.toEntity(categoryDto);
+
         productCategory.setCategorymedia(media);
         productcategoryRepository.save(productCategory);
         return categoryDto;
     }
 
     public String deleteUser(Integer id){
+        Optional<ProductCategory> byId = productcategoryRepository.findById(id);
+        if (byId.isPresent())
+        {
+            byId.get().setCategorymedia(null);
+            productcategoryRepository.deleteById(id);
+            return "success";
 
-        productcategoryRepository.deleteById(id);
-
-        return "success";
+        }
+        return "Fail";
     }
 
 
@@ -67,7 +82,8 @@ public class ProductCategoryService {
 
     public ProductCategoryDto getDrinkById(int id){
 
-        return ProductsCategoryDtoConverter.productCategoryToCategoryDto(productcategoryRepository.findById(id).get());
+
+        return productsCategoryMapper.toDto(productcategoryRepository.findById(id).get());
     }
 
 }

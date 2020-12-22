@@ -2,11 +2,13 @@ package com.resturant.restapi.converter;
 
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.dto.MediaDto;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MediaDtoConverter {
+
 
     public static List<MediaDto> mediaListToMediaDtoList(List<Media> mediaList){
         List<MediaDto> mediaDtos=new ArrayList<>();
@@ -23,6 +25,7 @@ public class MediaDtoConverter {
         dto.setFileContent(media.getFileContent());
         dto.setId(media.getId());
         dto.setName(media.getName());
+
         return dto;
     }
     public static Media mediaDtoToMedia(MediaDto mediaDto){

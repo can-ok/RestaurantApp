@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +18,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "WAITER_TABLE")
+@SQLDelete(
+        sql="UPDATE WAITER_TABLE  SET deleted= true where id=?")
+@Where(clause = "deleted=false")
 public class Waiter {
 
     @Id

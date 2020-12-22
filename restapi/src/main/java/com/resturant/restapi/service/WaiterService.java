@@ -10,6 +10,7 @@ import com.resturant.restapi.repository.WaiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +23,21 @@ public class WaiterService {
     @Autowired
     private MediaRepository mediaRepository;
 
+    @Autowired
+    private  WaiterMapper waiterMapper;
+
+
     public List<WaiterDto> getAllWaiters(){
 
-        return WaiterDtoConverter.waiterListToWaiterDtoList( waiterRepository.findAll());
+        List<WaiterDto> waiterDtoList=new ArrayList<>();
+        waiterRepository.findAll().forEach(waiter ->{
+
+            WaiterDto waiterDto=waiterMapper.toDto(waiter);
+
+            waiterDtoList.add(waiterDto);
+        } );
+
+        return waiterDtoList;
     }
 
 
@@ -32,9 +45,8 @@ public class WaiterService {
         if(waiterDto!=null){
 
             Media media=mediaRepository.findById(waiterDto.getMedia().getId()).get();
-            //Waiter waiter=WaiterDtoConverter.waiterDtoToWaiter(waiterDto);
+            Waiter waiter= waiterMapper.toWaiter(waiterDto);
 
-            Waiter waiter= WaiterMapper.INSTANCE.toWaiter(waiterDto);
             waiter.setMedia(media);
             waiterRepository.save(waiter);
             return waiterDto;

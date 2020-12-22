@@ -22,6 +22,7 @@ public class ProductsCategoryDtoConverter {
         productCategoryDto.setDescription(productCategory.getDescription());
         //productCategoryDto.setDrinkproducts(productCategory.getDrinkproducts());
         productCategoryDto.setCategorymedia(productCategory.getCategorymedia());
+
         return productCategoryDto;
 
     }
@@ -93,6 +94,7 @@ public class ProductsCategoryDtoConverter {
         productCategory.setDescription(productCategoryDto.getDescription());
         productCategory.setName(productCategoryDto.getName());
         productCategory.setId(productCategoryDto.getId());
+
 
         return productCategory;
 

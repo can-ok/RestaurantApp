@@ -2,11 +2,13 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.converter.RoleDtoConverter;
+import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.repository.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,20 +18,30 @@ public class RoleService {
     @Autowired
     RolesRepository rolesRepository;
 
+    @Autowired
+    RoleMapper roleMapper;
+
     public List<RoleDto> getAll(){
 
-        return RoleDtoConverter.roleListToRoleDtoList(rolesRepository.findAll());
+        List<RoleDto> rolesDtoList=new ArrayList<>();
+        rolesRepository.findAll().forEach(role -> {
+            RoleDto roleDto=roleMapper.toDto(role);
+            rolesDtoList.add(roleDto);
+        });
+
+        return rolesDtoList;
     }
 
     public RoleDto getRole(int id){
 
-        return RoleDtoConverter.roleToRoleDto(rolesRepository.findById(id).get());
+        return roleMapper.toDto(rolesRepository.findById(id).get());
     }
 
-    public RoleDto  insert(RoleDto role){
+    public RoleDto  insert(RoleDto roleDto){
 
-        rolesRepository.save(RoleDtoConverter.roleDtoToRole(role));
-        return role;
+        Role role=roleMapper.toEntity(roleDto);
+        rolesRepository.save(role);
+        return roleDto;
     }
 
 
@@ -54,7 +66,6 @@ public class RoleService {
 
 
         Role role=roleOptinal.get();
-
         role.setName(roleDto.getName());
         role.setId(id);
         rolesRepository.save(role);

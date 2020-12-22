@@ -2,13 +2,17 @@ package com.resturant.restapi.dto;
 
 import com.resturant.restapi.Model.Media;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ProductDto {
 
 
@@ -26,52 +30,4 @@ public class ProductDto {
 
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public Set<ProductCategoryDto> getProductcategory() {
-        return productcategory;
-    }
-
-    public void setProductcategory(Set<ProductCategoryDto> productcategory) {
-        this.productcategory = productcategory;
-    }
-
-
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
 }

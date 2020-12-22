@@ -8,10 +8,8 @@ import org.mapstruct.factory.Mappers;
 import javax.persistence.Table;
 import java.util.Map;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TableMapper {
-
-    TableMapper INSTANCE= Mappers.getMapper(TableMapper.class);
 
     TablesDto toDto(Tables tables);
 

@@ -16,12 +16,11 @@ public class UserDtoConverter {
 
         Users users=new Users();
 
-//        users.setUsername(usersDto.getUsername());
-//        users.setPassword(encoder.encode(usersDto.getPassword()));
-//        users.setEnabled(usersDto.isEnabled());
-//        users.setId(usersDto.getId());
-//
-        users=UserMapper.INSTANCE.toEntityWOROle(usersDto);
+        users.setUsername(usersDto.getUsername());
+        users.setPassword(encoder.encode(usersDto.getPassword()));
+        users.setEnabled(usersDto.isEnabled());
+        users.setId(usersDto.getId());
+
         return users;
     }
 
@@ -55,15 +54,14 @@ public class UserDtoConverter {
 
         UsersDto userDto=new UsersDto();
 
-//        userDto.setId(user.getId());
-//        userDto.setUsername(user.getUsername());
-//        userDto.setPassword(encoder.encode(user.getPassword()));
-//        //create converter and add AUthDot
-//
-//        userDto.setRoles( RoleDtoConverter.roleSetToRoleDtoSet(user.getRoles()));
-//        userDto.setEnabled(user.isEnabled());
+        userDto.setId(user.getId());
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(encoder.encode(user.getPassword()));
+        //create converter and add AUthDot
 
-        userDto=UserMapper.INSTANCE.toDto(user);
+        userDto.setRoles( RoleDtoConverter.roleSetToRoleDtoSet(user.getRoles()));
+        userDto.setEnabled(user.isEnabled());
+
         return userDto;
     }
 

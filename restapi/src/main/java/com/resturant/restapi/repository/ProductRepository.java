@@ -1,6 +1,7 @@
 package com.resturant.restapi.repository;
 
 import com.resturant.restapi.Model.Product;
+import com.resturant.restapi.Model.ProductCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,5 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     List<Product> findProductByProductcategoryId(Integer id);
 
+    List<Product> findAllByProductcategoryIn(List<ProductCategory> productCategories);
 }

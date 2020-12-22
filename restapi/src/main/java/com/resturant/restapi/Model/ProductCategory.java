@@ -1,9 +1,13 @@
 package com.resturant.restapi.Model;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,7 +15,12 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "PRODUCT_CATEGORY")
+@SQLDelete(
+        sql="UPDATE PRODUCT_CATEGORY SET deleted= true where id=?")
+@Where(clause = "deleted=false")
 public class ProductCategory {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,43 +47,5 @@ public class ProductCategory {
         this.name = name;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Media getCategorymedia() {
-        return categorymedia;
-    }
-
-    public void setCategorymedia(Media categorymedia) {
-        this.categorymedia = categorymedia;
-    }
 }

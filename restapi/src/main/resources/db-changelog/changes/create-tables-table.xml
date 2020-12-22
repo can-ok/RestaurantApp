@@ -36,6 +36,10 @@
         </insert>
     </changeSet>
 
-
+    <changeSet id="21" author="can.ok">
+        <addColumn tableName="Tables">
+            <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>
