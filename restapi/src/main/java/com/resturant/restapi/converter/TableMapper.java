@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Map;
 
 @Mapper(componentModel = "spring")
@@ -14,4 +15,7 @@ public interface TableMapper {
     TablesDto toDto(Tables tables);
 
     Tables toEntity(TablesDto tablesDto);
+
+
+    List<TablesDto> toDtoList(List<Tables> tablesList);
 }

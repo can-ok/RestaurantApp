@@ -3,6 +3,8 @@ import TableService from '../../api/TableService';
 import WaiterService from '../../api/WaiterService';
 import Modal from './Modal';
 
+import CustomerModel from './CustomerModal';
+
 import './Table.css'
 
 import PageLoader from '../PageLoader.js';
@@ -15,15 +17,14 @@ class TableList extends Component {
               tables:[],
               showModal:false,
               waiters:[],
-              loading:true
-                }
+              loading:true,
+              showCustomers:false
+            }
 
     static contextType=AppContext;
 
 
     componentDidMount(){
-
-        
 
         let appContext=this.context;
         let token=appContext.appState.token? appContext.appState.token:localStorage.getItem('token')
@@ -42,9 +43,7 @@ class TableList extends Component {
 
             });
         })
-
-
-       
+        
         
         WaiterService.token=token;
 
@@ -67,7 +66,11 @@ class TableList extends Component {
        if(table.title==='Ayakta'){
 
         this.selectTable(table.title)
-
+        
+        this.setState({
+            showCustomers:true,
+            showModal:false
+        })
        }
        else{
 
@@ -97,7 +100,8 @@ class TableList extends Component {
         }
         
         this.setState({
-            tables })
+            tables 
+        })
         }
     }
 
@@ -128,20 +132,14 @@ class TableList extends Component {
 
     selectWaiter=(item)=>{
         
-        
-        console.log(item)
         this.setState({showModal:false})
         
         let appState={...this.context.appState}
         appState.waiter=item.value
         this.context.setAppState(appState)
 
-        //sessionStorage.setItem('waiter',value.id)
-
-
         this.props.history.push("/products")
 
-        //window.location="/products" 
 
     }
 
@@ -206,7 +204,7 @@ class TableList extends Component {
 
             <div className="row CardItem"> 
 
-            {cards}
+                {cards}
 
             </div>
 
@@ -215,9 +213,10 @@ class TableList extends Component {
             
            { this.state.showModal&& <Modal open={this.state.showModal} 
                                         waiters={this.state.waiters}  selectWaiter={this.selectWaiter}
-                                        onClose={()=>this.setState({showModal:false})}>
-                
-            </Modal>}
+                                        onClose={()=>this.setState({showModal:false})}/>}
+
+           {this.state.showCustomers && <CustomerModel goProduct={()=>{this.props.history.push("/products")}} onClose={()=>this.setState({showCustomers:false})} /> }     
+            
 
         </div>
 

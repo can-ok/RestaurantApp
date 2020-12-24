@@ -12,9 +12,9 @@
 <!--    <include file="/db-changelog/changes/create-auth-table.xml"/>-->
     <include file="/db-changelog/changes/create-tables-table.xml"/>
     <include file="/db-changelog/changes/create-productCategory-table.xml"/>
-    <include file="/db-changelog/changes/create-drinks-table.xml"/>
+    <include file="/db-changelog/changes/create-product-table.xml"/>
     <include file="/db-changelog/changes/create-media-table.xml"/>
     <include file="/db-changelog/changes/create-roles-table.xml"/>
     <include file="/db-changelog/changes/create-user_roles-table.xml"/>
-
+    <include file="/db-changelog/changes/create-customer-table.xml"/>
 </databaseChangeLog>

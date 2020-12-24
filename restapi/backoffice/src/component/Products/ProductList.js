@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {Button} from 'reactstrap';
+import {Button, PaginationItem} from 'reactstrap';
 import {GrFormAdd} from 'react-icons/gr'
 import ProductsService from '../../api/ProductsService'
 
@@ -11,7 +11,10 @@ import AppContext from '../../AppContext';
 class ProductList extends Component {
     state = {
                 items:[] ,
-                loading:true
+                loading:true,
+                pageNumbers:[],
+                pageSize:10,
+                pageCount:0
             }
     
     static contextType=AppContext;
@@ -23,22 +26,30 @@ class ProductList extends Component {
 
         ProductsService.token=token;
         
-        ProductsService.getProduct("drinks")
+        ProductsService.getProduct(this.state.pageSize,this.state.pageCount)
         .then((response)=>{
             
             return response.json();
         }).then((data)=>{
 
+            let arr=new Array();
+            for(let i = 1; i <= Math.ceil(data.totalElements/this.state.pageSize); i++){
+                arr.push(i);
+              }
+
             this.setState({
-                items:data,
-                loading:false
+                items:data.content,
+                loading:false,
+                pageNumbers:arr
             });
         }).catch((error)=>{
 
             console.error("Error :",error)
         })
+
+       
     }
-    //http://localhost:8080/delete/food/1
+
 
 
     handle_detele=(itemId)=>{
@@ -62,14 +73,40 @@ class ProductList extends Component {
 
     }
 
+    paginate=(number)=>{
+
+
+        ProductsService.getProduct(this.state.pageSize,number-1)
+        .then((response)=>{
+            
+            return response.json();
+        }).then((data)=>{
+
+            let arr=new Array();
+            for(let i = 1; i <= Math.ceil(data.totalElements/this.state.pageSize); i++){
+                arr.push(i);
+              }
+
+            this.setState({
+                items:data.content,
+                loading:false,
+                pageNumbers:arr
+            });
+        }).catch((error)=>{
+
+            console.error("Error :",error)
+        })
+
+    }
+
 
 
     handle_filterProducts=(category)=>{
-
+        
         const items=this.state.items.filter( item=>
-            item.productcategory.name ==category
+            item.productcategory[0].name ==category
+            
          )
-
          this.setState({
              items
          })
@@ -98,7 +135,16 @@ class ProductList extends Component {
          </tr>
           );
        }
-    
+       
+       console.log(this.state.pageNumbers)
+       let pagination=this.state.pageNumbers.map((number=>{
+            return(
+            <li key={number} onClick={()=>this.paginate(number)} className="page-item">
+                <a href="#" className="page-link">{number}</a>
+            </li>)
+       }))
+      
+
        
 
         return ( <div>
@@ -126,8 +172,11 @@ class ProductList extends Component {
                 <tbody>
                 {listTable}
                 </tbody>
+                
             </table>
-            
+            <ul className='pagination d-flex justify-content-center'>
+                {pagination}
+            </ul>
             
         </div> );
     }

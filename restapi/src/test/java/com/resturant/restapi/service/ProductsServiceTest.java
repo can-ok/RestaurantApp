@@ -58,17 +58,17 @@ class ProductsServiceTest {
     }
 
 
-    @Test
-    void shouldgetAllDrinks() {
-
-        when(productRepository.findAll()).thenReturn(productList);
-
-        List<ProductDto> resultList=productsService.getAllDrinks();
-
-        assertNotNull(resultList);
-        assertEquals(productList.size(),resultList.size());
-
-    }
+//    @Test
+//    void shouldgetAllDrinks() {
+//
+//        when(productRepository.findAll()).thenReturn(productList);
+//
+//        List<ProductDto> resultList=productsService.getAllDrinks();
+//
+//        assertNotNull(resultList);
+//        assertEquals(productList.size(),resultList.size());
+//
+//    }
 
     @Test
     void shouldFindDrinkById(){
@@ -94,26 +94,26 @@ class ProductsServiceTest {
     }
 
 
-    @Test
-    void shouldNotgetSpecificCategory(){
-        //get empty list
-        when(productRepository.findProductByProductcategoryId(1)).thenReturn(Collections.emptyList());
-
-        List<ProductDto> listProducts= productsService.getSpecificCategory(1);
-
-        assertEquals(listProducts.size(),0);
-    }
-
-    @Test
-    void shouldgetSpecificCategory(){
-        //get empty list
-        when(productRepository.findProductByProductcategoryId(1)).thenReturn(productList);
-
-        //<Product> listProducts= productRepository.findProductByProductcategoryId(1);
-        List<ProductDto> listProducts=productsService.getSpecificCategory(1);
-
-        assertEquals(listProducts.size(),listProducts.size());
-    }
+//    @Test
+//    void shouldNotgetSpecificCategory(){
+//        //get empty list
+//        when(productRepository.findProductByProductcategoryId(1)).thenReturn(Collections.emptyList());
+//
+//        List<ProductDto> listProducts= productsService.getSpecificCategory(1);
+//
+//        assertEquals(listProducts.size(),0);
+//    }
+//
+//    @Test
+//    void shouldgetSpecificCategory(){
+//        //get empty list
+//        when(productRepository.findProductByProductcategoryId(1)).thenReturn(productList);
+//
+//        //<Product> listProducts= productRepository.findProductByProductcategoryId(1);
+//        List<ProductDto> listProducts=productsService.getSpecificCategory(1);
+//
+//        assertEquals(listProducts.size(),listProducts.size());
+//    }
 
 
 

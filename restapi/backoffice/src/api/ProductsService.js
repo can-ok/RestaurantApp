@@ -2,9 +2,9 @@
 
 class ProductsService{
 
-    static token=" "
+    static token=""
 
-     getProduct(name){
+     getProduct(pageSize,pageCount){
         var myHeaders = new Headers();
         myHeaders.append("Authorization", this.token);
 
@@ -16,7 +16,8 @@ class ProductsService{
 
         let response
         
-        response=fetch(`http://localhost:8080/products/${name}`,requestOptions)
+        //http://localhost:8080/products/?page=0&size=5
+        response=fetch(`http://localhost:8080/products/?page=${pageCount}&size=${pageSize}`,requestOptions)
         
 
         return response;
@@ -64,15 +65,7 @@ class ProductsService{
             "media":item.selectedMedia.value
             };
 
-        console.log(productCategory)
-        console.log(data)
-       
 
-        console.log(productCategory)
-
-        ///let categoryId=1;
-        
-        //http://localhost:8080/products/add/food/1
 
         
         let response=fetch(`http://localhost:8080/products/add/${type}`,{

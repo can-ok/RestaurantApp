@@ -121,6 +121,8 @@ export default class Basket extends Component {
 
         let tableContext=appContext.appState.table
         let waiterContext=appContext.appState.waiter
+        let customerContext=appContext.appState.customer
+        console.log("customer "+customerContext)
 
         items.forEach(item => {
             //delete item
@@ -132,7 +134,8 @@ export default class Basket extends Component {
                 "totalPrice":price,
                 "paymentType":"cash",
                 "orderTable":tableContext,
-                "waiterId":waiterContext
+                "waiterId":waiterContext,
+                "customerId":customerContext
             }
             
             data.push(jsonData);

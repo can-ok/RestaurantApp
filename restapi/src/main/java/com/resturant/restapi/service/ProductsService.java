@@ -9,17 +9,16 @@ import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
 import com.resturant.restapi.converter.ProductsCategoryMapper;
 import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.dto.ProductDto;
+import com.resturant.restapi.dto.ProductWrapperDto;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.ProductRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.*;
 
 @NoArgsConstructor
@@ -42,41 +41,64 @@ public class ProductsService {
     @Autowired
     ProductsCategoryMapper productsCategoryMapper;
 
-    public List<ProductDto> getAllDrinks(){
+    public Slice<ProductDto> getAllDrinks(int pageCount,int pageSize){
 
-        List<Product> productList=productRepository.findAll();
-        List<ProductDto> listProductDto=productMapper.toDtoList(productRepository.findAll());
+        Pageable pages=PageRequest.of(pageCount,pageSize);
 
-        for(int i=0; i<productList.size(); i++){
-            listProductDto.get(i).setProductcategory(productsCategoryMapper .toProductCategoryDtoSet(productList.get(i).getProductcategory()));
-        }
+        Slice<ProductDto> productDtosSlice=productRepository.findAllProd(pages).map(productMapper::toDto);
 
-        return listProductDto;
+
+        return productDtosSlice;
 
     }
 
 
+    public Page<ProductDto> getProducts(int pageCount,int pageSize){
 
-    public List<ProductDto> getSpecificCategory(int ProductCategoryId){
+        Pageable pageable=PageRequest.of(pageCount,pageSize);
 
+        Page<Product> productList=productRepository.findAllProducts(pageable);
+        if(productList.getSize()>0){
 
-        List<Product> listdrink= productRepository.findProductByProductcategoryId(ProductCategoryId);
-
-
-        List<ProductDto> productDtoDtoList =new ArrayList<>();
-
-
-        if(!listdrink.isEmpty())
-        {
-            return ProductDtoConverter.convertDrinkListToDrinDtoList(productDtoDtoList,listdrink);
         }
-        else {
 
-            return Collections.emptyList();
+        Page<ProductDto> productDtos=productRepository.findAllProducts(pageable).map(productMapper::toDto);
+
+        for(int i=0; i<productList.getContent().size(); i++){
+
+            productDtos.getContent().get(i).setProductcategory(productsCategoryMapper.toProductCategoryDtoSet(productList.getContent().get(i).getProductcategory()));
+            //listProductDto.get(i).setProductcategory(productsCategoryMapper .toProductCategoryDtoSet(productList.get(i).getProductcategory()));
         }
-        
+
+        return productDtos;
     }
 
+
+
+    public Slice<ProductDto> getSpecificCategory(int ProductCategoryId,int page,int size){
+        Pageable pages=PageRequest.of(page,size);
+        Slice<ProductDto> productByProductcategoryId = productRepository.findProductByProductcategoryId(ProductCategoryId, pages).map(productMapper::toDto);
+
+//        ProductWrapperDto productWrapperDto=new ProductWrapperDto();
+//
+//        if(productByProductcategoryId.hasNext()){
+//            productWrapperDto.setHasNext(true);
+//            System.out.println("girdi");
+//        }
+//
+//        List<ProductDto> productDtoList=new ArrayList<>();
+//        productByProductcategoryId.getContent().forEach(product -> {
+//            ProductDto productDto=productMapper.toDto(product);
+//            productDtoList.add(productDto);
+//        });
+//        productWrapperDto.setListproductDto(productDtoList);
+        //List<ProductDto> productDtoDtoList =new ArrayList<>();
+
+        //Slice<ProductDto> productDtos=new SliceImpl<>(productDtoList);
+
+
+        return productByProductcategoryId;
+    }
 
 
 
@@ -115,7 +137,8 @@ public class ProductsService {
 
         else{
 
-            ProductDto productDto = ProductDtoConverter.convertDrinktoDrinkDto(optinalEntity.get());
+            ProductDto productDto = productMapper.toDto(optinalEntity.get());
+
             return productDto;
         }
     }
@@ -123,9 +146,7 @@ public class ProductsService {
 
 
 
-    public List<ProductDto> deleteDrink(Integer id){
-
-        List<ProductDto> productDtos =new ArrayList<>();
+    public String deleteDrink(Integer id){
 
         Optional<Product> productEntity= productRepository.findById(id);
         if(productEntity.isPresent()){
@@ -133,11 +154,11 @@ public class ProductsService {
             productEntity.get().setProductcategory(null);
             productEntity.get().setMedia(null);
             productRepository.delete(productEntity.get());
-            productDtos =getAllDrinks();
+           return "Succes";
 
         }
 
-        return productDtos;
+        return "Fail";
 
 
 
@@ -146,6 +167,10 @@ public class ProductsService {
 
 
     public ProductDto updateDrink(ProductDto productDto){
+
+        if(productDto.equals(null) || productDto.getId()==null){
+            return null;
+        }
 
         Optional<Product> optinalDrink = productRepository.findById(productDto.getId());
 

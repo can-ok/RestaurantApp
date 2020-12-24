@@ -32,7 +32,7 @@ public class ProductCategory {
     private String description;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "productcategory")
+    @ManyToMany(mappedBy = "productcategory",fetch = FetchType.LAZY)
     private Set<Product> products;
 
 

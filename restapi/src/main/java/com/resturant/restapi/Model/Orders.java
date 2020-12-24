@@ -54,5 +54,7 @@ public class Orders {
     @Column(name="WAITERID")
     private String waiterId;
 
+    @Column(name="CUSTOMERID")
+    private String customerId;
 
 }

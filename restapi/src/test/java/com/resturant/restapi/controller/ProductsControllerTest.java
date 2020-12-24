@@ -61,24 +61,24 @@ public class ProductsControllerTest {
 
 
 
-    @Test
-    public void shouldgetProduct() {
-        when(productsService.getAllDrinks()).thenReturn(productDtos);
+//    @Test
+//    public void shouldgetProduct() {
+//        when(productsService.getAllDrinks()).thenReturn(productDtos);
+//
+//        assertNotNull(productsController.getAllDrinks());
+//        verify(productsService,times(1)).getAllDrinks();
+//
+//    }
 
-        assertNotNull(productsController.getAllDrinks());
-        verify(productsService,times(1)).getAllDrinks();
-
-    }
-
-    @Test
-    public void shouldNotgetProduct() {
-        when(productsService.getAllDrinks()).thenReturn(null);
-
-        assertNull(productsController.getAllDrinks());
-    }
-
-
-
+//    @Test
+//    public void shouldNotgetProduct() {
+//        when(productsService.getAllDrinks()).thenReturn(null);
+//
+//        assertNull(productsController.getAllDrinks());
+//    }
+//
+//
+//
 
 
 
@@ -101,14 +101,14 @@ public class ProductsControllerTest {
 
 
 
-    @Test
-    public void deleteProduct() {
-
-        when(productsService.deleteDrink(any())).thenReturn(productDtos);
-        assertNotNull(productsController.deleteDrink(any()));
-        verify(productsService,times(1)).deleteDrink(any());
-
-    }
+//    @Test
+//    public void deleteProduct() {
+//
+//        when(productsService.deleteDrink(any())).thenReturn(productDtos);
+//        assertNotNull(productsController.deleteDrink(any()));
+//        verify(productsService,times(1)).deleteDrink(any());
+//
+//    }
 
 
 
@@ -121,13 +121,13 @@ public class ProductsControllerTest {
     }
 
 
-    @Test
-    public void retrivebyProductCategor() {
-        int id=1;
-        when(productsService.getSpecificCategory(id)).thenReturn(null);
-
-        assertNull(productsController.retrivebyProductCategor(id));
-
-        //verify(productsController)
-    }
+//    @Test
+//    public void retrivebyProductCategor() {
+//        int id=1;
+//        when(productsService.getSpecificCategory(id)).thenReturn(null);
+//
+//        assertNull(productsController.retrivebyProductCategor(id));
+//
+//        //verify(productsController)
+//    }
 }

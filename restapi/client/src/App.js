@@ -24,7 +24,8 @@ import AppContext,{ContextWrapper} from './AppContext';
         {
           token:null,
           table:null,
-          waiter:null
+          waiter:null,
+          customer:null
         }
       );
 

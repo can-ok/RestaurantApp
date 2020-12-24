@@ -2,6 +2,7 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.converter.OrdersDtoConverter;
+import com.resturant.restapi.converter.OrdersMapper;
 import com.resturant.restapi.dto.OrdersDto;
 import com.resturant.restapi.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class OrdersService {
     @Autowired
     OrdersRepository ordersRepository;
 
+    @Autowired
+    OrdersMapper ordersMapper;
 
     public OrdersDto saveOrder(OrdersDto ordersDto){
 
@@ -25,7 +28,7 @@ public class OrdersService {
 
     public List<OrdersDto> saveOrders(List<OrdersDto> ordersDto){
 
-        List<Orders> ordersList= OrdersDtoConverter.ordersDtoListToOrderList(ordersDto);
+        List<Orders> ordersList= ordersMapper.toEntityList(ordersDto);
 
         ordersRepository.saveAll(ordersList);
 

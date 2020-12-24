@@ -1,5 +1,4 @@
 import React from 'react';
-import {Form,FormGroup,Label,Input} from 'reactstrap';
 import './Table.css'
 import Select from 'react-select';
 import {BiArrowBack} from 'react-icons/bi'

@@ -25,11 +25,10 @@ public class ProductCategoryService {
     ProductsCategoryMapper productsCategoryMapper;
 
     public Set<ProductCategoryDto> getAll(){
+
         Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
         productcategoryRepository.findAll().forEach(productCategory -> {
-
             ProductCategoryDto productCategoryDto=productsCategoryMapper.toDto(productCategory);
-
             productCategoryDtoList.add(productCategoryDto);
         });
         return productCategoryDtoList;
@@ -51,7 +50,7 @@ public class ProductCategoryService {
         {
             byId.get().setCategorymedia(null);
             productcategoryRepository.deleteById(id);
-            return "success";
+            return "Success";
 
         }
         return "Fail";
@@ -81,7 +80,6 @@ public class ProductCategoryService {
     }
 
     public ProductCategoryDto getDrinkById(int id){
-
 
         return productsCategoryMapper.toDto(productcategoryRepository.findById(id).get());
     }

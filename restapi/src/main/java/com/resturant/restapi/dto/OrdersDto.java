@@ -36,4 +36,7 @@ public class OrdersDto {
 
     private String waiterId;
 
+    private String customerId;
+
+
 }

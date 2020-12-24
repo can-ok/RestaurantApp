@@ -17,7 +17,7 @@ const ProductList = (props) => {
     <img src={'data:image/png;base64,'+item.media.fileContent} width="100" height="100" />
     
 
-    <h5 className="row justify-content-center">
+    <h5 className="row justify-content-center ">
     {item.title}
     </h5>
 
@@ -29,9 +29,9 @@ const ProductList = (props) => {
 
     <label className="row justify-content-center">{item.description}</label>
 
-    <div className="row justify-content-center">
+    <div className="row align-items-end">
     
-       <button className="btn btn-primary mt-2  btn-block" onClick={(e) => props.handleAddToCart(e, item)}>Ekle <GrFormAdd size={32} color="red"/> </button>
+       <button className="btn btn-primary mt-2 btn-block" onClick={(e) => props.handleAddToCart(e, item)}>Ekle <GrFormAdd size={32} color="red"/> </button>
 
         </div>
     </div>

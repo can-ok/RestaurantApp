@@ -16,9 +16,12 @@ class Production extends Component {
     state = {  items:[] ,
                value:"",
                categories:[],
+               selectedCategory:null,
                cartItems:[],
-               loading:true
-         
+               loading:true,
+               pageSize:6,
+               pageCount:0,
+               last:false
     }
 
 
@@ -26,7 +29,6 @@ class Production extends Component {
     static contextType=AppContext;
 
     componentDidMount(){
-        
 
         let appContext=this.context;
         let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
@@ -38,7 +40,7 @@ class Production extends Component {
         CategoryService.token=token;
         ProductService.token=token;
 
-        this.getItems()
+        this.getItemCategory(this.state.selectedCategory)
 
         //http://localhost:8080/getCategories
 
@@ -59,12 +61,7 @@ class Production extends Component {
         })
 
         
-        if(tableContext===null || waiterContext===null){
-            
-            this.props.history.push("/table");
-
-        }
-        else{
+       
         //get items from localStorage
         let item=localStorage.getItem(tableContext)
         if(item!=null){
@@ -74,7 +71,7 @@ class Production extends Component {
                 loading:false
             })
             }
-        }
+        
 
        
 
@@ -86,44 +83,70 @@ class Production extends Component {
     }
     
     
-    getItems=()=>{
-
-            //http://localhost:8080/drinks
-        ProductService.getAllProducts()
-        .then((response)=>{
-            
-            this.setState({
-                items:response.data
-            });
-
-
-        }).catch((error)=>{
-
-            console.error("Error :",error)
-        });
-
-    }
-
    
-    getItemCategory=(specificCategory)=>{
 
-        ProductService.getProductsByCategory(specificCategory)
-        .then((response)=>{
-            
-            
-            this.setState({
-                items:response.data
-            })
     
+    getItemCategory=(specificCategory,e)=>{
+
+        if(specificCategory==null){
+            ProductService.getAllProducts(this.state.pageSize,this.state.pageCount)
+            .then((response)=>{
+
+                if(this.state.items.length>0)
+                {
+                    this.setState({
+                        selectedCategory:null,
+                        items:[...this.state.items,...response.data.content],
+                        last:response.data.last
+                    });
+                }
+                else{
+                    this.setState({
+                        selectedCategory:null,
+                        items:response.data.content,
+                        pageCount:0,
+                        last:response.data.last
+                    });
+
+                }
+    
+            }).catch((error)=>{
+                console.error("Error :",error)
+            });
+        }
+        else{
+
+        ProductService.getProductsByCategory(specificCategory,this.state.pageSize,this.state.pageCount)
+        .then((response)=>{
+            if(this.state.selectedCategory!=specificCategory){
+
+                this.setState({
+                    items:response.data.content,
+                    selectedCategory:specificCategory,
+                    pageCount:0,
+                    last:response.data.last
+                })
+
+            }
+            else{
+                this.setState({
+                    items:[...this.state.items,...response.data.content],
+                    selectedCategory:specificCategory,
+                    last:response.data.last
+                })
+            }
+
         }).catch((error) => {
             console.error('Error:', error);
             });
+            
+        }
+        
 
     }
 
 
     handleRemoveFromCart=(event,item)=>{
-
 
         this.setState(state=>{
 
@@ -149,10 +172,7 @@ class Production extends Component {
             // map cart item array and update item at found index
             cartItemList = this.state.cartItems.map((item, i) =>
               i === itemFoundIndex ? { ...item, count: item.count+1 } : item
-            );
-
-            //override
-           
+            );           
 
             this.setbasket(cartItemList);
 
@@ -200,14 +220,19 @@ class Production extends Component {
                 };
                
             }
-           
-            
             localStorage.setItem(tableContext,JSON.stringify(basketItem))
 
         }
         
-
       
+    }
+
+    handleScroll=(e)=>{
+        const bottom=e.target.scrollHeight-e.target.scrollTop===e.target.clientHeight;
+        if(bottom && !this.state.last){
+            this.setState({pageCount:this.state.pageCount+1})
+            this.getItemCategory(this.state.selectedCategory,e)
+        }
     }
     
 
@@ -215,11 +240,6 @@ class Production extends Component {
 
         let appContext=this.context;
         let tableContext=appContext.appState.table;
-
-        /* let item=localStorage.getItem(tableContext)
-        item=JSON.parse(item)
-        console.log(item) */
-        
 
         let categoriesList=null;
 
@@ -245,22 +265,20 @@ class Production extends Component {
             <div className="col-2 float-left mt-2 ml-2 row">
             
             <ListGroup className="Category_List">
-                <div className="border border-primary p-3 rounded"  tag="button" action  onClick={()=>this.getItems()}>
+                <div className="border border-primary p-3 rounded"  tag="button" action  onClick={()=>this.getItemCategory(null)}>
                 <Link>Hepsi</Link>
                 </div>
             {categoriesList}
             </ListGroup>
             </div>
 
-            <div className="col-6 CardItem">
+            <div className="col-5 CardItem" onScroll={this.handleScroll}>
+                <ProductList handleAddToCart={this.handleAddToCart} items={this.state.items} /> 
 
-            <ProductList handleAddToCart={this.handleAddToCart} items={this.state.items} /> 
+            </div>
 
-             </div>
-
-            <div className="col-4  mt-2">
-
-            <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart} />
+            <div className="col-5  mt-2">
+                <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart} />
             </div>
 
          </div>   

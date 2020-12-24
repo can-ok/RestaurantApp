@@ -26,6 +26,13 @@
     background-color:darkcyan;
 }
 
+.CustomerModel {
+
+    color: darkcyan;
+    width: 800px;
+    height: 500px;
+}
+
 .CardItem{
 
     max-height:  40rem;

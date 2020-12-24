@@ -27,13 +27,9 @@ public class TableService {
 
     public List<TablesDto> getAllTables(){
 
-        List<TablesDto> tablesDtoList=new ArrayList<>();
 
-        tableRepository.findAll().forEach(entity->{
+        List<TablesDto> tablesDtoList=tableMapper.toDtoList(tableRepository.findAll());
 
-            TablesDto tablesDto=tableMapper.toDto(entity);
-            tablesDtoList.add(tablesDto);
-        });
 
         return tablesDtoList;
     }

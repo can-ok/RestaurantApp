@@ -37,6 +37,10 @@ import ListRoles from './component/Role/ListRole';
 
 import Media from './component/Media/Media';
 
+import CustomerList from './component/Customer/ListCustomer';
+import AddCustomer from './component/Customer/AddCustomer';
+
+
 const App = () => {
 
   const [appState,setAppState]=useState({ token:null});
@@ -75,6 +79,8 @@ const App = () => {
           <Route exact path="/media" component={Media}/>
           <Route exact path="/order" component={OrderList} />
           <Route exact path="/roles" component={ListRoles}/>
+          <Route exact path="/customer" component={CustomerList}/>
+          <Route exact path="/customer/add" component={AddCustomer}/>
       </Switch>
     </Router>
     </AppContext.Provider>

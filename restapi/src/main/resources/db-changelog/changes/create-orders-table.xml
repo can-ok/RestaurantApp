@@ -44,5 +44,11 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="25" author="can.ok">
+        <addColumn tableName="Orders">
+            <column name="customerId" type="VARCHAR(255)"></column>
+        </addColumn>
+    </changeSet>
+
 
 </databaseChangeLog>

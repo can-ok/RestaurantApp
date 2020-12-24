@@ -12,6 +12,7 @@ class CategoryList extends Component {
      }
 
     static contextType=AppContext;
+    
 
     componentDidMount(){
 

@@ -1,8 +1,12 @@
 package com.resturant.restapi.controller;
 
+import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.dto.ProductDto;
+import com.resturant.restapi.dto.ProductWrapperDto;
 import com.resturant.restapi.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,18 +22,20 @@ public class ProductsController {
 
 
 
-    @GetMapping(path = "/drinks")
-    public List<ProductDto> getAllDrinks(){
+    @GetMapping(path = "/")
+    public Page<ProductDto> getAllDrinks(@RequestParam(value = "page") int page,
+                                         @RequestParam(value = "size") int size){
 
-        return productsService.getAllDrinks();
+        return productsService.getProducts(page,size);
     }
 
-    @GetMapping(path="/getAll")
-    public List<? extends ProductDto> getAllProducts(){
 
-        return new ArrayList<ProductDto>() {{
-            addAll(productsService.getAllDrinks());
-        }};
+    @GetMapping(path="/getAll")
+    public Slice<ProductDto> getAllProducts(@RequestParam(value = "page") int page,
+                                                     @RequestParam(value = "size") int size){
+
+        return productsService.getAllDrinks(page,size);
+
     }
 
 
@@ -48,7 +54,7 @@ public class ProductsController {
 
 
     @DeleteMapping(path = "/delete/drink/{id}")
-    public List<ProductDto> deleteDrink(@PathVariable Integer id){
+    public String deleteDrink(@PathVariable Integer id){
 
         return productsService.deleteDrink(id);
     }
@@ -60,10 +66,11 @@ public class ProductsController {
         return productsService.updateDrink(productDto);
     }
 
-    @GetMapping(path="/category/{id}")
-    public List<ProductDto> retrivebyProductCategor(@PathVariable int id){
+    @GetMapping(path="/category/{id}/")
+    public Slice<ProductDto> retrivebyProductCategor(@PathVariable int id, @RequestParam(value = "page") int page,
+                                                     @RequestParam(value = "size") int size){
 
-        return productsService.getSpecificCategory(id);
+        return productsService.getSpecificCategory(id,page,size);
     }
 
 
