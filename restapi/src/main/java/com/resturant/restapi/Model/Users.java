@@ -21,12 +21,7 @@ import java.util.Set;
 @SQLDelete(
         sql="UPDATE USERS  SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class Users  implements Serializable {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Users extends BaseEntity  implements Serializable {
 
     @Column(name = "USERNAME")
     private String username;

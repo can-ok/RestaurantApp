@@ -23,12 +23,12 @@ import java.util.Date;
 @SQLDelete(
         sql="UPDATE ORDERS SET deleted=true where id=?")
 @Where(clause = "deleted=false")
-public class Orders {
+public class Orders extends BaseEntity {
 
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Integer Id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    private Integer Id;
 
     @Column(name="PRODUCTID")
     private Integer productId;

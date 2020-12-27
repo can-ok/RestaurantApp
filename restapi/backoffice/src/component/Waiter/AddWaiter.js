@@ -113,9 +113,9 @@ class AddWaiter extends Component {
                 onChange={this.handleDateSelect} //only when value has changed
             />
             </FormGroup>
-            <FormGroup>
+            <FormGroup style={{width: '300px'}}>
               <Label>Media:</Label>
-              <Select className="col-md-2" options={categoryOptions}  value={this.state.selectedMedia} onChange={this.handleSelectChange} />
+              <Select  options={categoryOptions}  value={this.state.selectedMedia} onChange={this.handleSelectChange} />
 
             </FormGroup>
             

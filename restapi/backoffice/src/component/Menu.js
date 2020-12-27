@@ -2,7 +2,6 @@ import {Navbar,Nav,Form,FormControl} from 'react-bootstrap'
 import {Button} from 'reactstrap';
 const MenuBar = (props) => {
 
-    console.log(props.token)
     const token=props.token;
     return ( <Navbar bg="dark" variant="dark">
     <Navbar.Brand href="#home">BackOffice</Navbar.Brand>

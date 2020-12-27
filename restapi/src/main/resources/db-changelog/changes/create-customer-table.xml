@@ -9,7 +9,7 @@
 
     <changeSet id="23-12-20-19-26" author="can.okan">
         <createTable tableName="Customer">
-            <column autoIncrement="true" name="customerId" type="int(10)">
+            <column autoIncrement="true" name="id" type="int(10)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="firstName" type="VARCHAR(255)"></column>

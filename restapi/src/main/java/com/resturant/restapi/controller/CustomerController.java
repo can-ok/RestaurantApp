@@ -19,7 +19,8 @@ public class CustomerController {
 
     @GetMapping("/")
     public Page<CustomerDto> getCustomers(@RequestParam(value = "page") int page,
-                                          @RequestParam(value = "size") int size){
+                                          @RequestParam(value = "size") int size)
+    {
 
         return customerService.getAllCustomers(page,size);
     }
@@ -36,9 +37,16 @@ public class CustomerController {
         return customerService.updateCustomer(customerDto);
     }
 
-    @DeleteMapping
-    public String deleteCustomer(Integer id){
+    @DeleteMapping("/{id}")
+    public String deleteCustomer(@PathVariable Integer id){
         return customerService.deleteCustomer(id);
+    }
+
+    @PostMapping( path = "/byNumber")
+    public Page<CustomerDto> getCustomersbyNumber(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
+                                                  @RequestBody CustomerDto customerDto)
+    {
+        return customerService.getCustomerByPhoneNumber(page,size,customerDto);
     }
 
 }

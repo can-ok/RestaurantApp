@@ -59,7 +59,6 @@ class WaiterList extends Component {
                 <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Sil </Button></td>
                 </tr>
 
-
             )
             
         }

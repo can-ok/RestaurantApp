@@ -3,28 +3,33 @@ import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 import CategoryService from '../../api/CategoryService';
 import TableService from '../../api/TableService';
+import MediaService from '../../api/MediaService';
+import Select from 'react-select';
 
 
 class EditTable extends Component {
     state = {  tableCategory:[],
         selectValue:1,
         tableName:"",
-        tableCount:0
+        tableCount:0,
+        categoryMedia:[],
+        selectedMedia:null
 
     }
 
 
     componentDidMount(){
 
-        CategoryService.getTableCategories()
+    
+        MediaService.getAllMedia()
         .then((response)=>{
-
-            return response.json()
+            console.log(response)
+            if(response.status===200) return response.json()
+        
         })
-        .then((data)=>{
-
+        .then(data=>{
             this.setState({
-                tableCategory:data
+                categoryMedia:data
             })
         })
     }
@@ -37,6 +42,12 @@ class EditTable extends Component {
         console.log(this.state.tableCount)
 
         TableService.updateTable(id,this.state)
+        .then((response)=>{
+            if(response.status===200){
+                this.props.history.push("/tables")
+            }
+        })
+        .catch((err)=>{console.log(err)})
         
     }
 
@@ -51,10 +62,21 @@ class EditTable extends Component {
     }
 
 
-   
+    handleSelectChange=(item)=>{
+        
+        console.log(item)
+        this.setState({
+            selectedMedia:item
+        })
+    }
 
 
     render() { 
+        const categoryOptions=this.state.categoryMedia.map((item)=>{
+            return({label:<div>{item.name} <img src={'data:image/png;base64,'+item.fileContent} width="30" /> </div> ,value:item}
+                )
+        })
+      
 
         
         return (<Form>
@@ -67,7 +89,10 @@ class EditTable extends Component {
             <Label>Count:
             <Input type='number' name="tableCount" /> </Label>
             </FormGroup>
-
+            <FormGroup style={{width: '300px'}}>
+            <Label>Media:</Label>
+            <Select  options={categoryOptions}  value={this.state.selectedMedia} onChange={this.handleSelectChange} />
+            </FormGroup>
             <Link onClick={this.mySubmitHandler} className="btn btn-success">Submit</Link>
             <Link to="/tables" className="btn btn-danger ml-2">Cancel</Link>        
             </Form>    );

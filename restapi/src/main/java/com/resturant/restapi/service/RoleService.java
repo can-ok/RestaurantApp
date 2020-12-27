@@ -4,6 +4,8 @@ import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.converter.RoleDtoConverter;
 import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.dto.RoleDto;
+import com.resturant.restapi.exception.ContentNotAllowed;
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,23 +24,22 @@ public class RoleService {
     RoleMapper roleMapper;
 
     public List<RoleDto> getAll(){
-
-        List<RoleDto> rolesDtoList=new ArrayList<>();
-        rolesRepository.findAll().forEach(role -> {
-            RoleDto roleDto=roleMapper.toDto(role);
-            rolesDtoList.add(roleDto);
-        });
-
-        return rolesDtoList;
+        List<RoleDto> roleDtoList=roleMapper.toDtoList(rolesRepository.findAll());
+        return roleDtoList;
     }
 
     public RoleDto getRole(int id){
 
+        if(id<0){
+            throw new ContentNotAllowed("Role id is not allowed");
+        }
         return roleMapper.toDto(rolesRepository.findById(id).get());
     }
 
-    public RoleDto  insert(RoleDto roleDto){
-
+    public RoleDto insert(RoleDto roleDto){
+        if(roleDto==null){
+            throw new ContentNotAllowed("Role Content Not Allowed");
+        }
         Role role=roleMapper.toEntity(roleDto);
         rolesRepository.save(role);
         return roleDto;
@@ -46,28 +47,34 @@ public class RoleService {
 
 
     public String delete(int id){
-        if(rolesRepository.findById(id).isPresent()){
 
-            rolesRepository.deleteById(id);
-            return "Success";
+        Optional<Role> roleOptional=rolesRepository.findById(id);
+        if(!roleOptional.isPresent()){
+            throw new EntityNotFound("Role Not Found");
         }
 
-        return "Fail";
+        rolesRepository.deleteById(id);
+        return "Success";
+
     }
 
     public String update(RoleDto roleDto,int id){
 
-        Optional<Role> roleOptinal=rolesRepository.findById(id);
-        if(!roleOptinal.isPresent()){
-
-            return "Fail";
-
+        if(roleDto==null && id<0){
+            throw new ContentNotAllowed("Not Allowed content");
         }
 
+        Optional<Role> roleOptinal=rolesRepository.findById(id);
+        if(!roleOptinal.isPresent()){
+            throw new EntityNotFound("Entity Not Found");
+        }
 
         Role role=roleOptinal.get();
-        role.setName(roleDto.getName());
-        role.setId(id);
+
+        if(role.getName()!=roleDto.getName()){
+            role.setName(roleDto.getName());
+        }
+
         rolesRepository.save(role);
         return "Success";
     }

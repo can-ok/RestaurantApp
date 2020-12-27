@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
@@ -24,4 +25,5 @@ public interface ProductsCategoryMapper {
 
     Set<ProductCategoryDto> toProductCategoryDtoSet(Set<ProductCategory> productCategories);
 
+    List<ProductCategory> toProductCategorySet(Set<ProductCategoryDto> productCategories);
 }

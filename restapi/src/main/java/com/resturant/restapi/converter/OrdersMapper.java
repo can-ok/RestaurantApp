@@ -16,4 +16,6 @@ public interface OrdersMapper {
     Orders toEntity(OrdersDto ordersDto);
 
     List<Orders> toEntityList(List<OrdersDto> ordersDtoList);
+
+    List<OrdersDto> toDtoList(List<Orders> ordersList);
 }

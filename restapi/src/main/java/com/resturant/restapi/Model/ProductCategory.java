@@ -21,11 +21,11 @@ import java.util.Set;
 @SQLDelete(
         sql="UPDATE PRODUCT_CATEGORY SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class ProductCategory {
+public class ProductCategory extends BaseEntity{
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Integer id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    private Integer id;
 
     private String name;
 
@@ -41,11 +41,11 @@ public class ProductCategory {
     @JoinColumn(name = "media_id")
     private Media categorymedia;
 
-
-    public ProductCategory(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+//
+//    public ProductCategory(Integer id, String name) {
+//        super(id);
+//        this.name = name;
+//    }
 
 
 }

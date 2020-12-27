@@ -22,11 +22,11 @@ import java.util.Set;
 @SQLDelete(
         sql="UPDATE PRODUCT SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class Product implements Serializable {
+public class Product extends BaseEntity implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Integer id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    private Integer id;
 
     private String  title;
 

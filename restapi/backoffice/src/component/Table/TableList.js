@@ -34,6 +34,9 @@ class TableList extends Component {
     }
 
 
+
+
+
     render() {
         
         
@@ -48,6 +51,7 @@ class TableList extends Component {
             <td>{item.title}</td>
             <td>{item.tableCount}</td>
             <td>{item.enabled.toString()}</td>
+            <td><img src={'data:image/png;base64,'+item.media.fileContent} width="60" alt="waiter"/></td>
             <td><Link to={`/editTable/${item.id}`} className="btn btn-warning">Edit</Link></td>
             <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(item.id)} >Delete </Button></td>
         </tr>)
@@ -68,6 +72,7 @@ class TableList extends Component {
                     <th>İsim</th>
                     <th>Sayı</th>
                     <th>Enable</th>
+                    <th>Görsel</th>
                     <th></th>
                     <th></th>
                     </tr>

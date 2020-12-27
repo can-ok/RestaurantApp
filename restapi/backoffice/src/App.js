@@ -39,11 +39,16 @@ import Media from './component/Media/Media';
 
 import CustomerList from './component/Customer/ListCustomer';
 import AddCustomer from './component/Customer/AddCustomer';
+import EditCustomer from './component/Customer/EditCustomer';
 
 
 const App = () => {
 
-  const [appState,setAppState]=useState({ token:null});
+  const [appState,setAppState]=useState({ 
+    token:null,
+    language:'en'
+  
+  });
 
   const context=appState.token? appState.token:localStorage.getItem('token')
 
@@ -57,14 +62,20 @@ const App = () => {
 
     <Router>
       <Switch>
-          <Route exact path="/" component={ProductList}/>
+      <Route exact path="/" render={(props) => {
+                if (!context) return <Redirect to="/login" />;
+                return <ProductList {...props} />;
+              }}/>
           <Route exact path="/login" component={LoginForm}/>
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/description/:type/:id" component={ProductDescription} />
           <Route exact path="/add/:type" component={AddProduct}/>
           <Route exact path="/update/:type/:id" component={EditProduct} />
           <Route exact path="/users/add" component={AddUser} />
-          <Route exact path="/users" component={User}/>
+          <Route exact path="/users" render={(props)=>{
+             if (!context) return <Redirect to="/login" />;
+             return <User {...props}/>;
+          }}/>
           <Route exact path="/users/edit/:id" component={EditUser} />
           <Route exact path="/categories" component={CategoryList} />
           <Route exact path="/addCategory" component={AddCategory}/>
@@ -80,7 +91,8 @@ const App = () => {
           <Route exact path="/order" component={OrderList} />
           <Route exact path="/roles" component={ListRoles}/>
           <Route exact path="/customer" component={CustomerList}/>
-          <Route exact path="/customer/add" component={AddCustomer}/>
+          <Route exact path="/customerAdd" component={AddCustomer}/>
+          <Route exact path="/customerEdit/:id" component={EditCustomer}/>
       </Switch>
     </Router>
     </AppContext.Provider>

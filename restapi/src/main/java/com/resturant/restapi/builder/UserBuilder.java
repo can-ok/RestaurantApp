@@ -3,7 +3,6 @@ package com.resturant.restapi.builder;
 import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.Model.Users;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,9 +10,9 @@ public class UserBuilder extends Builder{
 
     private Integer id;
 
-    private String USERNAME;
-    private String Password;
-    private boolean Enabled;
+    private String username;
+    private String password;
+    private boolean enabled;
 
     private Set<Role> roles=new HashSet<>();
 
@@ -22,10 +21,10 @@ public class UserBuilder extends Builder{
     public Users build() {
         Users user=new Users();
         user.setId(this.id);
-        user.setUsername(this.USERNAME);
-        user.setPassword(this.Password);
+        user.setUsername(this.username);
+        user.setPassword(this.password);
         user.setRoles(this.roles);
-        user.setEnabled(this.Enabled);
+        user.setEnabled(this.enabled);
         return user;
     }
 
@@ -36,12 +35,12 @@ public class UserBuilder extends Builder{
     }
 
     public UserBuilder username(String USERNAME) {
-        this.USERNAME=USERNAME;
+        this.username =USERNAME;
         return this;
     }
 
     public UserBuilder enabled(Boolean Enabled) {
-        this.Enabled=Enabled;
+        this.enabled =Enabled;
         return this;
     }
 
@@ -51,7 +50,7 @@ public class UserBuilder extends Builder{
     }
 
     public UserBuilder password(String Password) {
-        this.Password=Password;
+        this.password =Password;
         return this;
     }
 }

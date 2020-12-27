@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class OrdersDtoBuilder extends Builder {
 
-    private Integer Id;
+    private Integer id;
 
     private Integer productId;
 
@@ -70,7 +70,7 @@ public class OrdersDtoBuilder extends Builder {
 
     @Override
     public OrdersDtoBuilder id(int Id) {
-        this.Id=Id;
+        this.id=Id;
         return this;
     }
 

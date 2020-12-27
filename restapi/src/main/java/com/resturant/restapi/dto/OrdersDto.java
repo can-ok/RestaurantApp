@@ -18,7 +18,7 @@ import java.util.Date;
 @Setter
 public class OrdersDto {
 
-    private Integer Id;
+    private Integer id;
 
     private Integer productId;
 

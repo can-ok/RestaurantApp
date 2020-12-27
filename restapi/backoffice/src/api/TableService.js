@@ -32,7 +32,8 @@ class TableService{
         var data={
             "title":state.tableName,
             "enabled": true,
-            "tableCount":state.tableCount
+            "tableCount":state.tableCount,
+            "media":state.selectedMedia.value
         }
 
         //localhost:8080/table/add/2
@@ -79,7 +80,9 @@ class TableService{
         var data={
             "title":item.tableName,
             "enabled":true,
-            "tableCount":item.tableCount
+            "tableCount":item.tableCount,
+            "media":item.selectedMedia.value
+
         }
         console.log(data,id)
       //localhost:8080/table/update/1

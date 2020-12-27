@@ -138,27 +138,27 @@ public class ProductsServiceSetAndUpdateTest {
         assertNull(dto);
     }
 
-//    @Test
-//    public void shouldNotDelete(){
-//        int id=1;
-//        Mockito.when(productRepository.findById(id)).thenReturn(Optional.empty());
-//        List<ProductDto> dto=productsService.deleteDrink(id);
-//
-//        assertEquals(dto.size(),0);
-//    }
+    @Test
+    public void shouldNotDelete(){
+        int id=1;
+        Mockito.when(productRepository.findById(id)).thenReturn(Optional.empty());
+        String response=productsService.deleteDrink(id);
+
+        assertEquals(response,"Fail");
+    }
 
 
-//    @Test
-//    public void shouldDelete(){
-//        int id=1;
-//        Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(product));
-//
-//        List<ProductDto> dtoList=new ArrayList<>();
-//        List<Product> prodList=Arrays.asList(product);
-//        //Mockito.when(productsService.getAllDrinks()).thenReturn(ProductDtoConverter.convertDrinkListToDrinDtoList(dtoList,prodList));
-//        List<ProductDto> dto=productsService.deleteDrink(id);
-//
-//        assertEquals(dto.size(),productList.size());
-//    }
+    @Test
+    public void shouldDelete(){
+        int id=1;
+        Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(product));
+
+        List<ProductDto> dtoList=new ArrayList<>();
+        List<Product> prodList=Arrays.asList(product);
+        //Mockito.when(productsService.getAllDrinks()).thenReturn(ProductDtoConverter.convertDrinkListToDrinDtoList(dtoList,prodList));
+        //List<ProductDto> dto=productsService.deleteDrink(id);
+        String result=productsService.deleteDrink(id);
+        assertEquals(result,"Succes");
+    }
 
 }

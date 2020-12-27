@@ -94,7 +94,7 @@ public class ProductsControllerTest {
     public void retriveProduct() {
         int id=1;
         when(productsService.getDrinkById(id)).thenReturn(productDto);
-        assertEquals(productsController.retriveDrink(id),productDto);
+        assertEquals(productsController.retriveProduct(id),productDto);
 
     }
 

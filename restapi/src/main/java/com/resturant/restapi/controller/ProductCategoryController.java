@@ -41,7 +41,6 @@ public class ProductCategoryController {
     @PutMapping("/update/{id}")
     public ProductCategoryDto updateCategory(@PathVariable int id,@RequestBody ProductCategoryDto category)
     {
-
         return categoryService.updateCategory(id,category);
     }
 

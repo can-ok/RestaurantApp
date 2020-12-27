@@ -1,5 +1,6 @@
 package com.resturant.restapi.dto;
 
+import com.resturant.restapi.Model.Media;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,7 @@ public class TablesDto {
     private Boolean enabled;
 
     private Integer tableCount;
+
+    private Media media;
+
 }

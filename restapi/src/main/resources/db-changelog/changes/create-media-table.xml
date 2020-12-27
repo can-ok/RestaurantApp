@@ -85,6 +85,25 @@
     </changeSet>
 
 
+    <changeSet id="27.12.2020" author="can.ok">
+        <insert tableName="Media">
+            <column name="id" valueNumeric="12"></column>
+            <column name="name" value="Ayakta"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/delivery.png"></column>
+        </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="13"></column>
+            <column name="name" value="Restaurant Table"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/restauranttable.png"></column>
+        </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="14"></column>
+            <column name="name" value="Restaurant Table"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/garden.png"></column>
+        </insert>
+    </changeSet>
+
+
 
 
 </databaseChangeLog>

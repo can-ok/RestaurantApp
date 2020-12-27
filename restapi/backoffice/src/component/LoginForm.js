@@ -1,4 +1,3 @@
-
 import {Form,FormGroup,Label,Input, Button} from 'reactstrap';
 import React, { Component } from 'react';
 
@@ -6,11 +5,14 @@ import AuthService from '../api/AuthService';
 import Switch from "react-switch";
 
 import AppContext from '../AppContext';
+import ErrorAlert from './ErrorAlert';
 
 class LoginForm extends Component {
     state = { username:"",
               password:"",
-              checked:false
+              checked:false,
+              errorMessage:"",
+              language:"tr"
             }
 
     static contextType=AppContext;
@@ -19,10 +21,7 @@ class LoginForm extends Component {
         
         AuthService.login(this.state)
         .then((response)=>{
-            
-            /* console.log(response)
-            console.log(response.data.auth) */
-            
+
             let appState={...this.context.appState}
             appState.token="BASIC "+response.data.auth
             this.context.setAppState(appState)
@@ -31,18 +30,20 @@ class LoginForm extends Component {
             {
                 localStorage.setItem("token","BASIC "+response.data.auth)
                 
-                console.log("checked")
             }
 
-           // this.props.history.push("/")
-           // window.location="/"; //full reload
-            
             this.props.history.push("/")
             
-        }).catch((err)=>{
+        }).catch(err=>{
 
-            console.log(err)
+            console.log(err.response.data.message)
+            
+            this.setState({
+                errorMessage:err.response.data.message
+            })
+        
         })
+
     }        
 
     handleInputChange=(event)=>{
@@ -59,14 +60,26 @@ class LoginForm extends Component {
         this.setState({ checked });
     }
 
+    
+    onChangeLanguage=(language)=>{
+
+        let appState={...this.context.appState}
+        appState.language=language
+        this.context.setAppState(appState)
+
+        AuthService.language=language
+
+    }
+
 
     render() { 
 
-        let appContext=this.context;
-        console.log(appContext)
 
         return ( 
+            <div className="App container">
             <Form>
+                {this.state.errorMessage===""?null:<ErrorAlert message={this.state.errorMessage}/>}
+
                 <FormGroup>
                     <Label>Name:
                     <Input name="username" type="text"  onChange={this.handleInputChange} /></Label>
@@ -81,7 +94,11 @@ class LoginForm extends Component {
                 <Button onClick={this.mySubmitHandler} className="btn btn-success">Submit</Button>
 
             </Form>
-
+                <div className="float-right">
+                <img src="https://www.countryflags.io/tr/flat/64.png" onClick={()=>this.onChangeLanguage("tr")} alt="turkey" width="50" height="50"/>
+                <img src="https://www.countryflags.io/us/flat/64.png" onClick={()=>this.onChangeLanguage("en")} alt="usa" width="50" height="50"/>
+                </div>
+            </div>
 
          );
     }

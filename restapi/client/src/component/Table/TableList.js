@@ -10,6 +10,7 @@ import './Table.css'
 import PageLoader from '../PageLoader.js';
 
 import AppContext from '../../AppContext';
+import AddCustomerModel from './CustomerModal';
 
 
 class TableList extends Component {
@@ -54,11 +55,7 @@ class TableList extends Component {
                 loading:false
             })
         })
-
-       
-
     }
-
 
   
     showCards=(table)=>{
@@ -76,32 +73,31 @@ class TableList extends Component {
 
         let tables=[]
 
-        //console.log(table)
 
         for(let count=1; count<=table.tableCount; count++){
-        let status,prodCount;
+            let status,prodCount;
 
-        if(localStorage.getItem(`${table.title} ${count}`)){
-            console.log(`${table.title} ${count}`)
-            status=true
-            prodCount=0
-            JSON.parse(localStorage.getItem(`${table.title} ${count}`)).products.forEach(element => {
-                prodCount+=element.count
-            });
-        }
-            
-                                 
-           
-           let tableObject={'name':`${table.title} ${count}`,
-                            'reservedStatus':status,
-                            'count':prodCount}
-            tables.push(tableObject)
-            
-        }
+
+            //table already reserved (if it stored in localStorage)
+            if(localStorage.getItem(`${table.title} ${count}`)){
+                console.log(`${table.title} ${count}`)
+                status=true
+                prodCount=0
+                JSON.parse(localStorage.getItem(`${table.title} ${count}`)).products.forEach(element => {
+                    prodCount+=element.count
+                });
+            }
+                
+            let tableObject={'name':`${table.title} ${count}`,
+                                'reservedStatus':status,
+                                'count':prodCount}
+                tables.push(tableObject)
+                
+            }
         
-        this.setState({
-            tables 
-        })
+            this.setState({
+                tables 
+            })
         }
     }
 
@@ -140,7 +136,6 @@ class TableList extends Component {
 
         this.props.history.push("/products")
 
-
     }
 
 
@@ -150,7 +145,7 @@ class TableList extends Component {
          const tablesList=this.state.tablesCategory.map((item)=>
 
          <tr key={item.id} className="table-row" onClick={()=>this.showCards(item)}>
-            <td>{item.title}</td>
+            <td>{item.title}<img className="ml-5"src={'data:image/png;base64,'+item.media.fileContent} width="50" /></td>
          </tr>
         ) 
 
@@ -163,7 +158,7 @@ class TableList extends Component {
                 
               if(!item.reservedStatus){
                 return(<div key={item.name} className="col-md-4  border Card" onClick={()=>this.selectTable(item.name)} > 
-                
+
                 <h5 className="align-items-center">
                 {item.name}
                 </h5>
@@ -216,6 +211,7 @@ class TableList extends Component {
                                         onClose={()=>this.setState({showModal:false})}/>}
 
            {this.state.showCustomers && <CustomerModel goProduct={()=>{this.props.history.push("/products")}} onClose={()=>this.setState({showCustomers:false})} /> }     
+            
             
 
         </div>

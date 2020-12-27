@@ -15,6 +15,9 @@
             <column name="title" type="VARCHAR(255)"/>
             <column name="enabled" type="BOOLEAN" />
             <column name="tableCount" type="int(10)"/>
+            <column name="media_id" type="int(10)">
+                <constraints foreignKeyName="fk_media_table" referencedColumnNames="Media(id)"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -23,16 +26,19 @@
             <column name="title" value="Ayakta"></column>
             <column name="enabled" valueBoolean="true"></column>
             <column name="tableCount" value="0"></column>
+            <column name="media_id" value="12"></column>
         </insert>
         <insert tableName="Tables">
             <column name="title" value="Salon"></column>
             <column name="enabled" valueBoolean="true"></column>
             <column name="tableCount" value="20"></column>
+            <column name="media_id" value="13"></column>
         </insert>
         <insert tableName="Tables">
             <column name="title" value="Bahçe"></column>
             <column name="enabled" valueBoolean="true"></column>
             <column name="tableCount" value="20"></column>
+            <column name="media_id" value="14"></column>
         </insert>
     </changeSet>
 

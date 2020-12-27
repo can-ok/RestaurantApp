@@ -9,7 +9,8 @@ import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
 import com.resturant.restapi.converter.ProductsCategoryMapper;
 import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.dto.ProductDto;
-import com.resturant.restapi.dto.ProductWrapperDto;
+import com.resturant.restapi.exception.ContentNotAllowed;
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.ProductRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
@@ -55,19 +56,20 @@ public class ProductsService {
 
     public Page<ProductDto> getProducts(int pageCount,int pageSize){
 
+        if(pageCount<0 && pageSize<0)
+        {
+            throw new ContentNotAllowed("Not allowed page interval");
+        }
         Pageable pageable=PageRequest.of(pageCount,pageSize);
 
         Page<Product> productList=productRepository.findAllProducts(pageable);
-        if(productList.getSize()>0){
-
-        }
 
         Page<ProductDto> productDtos=productRepository.findAllProducts(pageable).map(productMapper::toDto);
 
         for(int i=0; i<productList.getContent().size(); i++){
 
             productDtos.getContent().get(i).setProductcategory(productsCategoryMapper.toProductCategoryDtoSet(productList.getContent().get(i).getProductcategory()));
-            //listProductDto.get(i).setProductcategory(productsCategoryMapper .toProductCategoryDtoSet(productList.get(i).getProductcategory()));
+            //productDtos.get(i).setProductcategory(productsCategoryMapper .toProductCategoryDtoSet(productList.get(i).getProductcategory()));
         }
 
         return productDtos;
@@ -75,27 +77,13 @@ public class ProductsService {
 
 
 
-    public Slice<ProductDto> getSpecificCategory(int ProductCategoryId,int page,int size){
-        Pageable pages=PageRequest.of(page,size);
+    public Slice<ProductDto> getSpecificCategory(int ProductCategoryId,int pageCount,int size){
+        if(pageCount<0 && size<0)
+        {
+            throw new ContentNotAllowed("Not allowed page interval");
+        }
+        Pageable pages=PageRequest.of(pageCount,size);
         Slice<ProductDto> productByProductcategoryId = productRepository.findProductByProductcategoryId(ProductCategoryId, pages).map(productMapper::toDto);
-
-//        ProductWrapperDto productWrapperDto=new ProductWrapperDto();
-//
-//        if(productByProductcategoryId.hasNext()){
-//            productWrapperDto.setHasNext(true);
-//            System.out.println("girdi");
-//        }
-//
-//        List<ProductDto> productDtoList=new ArrayList<>();
-//        productByProductcategoryId.getContent().forEach(product -> {
-//            ProductDto productDto=productMapper.toDto(product);
-//            productDtoList.add(productDto);
-//        });
-//        productWrapperDto.setListproductDto(productDtoList);
-        //List<ProductDto> productDtoDtoList =new ArrayList<>();
-
-        //Slice<ProductDto> productDtos=new SliceImpl<>(productDtoList);
-
 
         return productByProductcategoryId;
     }
@@ -104,20 +92,29 @@ public class ProductsService {
 
 
     public String insertDrink(ProductDto productDto){
+        if(productDto==null){
+            throw new ContentNotAllowed("Product Content Not Allowed");
+        }
+        if(productDto.getTitle()==null ||productDto.getTitle().equals("") ){
+            throw new ContentNotAllowed("Product Content Not Allowed");
+        }
+        if(productDto.getProductcategory().isEmpty()){
+            throw new ContentNotAllowed("Product Content Not Allowed");
+        }
+
         Product product=productMapper.toEntity(productDto);
 
         for(ProductCategoryDto productcategoryDto: productDto.getProductcategory())
         {
             Optional<ProductCategory> productcategory=productcategoryRepository.findById(productcategoryDto.getId());
+
             Optional<Media> media=mediaRepository.findById(productDto.getMedia().getId());
-            if(productcategory.isPresent()){
+            if(!productcategory.isPresent() && !media.isPresent()){
                 //product =ProductDtoConverter.convertDrinkDtoToDrink(product, productDto,productcategory,media.get());
-                product.getProductcategory().add(productcategory.get());
-                product.setMedia(media.get());
+                throw new EntityNotFound("Product/Media entity not found");
             }
-            else{
-                return "Fail";
-            }
+            product.getProductcategory().add(productcategory.get());
+            product.setMedia(media.get());
 
         }
         productRepository.save(product);
@@ -132,34 +129,28 @@ public class ProductsService {
 
         if(!optinalEntity.isPresent()){
 
-            return null;
+            throw  new EntityNotFound("Product Not Found");
         }
 
-        else{
+        ProductDto productDto = productMapper.toDto(optinalEntity.get());
 
-            ProductDto productDto = productMapper.toDto(optinalEntity.get());
+        return productDto;
 
-            return productDto;
-        }
     }
-
 
 
 
     public String deleteDrink(Integer id){
 
         Optional<Product> productEntity= productRepository.findById(id);
-        if(productEntity.isPresent()){
-
-            productEntity.get().setProductcategory(null);
-            productEntity.get().setMedia(null);
-            productRepository.delete(productEntity.get());
-           return "Succes";
-
+        if(!productEntity.isPresent()){
+            throw  new EntityNotFound("Product Not Found");
         }
 
-        return "Fail";
-
+        productEntity.get().setProductcategory(null);
+        productEntity.get().setMedia(null);
+        productRepository.delete(productEntity.get());
+        return "Succes";
 
 
     }
@@ -168,26 +159,30 @@ public class ProductsService {
 
     public ProductDto updateDrink(ProductDto productDto){
 
-        if(productDto.equals(null) || productDto.getId()==null){
-            return null;
+        if(productDto==null|| productDto.getId()<1){
+            throw new ContentNotAllowed("Product Content Not Allowed");
         }
 
         Optional<Product> optinalDrink = productRepository.findById(productDto.getId());
 
         if (!optinalDrink.isPresent()) {
-            System.out.println("Sonuç bulunamadı");
-            return null;
+           throw new EntityNotFound("Product Not Found");
         }
         else{
 
-            optinalDrink.get().setId(productDto.getId());
-            optinalDrink.get().setDescription(productDto.getDescription());
-            optinalDrink.get().setPrice(productDto.getPrice());
-            optinalDrink.get().setTitle(productDto.getTitle());
+            if(optinalDrink.get().getDescription()!=productDto.getDescription()){
+                optinalDrink.get().setDescription(productDto.getDescription());
+            }
+            if(optinalDrink.get().getPrice()!=productDto.getPrice())
+            {
+                optinalDrink.get().setPrice(productDto.getPrice());
+            }
+            if(optinalDrink.get().getTitle()!=productDto.getTitle()){
+                optinalDrink.get().setTitle(productDto.getTitle());
+            }
 
 
             productDto.getProductcategory().forEach(productCategoryDto -> {
-
                 Optional<ProductCategory> productcategory=productcategoryRepository.findById(productCategoryDto.getId());
                 optinalDrink.get().getProductcategory().add(productcategory.get());
             });

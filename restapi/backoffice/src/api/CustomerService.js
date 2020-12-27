@@ -49,6 +49,49 @@ class CustomerService{
        
     }
 
+    updateCustomer(item){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization",this.token);
+        myHeaders.append("Content-Type", "application/json");
+
+
+        var data={
+            "id":item.id,
+            "firstName":item.firstName,
+            "lastName":item.lastName,
+            "phoneNumber":item.phoneNumber,
+            "city":item.selectedCity,
+            "address":item.address
+            };
+
+
+        console.log(data)
+        
+        let response=fetch(`http://localhost:8080/customers`,{
+
+        method: 'PUT',
+        headers: myHeaders,
+        body: JSON.stringify(data)
+        })
+
+        return response;
+
+    }
+
+    deleteCustomer(id){
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization",this.token);
+        myHeaders.append("Content-Type", "application/json");
+
+        let response=fetch(`http://localhost:8080/customers/${id}`,{
+
+            method: 'DELETE',
+            headers: myHeaders})
+    
+            return response;
+
+    }
+
 
 
 

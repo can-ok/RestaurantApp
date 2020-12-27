@@ -29,12 +29,12 @@ public class TableController {
 
         return tableService.insertTable(tableDto);
     }
-//
-//    @DeleteMapping(path="/delete/{id}")
-//    public String deleteTable(@PathVariable Integer id){
-//        return tableService.deleteTable(id);
-//    }
-//
+
+    @DeleteMapping(path="/delete/{id}")
+    public String deleteTable(@PathVariable Integer id){
+        return tableService.deleteTable(id);
+    }
+
     @PutMapping(path = "/update/{id}")
     public TablesDto updateTable(@RequestBody TablesDto tablesDto,@PathVariable int id){
 

@@ -18,11 +18,8 @@ import javax.persistence.*;
 @SQLDelete(
         sql="UPDATE TABLES SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class Tables {
+public class Tables extends BaseEntity{
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Integer id;
 
     private String title;
 
@@ -33,6 +30,9 @@ public class Tables {
     private Integer tableCount;
 
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "media_id")
+    private Media media;
 
 
 }

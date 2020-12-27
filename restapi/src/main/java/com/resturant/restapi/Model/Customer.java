@@ -18,12 +18,9 @@ import javax.persistence.*;
 @SQLDelete(
         sql="UPDATE Customer SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class Customer {
+public class Customer extends BaseEntity{
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name="CUSTOMERID")
-    private Integer customerId;
+
 
     @Column(name="FIRSTNAME")
     private String firstName;

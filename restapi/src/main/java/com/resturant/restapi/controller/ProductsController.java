@@ -2,7 +2,6 @@ package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.dto.ProductDto;
-import com.resturant.restapi.dto.ProductWrapperDto;
 import com.resturant.restapi.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,7 +46,7 @@ public class ProductsController {
     }
 
     @GetMapping(path = "/drink/{id}")
-    public ProductDto retriveDrink(@PathVariable Integer id){
+    public ProductDto retriveProduct(@PathVariable Integer id){
 
         return productsService.getDrinkById(id);
     }

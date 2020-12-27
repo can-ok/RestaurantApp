@@ -29,7 +29,11 @@ class ProductList extends Component {
         ProductsService.getProduct(this.state.pageSize,this.state.pageCount)
         .then((response)=>{
             
-            return response.json();
+            if(response.status===200)
+            {
+                return response.json();
+            }
+            this.props.history.push("/login")
         }).then((data)=>{
 
             let arr=new Array();
@@ -78,15 +82,20 @@ class ProductList extends Component {
 
         ProductsService.getProduct(this.state.pageSize,number-1)
         .then((response)=>{
-            
-            return response.json();
+            if(response.status===200)
+            {
+                console.log(response)
+                return response.json();
+
+            }
         }).then((data)=>{
 
             let arr=new Array();
             for(let i = 1; i <= Math.ceil(data.totalElements/this.state.pageSize); i++){
                 arr.push(i);
               }
-
+            
+            console.log(data)
             this.setState({
                 items:data.content,
                 loading:false,
@@ -136,7 +145,6 @@ class ProductList extends Component {
           );
        }
        
-       console.log(this.state.pageNumbers)
        let pagination=this.state.pageNumbers.map((number=>{
             return(
             <li key={number} onClick={()=>this.paginate(number)} className="page-item">

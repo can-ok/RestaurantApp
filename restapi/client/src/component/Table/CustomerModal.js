@@ -7,6 +7,7 @@ import {GrFormAdd} from 'react-icons/gr'
 import { BiCurrentLocation } from 'react-icons/bi';
 import {Button, FormGroup, Label,Form,Input} from 'reactstrap';
 
+import AddCustomerModel from './AddCustomerModal';
 
 const MODAL_STYLES={
     position:'fixed',
@@ -40,6 +41,9 @@ const CustomerModel = ({onClose,goProduct}) => {
     const [pageCount,setPageCount]=useState(1);
     const [items,setItems]=useState([])
     const [pageNumbers,setPageNumbers]=useState([])
+    const [customerNumber,setCustomerNumber]=useState("")
+
+    const [addCustomerModel,setCustomerModel]=useState(false)
 
     useEffect(()=>{
         let token=context.appState.toke?context.appState.token:localStorage.getItem('token')
@@ -69,7 +73,7 @@ const CustomerModel = ({onClose,goProduct}) => {
     let selectCustomer=(customer)=>{
 
         let appState=Object.assign({},context.appState)
-        appState.customer=customer.customerId
+        appState.customer=customer.id
         context.setAppState(appState)
         onClose()
         goProduct()
@@ -78,8 +82,8 @@ const CustomerModel = ({onClose,goProduct}) => {
 
     let customers=items.map((item=>{
         return(
-                <tr key={item.customerId} onClick={()=>selectCustomer(item)}>
-                <td>{item.customerId}</td>
+                <tr key={item.id} onClick={()=>selectCustomer(item)}>
+                <td>{item.id}</td>
                 <td>{item.firstName} {item.lastName}</td>
                 <td>{item.phoneNumber} </td>
                 <td></td>
@@ -95,25 +99,37 @@ const CustomerModel = ({onClose,goProduct}) => {
    }))
 
     
+   
+   let getCustomer=(e)=>{
+      CustomerService.findCustomer(customerNumber,pageSize,pageCount)
+      .then((response)=>{
+          if(response.status==200) return response.json()
+
+      })
+      .then((data)=>{
+        setItems(data.content)
+      })
+
+   }
+   
 
     return ( 
         <>
+        
         <div style={OVERLAY_STYLE}/>
         <div style={MODAL_STYLES}>
 
             <div className="row">
                 <div className="col">
-            <Link className="btn float-left" to="/customer/add"><GrFormAdd size='1rem'/><strong>Add Customer</strong></Link>
+            <Link className="btn float-left"><GrFormAdd size='1rem'/><strong>Add Customer</strong></Link>
             </div>
             <div className="col">
             <Form className="float-right">
-                <FormGroup>
-                <Label>
-                <Input name="customerNumber" type="text"/>
-                <Button className="btn btn-primary">Ara</Button>
-                </Label>
-                </FormGroup>
-                </Form>
+               
+                <input name="customerNumber" type="text" onChange={(e)=>setCustomerNumber(e.target.value)}/>
+                <button className="btn btn-primary m-3" onClick={()=>getCustomer()}>Ara</button>
+               
+            </Form>
                 </div>
 
             </div>
@@ -136,6 +152,7 @@ const CustomerModel = ({onClose,goProduct}) => {
                 {pagination}
                 </ul>
             </div>
+            {addCustomerModel && <AddCustomerModel/>}
         </div>
         </>
      );

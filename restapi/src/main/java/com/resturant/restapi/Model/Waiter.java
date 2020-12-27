@@ -21,11 +21,11 @@ import java.util.Date;
 @SQLDelete(
         sql="UPDATE WAITER_TABLE  SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class Waiter {
+public class Waiter extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
 
     private String firstname;
 

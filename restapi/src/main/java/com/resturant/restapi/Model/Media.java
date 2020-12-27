@@ -21,11 +21,11 @@ import java.util.List;
 @SQLDelete(
         sql="UPDATE MEDIA SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class Media {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Media extends BaseEntity{
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
 
     private String name;
 

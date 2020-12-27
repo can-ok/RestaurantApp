@@ -120,6 +120,7 @@ class ProductsService{
             "media":item.selectedMedia.value
 
             };
+
         
               //http://localhost:8080/products/update/drink/1
         let response=fetch(`http://localhost:8080/products/update/${type}/`,{

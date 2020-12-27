@@ -45,6 +45,33 @@ class CustomerService{
        
     }
 
+    findCustomer(phoneNumber,pageSize,pageCount){
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization",this.token);
+        myHeaders.append("Content-Type", "application/json");
+        
+        var data={
+
+            "phoneNumber":phoneNumber,
+    
+            };
+            
+
+        console.log(data)
+        
+
+        let response=fetch(`http://localhost:8080/customers/byNumber?page=${pageCount}&size=${pageSize}`,{
+
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify(data)
+        })
+
+        return response;
+       
+    }
+
 
 
 

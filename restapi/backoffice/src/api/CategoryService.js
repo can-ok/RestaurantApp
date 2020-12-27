@@ -63,9 +63,11 @@ class CategoryService{
             "id":state.id,
             "name": state.itemTitle,
             "description":state.itemDescription,
-            "categorymedia":state.selectedMedia
+            "categorymedia":state.selectedMedia.value
             };
 
+
+        console.log(data)
         //localhost:8080/category/update/1
         let response=fetch(`http://localhost:8080/category/update/${state.id}`,{
 

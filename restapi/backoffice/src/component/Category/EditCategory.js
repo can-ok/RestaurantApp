@@ -16,13 +16,14 @@ class EditCategory extends Component {
 
     componentDidMount(){
 
-       MediaService.getAllMedia()
+        MediaService.getAllMedia()
+        .then((response)=>response.json())
         .then((data)=>{
-            this.setState({
-                categoryMedia:data
-            })
+          this.setState({
+            categoryMedia:data
+          })
         })
-        .catch((err)=>console.log(err))
+  
 
 
         fetch("http://localhost:8080/category/get/"+this.state.id).then((response)=>response.json())
@@ -60,7 +61,6 @@ class EditCategory extends Component {
         CategoryService.updateCategory(this.state)
         .then((response)=>{
             
-    
             console.log(response)
             this.props.history.push("/categories")
 
@@ -88,13 +88,14 @@ class EditCategory extends Component {
               <Label>Açıklama:
               <Input name="itemDescription" type="text"  onChange={this.handleInputChange} value={itemDescription} /></Label>
             </FormGroup>
-
+            <FormGroup>
+              <Label>Açıklama:
+              <Input name="itemDescription" type="text"  onChange={this.handleInputChange} value={itemDescription} /></Label>
+            </FormGroup>
             <FormGroup>
               <Label>Media:</Label>
               <Select className="col-md-4" options={categoryOptions}  value={this.state.selectedMedia} onChange={this.handleSelectChange} />
             </FormGroup>
-        
-
 
             <Button  onClick={this.mySubmitHandler} className="btn btn-success">Submit</Button>
             <Link to="/" className="btn btn-danger ml-2">Cancel</Link>        

@@ -1,10 +1,8 @@
-
-
 import axios from 'axios';
 
 class AuthService{
 
-
+    static language=''
     
     login(item){
 
@@ -13,7 +11,7 @@ class AuthService{
             "password":item.password,
         }
 
-        let response=axios.post("http://localhost:8080/register",candidate)
+        let response=axios.post("http://localhost:8080/register",candidate,{headers:{'accept-language':this.language}})
 
         return response;
 
