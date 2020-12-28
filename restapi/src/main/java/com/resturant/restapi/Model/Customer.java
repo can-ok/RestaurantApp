@@ -35,4 +35,8 @@ public class Customer extends BaseEntity{
 
     @Column(name="PHONENUMBER")
     private String phoneNumber;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "media_id")
+    private Media media;
 }

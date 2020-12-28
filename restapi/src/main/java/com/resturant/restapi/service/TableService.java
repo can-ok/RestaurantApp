@@ -3,6 +3,7 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.Model.Tables;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.TableDtoConverter;
 import com.resturant.restapi.converter.TableMapper;
 import com.resturant.restapi.dto.TablesDto;
@@ -31,6 +32,9 @@ public class TableService {
 
     @Autowired
     TableMapper tableMapper;
+
+    @Autowired
+    private MessageSourceExternalizer messageSourceExternalizer;
 
     public List<TablesDto> getAllTables(){
 
@@ -64,13 +68,13 @@ public class TableService {
     public TablesDto insertTable(TablesDto tablesDto){
 
         if(tablesDto==null){
-            throw new ContentNotAllowed("Table Content Not Allowed");
+            throw new ContentNotAllowed("Table"+messageSourceExternalizer.getMessage("entity.error"));
         }
 
-        Media media=mediaRepository.findById(tablesDto.getMedia().getId()).get();
+        //Media media=mediaRepository.findById(tablesDto.getMedia().getId()).get();
         Tables tables=tableMapper.toEntity(tablesDto);
 
-        tables.setMedia(media);
+        //tables.setMedia(media);
         tableRepository.save(tables);
 
         return tablesDto;
@@ -94,7 +98,7 @@ public class TableService {
         Optional<Tables> tableEntity=tableRepository.findById(id);
 
         if(!tableEntity.isPresent()){
-            throw new EntityNotFound("Table Entity Not Found");
+            throw new EntityNotFound("Table "+messageSourceExternalizer.getMessage("entity.error"));
         }
         else{
 
@@ -121,7 +125,7 @@ public class TableService {
     public String deleteTable(Integer id){
         Optional<Tables> byId = tableRepository.findById(id);
         if(!byId.isPresent()){
-            throw new EntityNotFound("Entity not found");
+            throw new EntityNotFound(messageSourceExternalizer.getMessage("entity.error"));
         }
         tableRepository.deleteById(id);
         return "Success";

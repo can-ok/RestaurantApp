@@ -101,6 +101,11 @@
             <column name="name" value="Restaurant Table"></column>
             <column name="FILECONTENT" valueBlobFile="../../static/garden.png"></column>
         </insert>
+        <insert tableName="Media">
+            <column name="id" valueNumeric="15"></column>
+            <column name="name" value="Restaurant Table"></column>
+            <column name="FILECONTENT" valueBlobFile="../../static/customer.png"></column>
+        </insert>
     </changeSet>
 
 

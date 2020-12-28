@@ -1,6 +1,7 @@
 package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Role;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.RoleDtoConverter;
 import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.dto.RoleDto;
@@ -22,6 +23,8 @@ public class RoleService {
 
     @Autowired
     RoleMapper roleMapper;
+    @Autowired
+    private MessageSourceExternalizer messageSourceExternalizer;
 
     public List<RoleDto> getAll(){
         List<RoleDto> roleDtoList=roleMapper.toDtoList(rolesRepository.findAll());
@@ -38,7 +41,7 @@ public class RoleService {
 
     public RoleDto insert(RoleDto roleDto){
         if(roleDto==null){
-            throw new ContentNotAllowed("Role Content Not Allowed");
+            throw new ContentNotAllowed("Role"+messageSourceExternalizer.getMessage("content.error"));
         }
         Role role=roleMapper.toEntity(roleDto);
         rolesRepository.save(role);
@@ -50,7 +53,7 @@ public class RoleService {
 
         Optional<Role> roleOptional=rolesRepository.findById(id);
         if(!roleOptional.isPresent()){
-            throw new EntityNotFound("Role Not Found");
+            throw new EntityNotFound("Role "+messageSourceExternalizer.getMessage("content.error"));
         }
 
         rolesRepository.deleteById(id);
@@ -61,12 +64,12 @@ public class RoleService {
     public String update(RoleDto roleDto,int id){
 
         if(roleDto==null && id<0){
-            throw new ContentNotAllowed("Not Allowed content");
+            throw new ContentNotAllowed(messageSourceExternalizer.getMessage("content.error"));
         }
 
         Optional<Role> roleOptinal=rolesRepository.findById(id);
         if(!roleOptinal.isPresent()){
-            throw new EntityNotFound("Entity Not Found");
+            throw new EntityNotFound(messageSourceExternalizer.getMessage("entity.error"));
         }
 
         Role role=roleOptinal.get();

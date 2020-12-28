@@ -30,7 +30,7 @@ public class Tables extends BaseEntity{
     private Integer tableCount;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "media_id")
     private Media media;
 

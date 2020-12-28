@@ -42,7 +42,7 @@ public class UserService {
 
     public UsersDto insertUser(UsersDto usersDto){
         if(usersDto==null && usersDto.getId()<1){
-            throw new ContentNotAllowed("User Content Not Allowed");
+            throw new ContentNotAllowed("User"+ messageSourceExternalizer.getMessage("content.error"));
         }
 
 
@@ -74,7 +74,7 @@ public class UserService {
         Optional<Users> userEntity=userRepository.findById(id);
 
         if(!userEntity.isPresent()){
-            throw new  EntityNotFound("User entity not found");
+            throw new  EntityNotFound("User "+messageSourceExternalizer.getMessage("entity.error"));
         }
         else{
 
@@ -88,7 +88,7 @@ public class UserService {
     public String deleteUser(Integer id){
         Optional<Users> byId = userRepository.findById(id);
         if(!byId.isPresent()){
-            throw new EntityNotFound("User Entity Not Found");
+            throw new EntityNotFound(messageSourceExternalizer.getMessage("entity.error"));
         }
         userRepository.delete(byId.get());
         return "Success";
@@ -100,7 +100,7 @@ public class UserService {
 
         if (!entity.isPresent()) {
 
-            throw new ContentNotAllowed("User Content Not Allowed");
+            throw new ContentNotAllowed(messageSourceExternalizer.getMessage("content.error"));
         }
         else{
 

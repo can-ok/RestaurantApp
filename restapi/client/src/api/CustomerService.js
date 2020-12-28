@@ -52,9 +52,7 @@ class CustomerService{
         myHeaders.append("Content-Type", "application/json");
         
         var data={
-
             "phoneNumber":phoneNumber,
-    
             };
             
 
@@ -62,7 +60,6 @@ class CustomerService{
         
 
         let response=fetch(`http://localhost:8080/customers/byNumber?page=${pageCount}&size=${pageSize}`,{
-
         method: 'POST',
         headers: myHeaders,
         body: JSON.stringify(data)

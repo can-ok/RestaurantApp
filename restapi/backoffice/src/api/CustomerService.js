@@ -21,21 +21,13 @@ class CustomerService{
     }
 
 
-    addCustomer(item){
+    addCustomer(data){
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization",this.token);
         myHeaders.append("Content-Type", "application/json");
         
-        var data={
-            "firstName":item.firstName,
-            "lastName":item.lastName,
-            "phoneNumber":item.phoneNumber,
-            "city":item.selectedCity,
-            "address":item.address
-            };
-
-
+       
         console.log(data)
         
         let response=fetch(`http://localhost:8080/customers`,{
@@ -49,20 +41,11 @@ class CustomerService{
        
     }
 
-    updateCustomer(item){
+    updateCustomer(data){
         var myHeaders = new Headers();
         myHeaders.append("Authorization",this.token);
         myHeaders.append("Content-Type", "application/json");
 
-
-        var data={
-            "id":item.id,
-            "firstName":item.firstName,
-            "lastName":item.lastName,
-            "phoneNumber":item.phoneNumber,
-            "city":item.selectedCity,
-            "address":item.address
-            };
 
 
         console.log(data)

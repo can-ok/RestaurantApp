@@ -3,6 +3,7 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.ProductDtoConverter;
 import com.resturant.restapi.converter.ProductMapper;
 import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
@@ -41,6 +42,9 @@ public class ProductsService {
 
     @Autowired
     ProductsCategoryMapper productsCategoryMapper;
+
+    @Autowired
+    private MessageSourceExternalizer messageSourceExternalizer;
 
     public Slice<ProductDto> getAllDrinks(int pageCount,int pageSize){
 
@@ -93,13 +97,13 @@ public class ProductsService {
 
     public String insertDrink(ProductDto productDto){
         if(productDto==null){
-            throw new ContentNotAllowed("Product Content Not Allowed");
+            throw new ContentNotAllowed("Product "+messageSourceExternalizer.getMessage("content.error"));
         }
         if(productDto.getTitle()==null ||productDto.getTitle().equals("") ){
-            throw new ContentNotAllowed("Product Content Not Allowed");
+            throw new ContentNotAllowed("Product "+messageSourceExternalizer.getMessage("content.error"));
         }
         if(productDto.getProductcategory().isEmpty()){
-            throw new ContentNotAllowed("Product Content Not Allowed");
+            throw new ContentNotAllowed("Product"+messageSourceExternalizer.getMessage("content.error"));
         }
 
         Product product=productMapper.toEntity(productDto);
@@ -129,7 +133,7 @@ public class ProductsService {
 
         if(!optinalEntity.isPresent()){
 
-            throw  new EntityNotFound("Product Not Found");
+            throw  new EntityNotFound("Product "+messageSourceExternalizer.getMessage("entity.error"));
         }
 
         ProductDto productDto = productMapper.toDto(optinalEntity.get());
@@ -144,7 +148,7 @@ public class ProductsService {
 
         Optional<Product> productEntity= productRepository.findById(id);
         if(!productEntity.isPresent()){
-            throw  new EntityNotFound("Product Not Found");
+            throw  new EntityNotFound("Product "+messageSourceExternalizer.getMessage("entity.error"));
         }
 
         productEntity.get().setProductcategory(null);
@@ -165,8 +169,8 @@ public class ProductsService {
 
         Optional<Product> optinalDrink = productRepository.findById(productDto.getId());
 
-        if (!optinalDrink.isPresent()) {
-           throw new EntityNotFound("Product Not Found");
+        if ( optinalDrink.equals(null)  || !optinalDrink.isPresent()) {
+           throw new EntityNotFound("Product "+messageSourceExternalizer.getMessage("entity.error"));
         }
         else{
 

@@ -4,6 +4,7 @@ import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.builder.RoleBuilder;
 import com.resturant.restapi.builder.UserBuilder;
+import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.converter.UserDtoConverter;
 import com.resturant.restapi.converter.UserMapper;
 import com.resturant.restapi.dto.UsersDto;
@@ -37,12 +38,16 @@ public class UserServiceTest {
     UserMapper userMapper;
 
     @Mock
+    RoleMapper roleMapper;
+
+    @Mock
     RolesRepository rolesRepository;
 
     @InjectMocks
     UserService userService;
 
     private List<UsersDto> usersDtoList=new ArrayList<>();
+    private List<Users> usersList=new ArrayList<>();
 
     private UsersDto usersDto=new UsersDto();
     private Users user;
@@ -57,8 +62,16 @@ public class UserServiceTest {
         role=new RoleBuilder().id(1).name("user").build();
         roles.add(role);
         user=new UserBuilder().id(1).username("user").password("pass").roles(roles).build();
-        usersDto=UserDtoConverter.userToUserDto(user);
+        usersList.add(user);
+
+        usersDto=new UsersDto(1,"user","pass",true,null);
         usersDtoList.add(usersDto);
+
+        when(userMapper.toEntityWOROle(any())).thenReturn(user);
+        when(userMapper.toDto(any())).thenReturn(usersDto);
+        when(userMapper.toEntity(any())).thenReturn(user);
+        when(userMapper.toDtoList(any())).thenReturn(usersDtoList);
+        when(roleMapper.toRoleList(any())).thenReturn(roles);
 
     }
 
@@ -76,7 +89,7 @@ public class UserServiceTest {
 
     @Test
     public void shouldGetAllUser() {
-        when(usersRepository.findAll()).thenReturn(UserDtoConverter.userDtoListToUserList(usersDtoList));
+        when(usersRepository.findAll()).thenReturn(usersList);
         when(userMapper.toDto(any())).thenReturn(usersDto);
 
         assertNotNull(userService.getAllUser());
@@ -86,7 +99,7 @@ public class UserServiceTest {
     @Test
     public void shouldGetUser() {
         int id=1;
-        when(usersRepository.findById(id)).thenReturn(Optional.of(UserDtoConverter.userDtoToUser(usersDto)));
+        when(usersRepository.findById(id)).thenReturn(Optional.of(user));
         when(userMapper.toDto(any())).thenReturn(usersDto);
 
         UsersDto usersResult=userService.getUser(id);
@@ -104,8 +117,16 @@ public class UserServiceTest {
 
 
     @Test
-    public void deleteUser() {
+    public void shoudNotdeleteUser() {
         Integer id=1;
+        assertEquals(userService.deleteUser(id),"Success");
+
+    }
+
+    @Test
+    public void shoudDeleteUser() {
+        Integer id=1;
+        when(usersRepository.findById(id)).thenReturn(Optional.of(user));
         assertEquals(userService.deleteUser(id),"Success");
 
     }

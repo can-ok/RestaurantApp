@@ -15,13 +15,18 @@ public interface UserMapper {
 
     UsersDto toDto(Users users);
     Users toEntity(UsersDto usersDto);
+
+
+    List<UsersDto> toDtoList(List<Users> users);
+
+    //List<Users> toEntityList(List<UsersDto> usersDto);
+
     @Mapping(
             ignore = true,
             source = "roles",target = "roles"
     )
     Users toEntityWOROle(UsersDto dto);
 
-    List<UsersDto> toDtoList(List<Users> users);
 
 
 }

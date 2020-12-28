@@ -2,6 +2,7 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.ProductCategory;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.ProductMapper;
 import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
 import com.resturant.restapi.converter.ProductsCategoryMapper;
@@ -29,6 +30,9 @@ public class ProductCategoryService {
     @Autowired
     ProductsCategoryMapper productsCategoryMapper;
 
+    @Autowired
+    private MessageSourceExternalizer messageSourceExternalizer;
+
     @Cacheable("catagories")
     public Set<ProductCategoryDto> getAll(){
         Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
@@ -48,7 +52,7 @@ public class ProductCategoryService {
 
         Optional<Media> media=mediaRepository.findById(categoryDto.getCategorymedia().getId());
         if(!media.isPresent()){
-            throw new EntityNotFound("Media not allowed");
+            throw new EntityNotFound("Media "+messageSourceExternalizer.getMessage("entity.error"));
         }
         ProductCategory productCategory = productsCategoryMapper.toEntity(categoryDto);
         productCategory.setCategorymedia(media.get());
@@ -63,7 +67,7 @@ public class ProductCategoryService {
         Optional<ProductCategory> byId = productcategoryRepository.findById(id);
         if (!byId.isPresent())
         {
-            throw new EntityNotFound("Category not Found");
+            throw new EntityNotFound("Category "+messageSourceExternalizer.getMessage("entity.error"));
         }
         byId.get().setCategorymedia(null);
         productcategoryRepository.deleteById(id);
@@ -83,7 +87,7 @@ public class ProductCategoryService {
 
         if(!entity.isPresent()){
 
-           throw new EntityNotFound("Category Not Found");
+           throw new EntityNotFound("Category "+messageSourceExternalizer.getMessage("entity.error"));
         }
         else{
 
@@ -110,7 +114,7 @@ public class ProductCategoryService {
     public ProductCategoryDto getDrinkById(int id){
         if(!productcategoryRepository.findById(id).isPresent())
         {
-            throw new EntityNotFound("Category");
+            throw new EntityNotFound("Category "+messageSourceExternalizer.getMessage("entity.error"));
         }
 
         return productsCategoryMapper.toDto(productcategoryRepository.findById(id).get());

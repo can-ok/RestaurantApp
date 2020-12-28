@@ -1,9 +1,13 @@
 package com.resturant.restapi.service;
 
+import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Tables;
+import com.resturant.restapi.builder.MediaDtoBuilder;
+import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.converter.TableDtoConverter;
 import com.resturant.restapi.converter.TableMapper;
 import com.resturant.restapi.dto.TablesDto;
+import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.TableRepository;
 import org.junit.Before;
@@ -36,28 +40,48 @@ public class TableServiceTest {
     @InjectMocks
     private TableService tableService;
 
-    List<Tables> tablesList =new ArrayList<>();
-    Tables tables =new Tables();
-    TablesDto tablesDto;
+    @Mock
+    private MediaRepository mediaRepository;
+
+
+    private List<Tables> tablesList =new ArrayList<>();
+    private Tables tables =new Tables();
+    private TablesDto tablesDto=new TablesDto();
+    private List<TablesDto> tablesDtoList =new ArrayList<>();
+
+    private Media media;
 
     @Before
     public void setUp(){
 
-        tables.setId(1);
-        tables.setEnabled(true);
-        tables.setTitle("Salon");
-        tables.setTableCount(10);
+        when(tableMapper.toDto(any())).thenReturn(tablesDto);
 
-        tablesDto=TableDtoConverter.tablesToTablesDto(tables);
+        tablesDtoList.add(tablesDto);
+
+        when(tableMapper.toDtoList(any())).thenReturn(tablesDtoList);
 
         tablesList.add(tables);
+
+        byte[] fileBytes = "deneme".getBytes();
+        media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
+
+
+        tables.setId(1);
+        tablesDto.setId(1);
+        tables.setEnabled(true);
+        tablesDto.setTitle("Salon");
+        tables.setTitle("Salon");
+        tables.setTableCount(10);
+        tablesDto.setTableCount(10);
+        tables.setMedia(media);
+        tablesDto.setMedia(media);
+
     }
 
     @Test
     public void shouldgetAllTables() {
 
         when(tableRepository.findAll()).thenReturn(tablesList);
-        when(tableMapper.toDto(any())).thenReturn(tablesDto);
         List<TablesDto> resultTableList=tableService.getAllTables();
 
         assertEquals(resultTableList.size(),tablesList.size());
@@ -65,10 +89,10 @@ public class TableServiceTest {
 
     @Test
     public void insertTable() {
-        when(tableMapper.toEntity(any())).thenReturn(tables);
-       when(tableRepository.save(any())).thenReturn(tables);
-       TablesDto resultTableDto=tableService.insertTable(TableDtoConverter.tablesToTablesDto(tables));
+        when(tableRepository.save(any())).thenReturn(tables);
+        when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
 
+        TablesDto resultTableDto=tableService.insertTable(tablesDto);
        //assertEquals(tables,resultTableDto);
 
         assertNotNull(resultTableDto);
@@ -86,8 +110,6 @@ public class TableServiceTest {
     }
 
 
-
-
     @Test
     public void shoudNotGetTablebyId() {
         int id=1;
@@ -96,8 +118,6 @@ public class TableServiceTest {
         TablesDto resultDto=tableService.getTablebyId(id);
 
         assertNull(resultDto);
-
-
     }
 
 
@@ -108,8 +128,9 @@ public class TableServiceTest {
 
         when(tableRepository.save(any())).thenReturn(tables);//gereksiz
 
+        when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
 
-        TablesDto resultDto=tableService.updateTable(TableDtoConverter.tablesToTablesDto(tables),id);
+        TablesDto resultDto=tableService.updateTable(tablesDto,id);
         assertNotNull(resultDto);
         assertEquals(resultDto.getId(),tables.getId());
     }

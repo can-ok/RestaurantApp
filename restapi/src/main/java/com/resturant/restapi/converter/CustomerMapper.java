@@ -6,12 +6,17 @@ import com.resturant.restapi.dto.CustomerDto;
 import com.resturant.restapi.dto.MediaDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
 
+@Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
 
     CustomerDto toDto(Customer customer);
 
     Customer toEntity(CustomerDto customerDto);
+
+    List<CustomerDto> toDtoList(List<Customer> customers);
+
+    List<Customer> toEntityList(List<CustomerDto> customerDtos);
 }

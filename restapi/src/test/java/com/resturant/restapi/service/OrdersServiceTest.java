@@ -1,7 +1,9 @@
 package com.resturant.restapi.service;
 
+import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.builder.OrdersDtoBuilder;
 import com.resturant.restapi.converter.OrdersDtoConverter;
+import com.resturant.restapi.converter.OrdersMapper;
 import com.resturant.restapi.dto.OrdersDto;
 import com.resturant.restapi.repository.OrdersRepository;
 import org.junit.Before;
@@ -10,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +28,26 @@ public class OrdersServiceTest {
     @Mock
     OrdersRepository ordersRepository;
 
+    @Mock
+    OrdersMapper ordersMapper;
+
     @InjectMocks
     private OrdersService ordersService;
 
     private OrdersDto ordersDto;
 
     private List<OrdersDto> ordersDtoList=new ArrayList<>();
+    private List<Orders> orderList=new ArrayList<>();
 
     @Before
     public void setUp() throws Exception{
         ordersDto=new OrdersDtoBuilder().id(1).paymentType("cash").orderTable("Masa 1").productCount(5)
                 .totalPrice(100).productId(1).waiterId("1").build();
 
+
         ordersDtoList.add(ordersDto);
+
+        //when(ordersMapper.toDtoList(any())).
     }
 
     @Test

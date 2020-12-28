@@ -1,6 +1,7 @@
 package com.resturant.restapi.dto;
 
 
+import com.resturant.restapi.Model.Media;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,7 @@ public class CustomerDto {
     private String city;
     private String address;
     private String phoneNumber;
+
+    private Media media;
 
 }

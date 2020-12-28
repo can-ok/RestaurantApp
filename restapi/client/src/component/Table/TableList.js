@@ -110,7 +110,9 @@ class TableList extends Component {
         this.context.setAppState(appState)
         
         this.setState({
-            showModal:true
+            showModal:true,
+            showCustomers:false
+
         })
 
     }

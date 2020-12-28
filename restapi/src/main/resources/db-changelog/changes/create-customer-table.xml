@@ -17,6 +17,9 @@
             <column name="city" type="VARCHAR(255)"></column>
             <column name="address" type="VARCHAR(255)"></column>
             <column name="phoneNumber" type="varchar(30)"></column>
+            <column name="media_id" type="int(10)">
+                <constraints  foreignKeyName="fk_customer_media" referencedColumnNames="Media(id)"></constraints>
+            </column>
         </createTable>
     </changeSet>
 

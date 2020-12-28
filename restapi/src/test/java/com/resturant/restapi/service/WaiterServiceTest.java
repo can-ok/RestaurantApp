@@ -5,7 +5,6 @@ import com.resturant.restapi.Model.Waiter;
 import com.resturant.restapi.builder.MediaDtoBuilder;
 import com.resturant.restapi.builder.WaiterBuilder;
 import com.resturant.restapi.converter.MediaDtoConverter;
-import com.resturant.restapi.converter.WaiterDtoConverter;
 import com.resturant.restapi.converter.WaiterMapper;
 import com.resturant.restapi.dto.WaiterDto;
 import com.resturant.restapi.repository.MediaRepository;
@@ -19,13 +18,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
@@ -49,8 +46,8 @@ public class WaiterServiceTest {
 
 
 
-
     private List<WaiterDto> waiterDtoList=new ArrayList<>();
+    private List<Waiter> waiterList=new ArrayList<>();
 
     private WaiterDto waiterDto=new WaiterDto();
     private Waiter waiter;
@@ -63,26 +60,31 @@ public class WaiterServiceTest {
         media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
 
         waiter=new WaiterBuilder().firstname("deneme").id(1).lastname("deneme").media(media).build();
-        waiterDto= WaiterDtoConverter.waiterToWaiterDto(waiter);
+
+        when(waiterMapper.toDto(any())).thenReturn(waiterDto);
+        when(waiterMapper.toWaiter(any())).thenReturn(waiter);
+        when(waiterMapper.waiterDtoList(any())).thenReturn(waiterDtoList);
+        when(waiterMapper.waiterList(any())).thenReturn(waiterList);
+
+        waiterDto= waiterMapper.toDto(waiter);
     }
 
     @Before
     public void setUpDtoList(){
         waiterDtoList.add(waiterDto);
+        waiterList.add(waiter);
     }
 
 
 
     @Test
     public void shouldGetAllWaiters() {
-        when(waiterRepository.findAll()).thenReturn(WaiterDtoConverter.waiterDtoListToWaiterList(waiterDtoList));
+        when(waiterRepository.findAll()).thenReturn(waiterList);
         assertEquals(waiterService.getAllWaiters().size(),waiterDtoList.size());
     }
 
     @Test
     public void shoudlNotInsert() {
-        //when(waiterRepository.save(any())).thenReturn(Optional.empty());
-        //when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
 
         WaiterDto waiterDto=waiterService.insert(null);
         assertNull(waiterDto);
@@ -91,10 +93,9 @@ public class WaiterServiceTest {
 
     @Test
     public void shouldInsert() {
-        when(waiterRepository.save(any())).thenReturn(WaiterDtoConverter.waiterDtoToWaiter(waiterDto));
+        when(waiterRepository.save(any())).thenReturn(waiter);
         when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
 
-        when(waiterMapper.toWaiter(waiterDto)).thenReturn(waiter);
 
         WaiterDto result=waiterService.insert(waiterDto);
         assertNotNull(result);
@@ -106,7 +107,7 @@ public class WaiterServiceTest {
     @Test
     public void delete() {
         int id=1;
-        when(waiterRepository.findById(id)).thenReturn(Optional.of(WaiterDtoConverter.waiterDtoToWaiter(waiterDto)));
+        when(waiterRepository.findById(id)).thenReturn(Optional.of(waiter));
 
         assertEquals(waiterService.delete(id),"Success");
 
@@ -124,7 +125,7 @@ public class WaiterServiceTest {
     @Test
     public void shouldUpdateWaiter() {
         int id=1;
-        when(waiterRepository.findById(id)).thenReturn(Optional.of(WaiterDtoConverter.waiterDtoToWaiter(waiterDto)));
+        when(waiterRepository.findById(id)).thenReturn(Optional.of(waiter));
         when(mediaRepository.findById(any())).thenReturn(Optional.of(media));
         assertEquals(waiterDto,waiterService.updateWaiter(id,waiterDto));
     }

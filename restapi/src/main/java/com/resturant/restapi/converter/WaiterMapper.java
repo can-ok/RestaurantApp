@@ -17,4 +17,7 @@ public interface WaiterMapper {
     Waiter toWaiter(WaiterDto waiterDto);
 
     List<WaiterDto> waiterDtoList(List<Waiter> waiters);
+
+    List<Waiter> waiterList(List<WaiterDto> waiters);
+
 }

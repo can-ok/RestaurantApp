@@ -6,6 +6,8 @@ import com.resturant.restapi.Model.Product;
 
 import com.resturant.restapi.builder.ProductCategoryBuilder;
 import com.resturant.restapi.converter.ProductDtoConverter;
+import com.resturant.restapi.converter.ProductMapper;
+import com.resturant.restapi.converter.ProductsCategoryMapper;
 import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,12 +17,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.*;
-
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.any;
 import static org.junit.Assert.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,17 +35,26 @@ class ProductsServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-
-
     @InjectMocks
     private ProductsService productsService;
 
+    @Mock
+    ProductMapper productMapper;
 
+    @Mock
+    ProductsCategoryMapper productsCategoryMapper;
 
     List<Product> productList =new ArrayList<>();
+
+    List<ProductCategory> productCategories=new ArrayList<>();
+
     private Product product;
 
     private ProductDto productDto;
+
+    private Pageable pages=PageRequest.of(0,5);
+
+    private List<ProductDto> productDtoList=new ArrayList<>();
 
     @BeforeEach
     public void setUp() throws Exception{
@@ -50,25 +63,29 @@ class ProductsServiceTest {
         setCategory.add(new ProductCategoryBuilder().id(1).name("deneme").build());
         product=new ProductBuilder().id(1).title("deneme").description("descript").price(10).productcategory(setCategory).build();
 
-        // add list
         productList.add(product);
 
         productDto= ProductDtoConverter.convertDrinktoDrinkDto(product);
 
+        productDtoList.add(productDto);
+
+
+        when(productMapper.toDto(any())).thenReturn(productDto);
+        when(productsCategoryMapper.toProductCategorySet(any())).thenReturn(productCategories);
     }
 
 
-//    @Test
-//    void shouldgetAllDrinks() {
-//
-//        when(productRepository.findAll()).thenReturn(productList);
-//
-//        List<ProductDto> resultList=productsService.getAllDrinks();
-//
-//        assertNotNull(resultList);
-//        assertEquals(productList.size(),resultList.size());
-//
-//    }
+    @Test
+    void shouldgetAllDrinks() {
+
+        Page<Product> products=new PageImpl<>(productList);
+        when(productRepository.findAllProducts(pages)).thenReturn(products);
+        Page<ProductDto> result = productsService.getProducts(0, 5);
+
+        assertNotNull(result);
+        //assertEquals(productList.size(),result.getTotalElements());
+
+    }
 
     @Test
     void shouldFindDrinkById(){
@@ -82,7 +99,8 @@ class ProductsServiceTest {
 
     }
 
-    @Test
+
+    @Test()
     void shouldNotFindDrinkById(){
         Integer id=5;
         when(productRepository.findById(id)).thenReturn(Optional.empty());
@@ -97,13 +115,15 @@ class ProductsServiceTest {
 //    @Test
 //    void shouldNotgetSpecificCategory(){
 //        //get empty list
-//        when(productRepository.findProductByProductcategoryId(1)).thenReturn(Collections.emptyList());
+//        Pageable pages= PageRequest.of(5,1);
+//
+//        when(productRepository.findProductByProductcategoryId(1,pages)).thenReturn(Collections.emptyList());
 //
 //        List<ProductDto> listProducts= productsService.getSpecificCategory(1);
 //
 //        assertEquals(listProducts.size(),0);
 //    }
-//
+
 //    @Test
 //    void shouldgetSpecificCategory(){
 //        //get empty list

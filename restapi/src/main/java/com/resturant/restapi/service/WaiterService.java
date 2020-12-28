@@ -2,7 +2,6 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Waiter;
-import com.resturant.restapi.converter.WaiterDtoConverter;
 import com.resturant.restapi.converter.WaiterMapper;
 import com.resturant.restapi.dto.WaiterDto;
 import com.resturant.restapi.repository.MediaRepository;

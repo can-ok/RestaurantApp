@@ -7,11 +7,14 @@ import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.builder.MediaDtoBuilder;
 import com.resturant.restapi.builder.ProductBuilder;
 import com.resturant.restapi.builder.ProductCategoryBuilder;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.converter.ProductDtoConverter;
 
+import com.resturant.restapi.converter.ProductMapper;
 import com.resturant.restapi.dto.ProductDto;
 
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
 import com.resturant.restapi.repository.ProductRepository;
@@ -23,6 +26,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -48,14 +52,18 @@ public class ProductsServiceSetAndUpdateTest {
     @InjectMocks
     private ProductsService productsService;
 
+    @Mock
+    private ProductMapper productMapper;
 
+    @Mock
+    private MessageSourceExternalizer messageSourceExternalizer;
 
     private ProductCategory productCategory;
 
     List<Product> productList =new ArrayList<>();
     private Product product;
 
-    private ProductDto productDto;
+    private ProductDto productDto=new ProductDto();
 
     private  Media media;
 
@@ -67,26 +75,27 @@ public class ProductsServiceSetAndUpdateTest {
         setCategory.add(new ProductCategoryBuilder().id(1).name("deneme").build());
 
         byte[] fileBytes = "deneme".getBytes();
-       media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
+        media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
 
         product=new ProductBuilder().id(1).title("deneme").description("descript").price(10).productcategory(setCategory).media(media).build();
-
         productList.add(product);
-
         productDto= ProductDtoConverter.convertDrinktoDrinkDto(product);
-
         productCategory=new ProductCategoryBuilder().id(1).description("deneme").name("deneme").build();
+
+        when(productMapper.toDto(any())).thenReturn(productDto);
+        when(productMapper.toEntity(any())).thenReturn(product);
+
 
     }
 
 
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shouldNotInsertFood() {
         // ın that scenario we assume that catagory doesnt exit so it goes fail
 
         Mockito.when(productRepository.save(any())).thenReturn(product);
-        String response=productsService.insertDrink(ProductDtoConverter.convertDrinktoDrinkDto(product));
+        String response=productsService.insertDrink(productDto);
 
 
         assertNotNull(response);
@@ -124,9 +133,8 @@ public class ProductsServiceSetAndUpdateTest {
         assertEquals(dto.getId(),product.getId());
     }
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void  shouldNotUpdateDrink(){
-
         int id=1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -134,11 +142,10 @@ public class ProductsServiceSetAndUpdateTest {
 
         ProductDto dto=productsService.updateDrink(productDto);
 
-
         assertNull(dto);
     }
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shouldNotDelete(){
         int id=1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.empty());
@@ -152,11 +159,6 @@ public class ProductsServiceSetAndUpdateTest {
     public void shouldDelete(){
         int id=1;
         Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(product));
-
-        List<ProductDto> dtoList=new ArrayList<>();
-        List<Product> prodList=Arrays.asList(product);
-        //Mockito.when(productsService.getAllDrinks()).thenReturn(ProductDtoConverter.convertDrinkListToDrinDtoList(dtoList,prodList));
-        //List<ProductDto> dto=productsService.deleteDrink(id);
         String result=productsService.deleteDrink(id);
         assertEquals(result,"Succes");
     }
