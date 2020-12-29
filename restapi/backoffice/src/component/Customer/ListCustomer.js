@@ -6,6 +6,9 @@ import { GrFormAdd, GrTroubleshoot } from "react-icons/gr";
 import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
 import CustomerService from "../../api/CustomerService";
+import PaginationBar from '../PaginationBar';
+
+import {ExportReactCSV} from "./ExportCSV";
 
 const CustomerList = () => {
   const context = useContext(AppContext);
@@ -23,6 +26,7 @@ const CustomerList = () => {
 
   const [showListCompoent,setListComponent]=useState(true)
 
+  const [excel,SetExcel]=useState([])
 
 
   useEffect(() => {
@@ -34,41 +38,26 @@ const CustomerList = () => {
     CustomerService.getCustomers(pageSize, pageCount)
       .then((response) => {
         let arr = new Array();
-        for (
-          let i = 1;
-          i <= Math.ceil(response.data.totalElements / pageSize);
-          i++
-        ) {
+       
+        if (response.status != 200) {
+          return 
+        }
+        for (let i = 1; i <= Math.ceil(response.data.totalElements / pageSize);i++) {
           arr.push(i);
         }
-        if (response.status == 200) {
-          setItems(response.data.content);
-          setLoading(false);
-          setPageNumbers(arr);
-        }
+        setItems(response.data.content);
+        setLoading(false);
+        setPageNumbers(arr);
+
       })
       .catch((err) => console.log(err));
   }, []);
-
-  let pagination = pageNumbers.map((number) => {
-    return (
-      <li key={number} onClick={() => paginate(number)} className="page-item">
-        <a href="#" className="page-link">
-          {number}
-        </a>
-      </li>
-    );
-  });
 
   let paginate = (number) => {
     CustomerService.getCustomers(pageSize, number - 1)
       .then((response) => {
         let arr = new Array();
-        for (
-          let i = 1;
-          i <= Math.ceil(response.data.totalElements / pageSize);
-          i++
-        ) {
+        for (let i = 1; i <= Math.ceil(response.data.totalElements / pageSize); i++) {
           arr.push(i);
         }
         if (response.status == 200) {
@@ -82,12 +71,14 @@ const CustomerList = () => {
   };
 
   let handle_detele = (id) => {
-    const newList = items.filter((item) => item.id !== id);
-    setItems(newList);
-
     CustomerService.deleteCustomer(id)
       .then((response) => {
-        console.log(response.status);
+        if(response.status!=200){
+
+          return 
+        }
+        const newList = items.filter((item) => item.id !== id);
+        setItems(newList);
       })
       .catch((err) => console.log(err));
   };
@@ -99,9 +90,6 @@ const CustomerList = () => {
 
    };
 
-
-
-  
   return (
 
    <div>
@@ -109,14 +97,20 @@ const CustomerList = () => {
      {showEditCompoent&& <EditCustomer setListComponent={setListComponent} selectedItem={selectedItem} setAddComponent={setEditComponent}/>}
 
     {showListCompoent && 
+
+    
       <div>
         <PageLoader loading={loading} />
         <div className="mb-3">
           <strong>Customer List</strong>
-          <a className="btn float-right" onClick={()=>{setAddComponent(true); setListComponent(false); }}>
+
+          <div className="float-right">
+          <ExportReactCSV  items={items} csvData={excel} fileName={"my-file.csv"} />
+          <a className="btn " onClick={()=>{setAddComponent(true); setListComponent(false); }}>
             <GrFormAdd size="1rem" />
             <strong>Add Customer</strong>
           </a>
+          </div>
         </div>
 
         <table className="table">
@@ -164,7 +158,8 @@ const CustomerList = () => {
             })}
           </tbody>
         </table>
-        <ul className="pagination d-flex justify-content-center">{pagination}</ul>
+          
+          <PaginationBar pageNumbers={pageNumbers} paginate={paginate} />
         </div> 
       }
 

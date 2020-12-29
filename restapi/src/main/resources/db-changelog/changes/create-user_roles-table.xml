@@ -8,36 +8,36 @@
 
 
 
-    <changeSet id="5" author="can.okan">
+    <changeSet id="31.12.2020" author="can.okan">
         <createTable tableName="USER_ROLES">
-            <column autoIncrement="true" name="id" type="int(10)">
+            <column autoIncrement="true" name="ID" type="int(10)">
                 <constraints primaryKey="true"/>
             </column>
 
-            <column name="user_id" type="int(10)">
+            <column name="USER_ID" type="int(10)">
 
-                <constraints nullable="false" foreignKeyName="fk_user_role" references="Users(id)" />
+                <constraints nullable="false" foreignKeyName="FK_USER_ROLE" references="USERS(ID)" />
             </column>
 
-            <column name="role_id" type="int(10)">
+            <column name="ROLE_ID" type="int(10)">
 
-                <constraints nullable="false" foreignKeyName="fk_role_user" references="ROLES(id)" />
+                <constraints nullable="false" foreignKeyName="FK_ROLE_USER" references="ROLES(ID)" />
             </column>
 
         </createTable>
     </changeSet>
 
-    <changeSet id="16" author="can.okan">
+    <changeSet id="31.12.2020-1" author="can.okan">
         <insert tableName="USER_ROLES">
-            <column name="id" valueNumeric="1"></column>
-            <column name="user_id" valueNumeric="1"></column>
-            <column name="role_id" valueNumeric="1"></column>
+            <column name="ID" valueNumeric="1"></column>
+            <column name="USER_ID" valueNumeric="1"></column>
+            <column name="ROLE_ID" valueNumeric="1"></column>
 
         </insert>
         <insert tableName="USER_ROLES">
-            <column name="id" valueNumeric="2"></column>
-            <column name="user_id" valueNumeric="2"></column>
-            <column name="role_id" valueNumeric="2"></column>
+            <column name="ID" valueNumeric="2"></column>
+            <column name="USER_ID" valueNumeric="2"></column>
+            <column name="ROLE_ID" valueNumeric="2"></column>
 
         </insert>
     </changeSet>

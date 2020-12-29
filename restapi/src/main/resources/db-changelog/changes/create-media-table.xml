@@ -7,18 +7,21 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 
-    <changeSet id="11" author="can.okan">
+    <changeSet id="29.12.2020" author="can.okan">
         <createTable tableName="Media">
             <column name="id" autoIncrement="true" type="int(10)">
                 <constraints primaryKey="true" />
             </column>
             <column name="name" type="VARCHAR(255)"></column>
 
-            <column name="FILECONTENT" type="BINARY"></column>
+            <column name="FILECONTENT" type="LONGVARBINARY"></column>
         </createTable>
     </changeSet>
 
-    <changeSet id="13" author="can.okan">
+
+
+
+    <changeSet id="29.12.2020-1" author="can.okan">
         <insert tableName="Media">
             <column name="id" valueNumeric="1"></column>
             <column name="name" value="Ana Yemek"></column>
@@ -78,8 +81,8 @@
         </insert>
     </changeSet>
 
-    <changeSet id="21" author="can.ok">
-        <addColumn tableName="MEDIA">
+    <changeSet id="29.12.2020-14" author="can.ok">
+        <addColumn tableName="Media">
             <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
         </addColumn>
     </changeSet>

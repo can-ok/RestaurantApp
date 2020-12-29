@@ -17,10 +17,10 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Users")
+@Entity(name = "USERS")
 @SQLDelete(
-        sql="UPDATE USERS  SET deleted= true where id=?")
-@Where(clause = "deleted=false")
+        sql="UPDATE USERS  SET DELETED= true WHERE id=?")
+@Where(clause = "DELETED=false")
 public class Users extends BaseEntity  implements Serializable {
 
     @Column(name = "USERNAME")
@@ -38,5 +38,8 @@ public class Users extends BaseEntity  implements Serializable {
     )
     private Set<Role> roles=new HashSet<>();
 
+
+    @Column(name = "DELETED")
+    private boolean deleted;
 
 }

@@ -4,7 +4,6 @@ import axios from 'axios';
 
 class CustomerService{
 
-
     static token=""
 
     getCustomers(pageSize,pageCount){

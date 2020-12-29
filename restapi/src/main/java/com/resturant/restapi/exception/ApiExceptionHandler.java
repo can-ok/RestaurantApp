@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.xml.ws.Response;
 import java.util.Date;
 
 @RestController
@@ -35,6 +36,12 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
     }
 
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDto> genericException(Exception e,WebRequest webRequest){
+        ErrorResponseDto responseDto=prepareResponseModel(e.getMessage(),webRequest);
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
+    }
 
     public ErrorResponseDto prepareResponseModel(String message,WebRequest webRequest){
         Date date = new Date(System.currentTimeMillis());

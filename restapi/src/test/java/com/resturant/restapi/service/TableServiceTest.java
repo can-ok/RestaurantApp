@@ -3,10 +3,12 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.builder.MediaDtoBuilder;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.converter.TableDtoConverter;
 import com.resturant.restapi.converter.TableMapper;
 import com.resturant.restapi.dto.TablesDto;
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.TableRepository;
@@ -16,6 +18,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -43,6 +47,8 @@ public class TableServiceTest {
     @Mock
     private MediaRepository mediaRepository;
 
+    @Mock
+    private MessageSourceExternalizer messageSourceExternalizer;
 
     private List<Tables> tablesList =new ArrayList<>();
     private Tables tables =new Tables();
@@ -134,4 +140,26 @@ public class TableServiceTest {
         assertNotNull(resultDto);
         assertEquals(resultDto.getId(),tables.getId());
     }
+
+    @Test
+    public void shouldDeleteTable(){
+        int id=1;
+        when(tableRepository.findById(id)).thenReturn(Optional.of(tables));
+        assertEquals(tableService.deleteTable(id),"Success");
+
+    }
+
+    @Test(expected = EntityNotFound.class)
+    public void shouldNotDeleteTable(){
+        int id=1;
+        when(tableRepository.findById(id)).thenReturn(Optional.ofNullable(null));
+        assertEquals(tableService.deleteTable(id),"Success");
+
+    }
+
+    @Test
+    public void shouldGetReservedTable(){
+
+    }
+
 }

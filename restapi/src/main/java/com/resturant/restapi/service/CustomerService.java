@@ -7,6 +7,7 @@ import com.resturant.restapi.converter.CustomerMapper;
 import com.resturant.restapi.dto.CustomerDto;
 import com.resturant.restapi.exception.ContentNotAllowed;
 import com.resturant.restapi.exception.EntityNotFound;
+import com.resturant.restapi.external.ExcelFileExporter;
 import com.resturant.restapi.repository.CustomerRepository;
 import com.resturant.restapi.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +103,16 @@ public class CustomerService {
         customerRepository.save(optionalCustomer.get());
 
         return customerMapper.toDto(optionalCustomer.get());
+    }
+
+
+    public ByteArrayInputStream loadXML(){
+
+        List<Customer> all = customerRepository.findAll();
+         ByteArrayInputStream byteArrayInputStream = ExcelFileExporter.exportCustomerList(all);
+
+         return byteArrayInputStream;
+
     }
 
 }

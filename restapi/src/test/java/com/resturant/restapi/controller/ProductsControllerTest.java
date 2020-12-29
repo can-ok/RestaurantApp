@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.*;
 
 import static org.junit.Assert.*;
 import java.util.*;
@@ -45,6 +46,9 @@ public class ProductsControllerTest {
 
     private ProductDto productDto;
     List<ProductDto> productDtoList=new ArrayList<>();
+
+    private Pageable pages= PageRequest.of(0,5);
+
     @Before
     public void setUpProductsList(){
 
@@ -56,30 +60,38 @@ public class ProductsControllerTest {
 
         productDto=ProductDtoConverter.convertDrinktoDrinkDto(product);
 
+        productDtoList.add(productDto);
+
     }
 
 
 
 
-//    @Test
-//    public void shouldgetProduct() {
-//        when(productsService.getAllDrinks()).thenReturn(productDtos);
-//
-//        assertNotNull(productsController.getAllDrinks());
-//        verify(productsService,times(1)).getAllDrinks();
-//
-//    }
+    @Test
+    public void shouldgetProduct() {
+        Page<ProductDto> products=new PageImpl<>(productDtoList);
+        when(productsService.getProducts(0,5)).thenReturn(products);
 
-//    @Test
-//    public void shouldNotgetProduct() {
-//        when(productsService.getAllDrinks()).thenReturn(null);
-//
-//        assertNull(productsController.getAllDrinks());
-//    }
-//
-//
-//
+        assertEquals(productsController.getAllDrinks(0,5).getTotalElements(),1);
 
+    }
+
+    @Test
+    public void shouldNotgetProduct() {
+        when(productsService.getAllDrinks(0,5)).thenReturn(null);
+
+        assertNull(productsController.getAllDrinks(0,5));
+    }
+
+
+    @Test
+    public void shouldgetSliceProduct() {
+        Slice<ProductDto> products=new SliceImpl<>(productDtoList);
+        when(productsService.getAllDrinks(0,5)).thenReturn(products);
+
+        assertEquals(productsController.getAllProducts(0,5).hasNext(),false);
+
+    }
 
 
     @Test
@@ -98,36 +110,30 @@ public class ProductsControllerTest {
 
     }
 
-
-
-
-//    @Test
-//    public void deleteProduct() {
-//
-//        when(productsService.deleteDrink(any())).thenReturn(productDtos);
-//        assertNotNull(productsController.deleteDrink(any()));
-//        verify(productsService,times(1)).deleteDrink(any());
-//
-//    }
+    @Test
+    public void deleteProduct() {
+        when(productsService.deleteDrink(any())).thenReturn("Success");
+        assertEquals(productsController.deleteDrink(1),"Success");
+    }
 
 
 
     @Test
     public void updateProduct() {
         when(productsService.updateDrink(any())).thenReturn(productDto);
-
         assertEquals(productsController.updateDrink(any()),productDto);
 
     }
 
 
-//    @Test
-//    public void retrivebyProductCategor() {
-//        int id=1;
-//        when(productsService.getSpecificCategory(id)).thenReturn(null);
-//
-//        assertNull(productsController.retrivebyProductCategor(id));
-//
-//        //verify(productsController)
-//    }
+    @Test
+    public void retrivebyProductCategor() {
+        int id=1;
+        Slice<ProductDto> products=new SliceImpl<>(productDtoList);
+        when(productsService.getSpecificCategory(id,0,5)).thenReturn(products);
+
+        assertEquals(productsController.retrivebyProductCategor(id,0,5).hasNext(),false);
+
+        //verify(productsController)
+    }
 }

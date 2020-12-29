@@ -10,6 +10,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -21,31 +22,21 @@ import java.util.Set;
 @SQLDelete(
         sql="UPDATE PRODUCT_CATEGORY SET deleted= true where id=?")
 @Where(clause = "deleted=false")
-public class ProductCategory extends BaseEntity{
-
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Id
-//    private Integer id;
+public class ProductCategory extends BaseEntity implements Serializable {
 
     private String name;
 
     private String description;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "productcategory",fetch = FetchType.LAZY)
-    private Set<Product> products;
+//
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "productcategory",fetch = FetchType.LAZY)
+//    private Set<Product> products;
 
 
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "media_id")
     private Media categorymedia;
-
-//
-//    public ProductCategory(Integer id, String name) {
-//        super(id);
-//        this.name = name;
-//    }
 
 
 }

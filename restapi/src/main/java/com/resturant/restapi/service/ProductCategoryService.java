@@ -33,7 +33,7 @@ public class ProductCategoryService {
     @Autowired
     private MessageSourceExternalizer messageSourceExternalizer;
 
-    @Cacheable("catagories")
+    @Cacheable(cacheNames = "catagories")
     public Set<ProductCategoryDto> getAll(){
         Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
         productcategoryRepository.findAll().forEach(productCategory -> {
@@ -79,7 +79,7 @@ public class ProductCategoryService {
     @CacheEvict(value="catagories" ,allEntries = true)
     public ProductCategoryDto updateCategory(Integer id,ProductCategoryDto category){
 
-        if(category==null && id<0){
+        if(category==null || id<1){
             throw new ContentNotAllowed("Content not allowed");
         }
 
@@ -91,27 +91,29 @@ public class ProductCategoryService {
         }
         else{
 
-            if(!entity.get().getName().equals(category.getName())){
-                entity.get().setName(category.getName());
+            ProductCategory productCategory = entity.get();
+            if(!productCategory.getName().equals(category.getName())){
+                productCategory.setName(category.getName());
             }
-            if(category.getCategorymedia()!=entity.get().getCategorymedia()){
-                Media updateMedia=mediaRepository.findById(entity.get().getCategorymedia().getId()).get();
-                entity.get().setCategorymedia(updateMedia);
+            if(category.getCategorymedia()!= productCategory.getCategorymedia()){
+                Media updateMedia=mediaRepository.findById(productCategory.getCategorymedia().getId()).get();
+                productCategory.setCategorymedia(updateMedia);
             }
-            if(entity.get().getId()!=category.getId()){
-                entity.get().setId(id);
+            if(productCategory.getId()!=category.getId()){
+                productCategory.setId(id);
             }
-            if(!entity.get().getDescription().equals(category.getDescription())){
-                entity.get().setDescription(category.getDescription());
+            if(!productCategory.getDescription().equals(category.getDescription())){
+                productCategory.setDescription(category.getDescription());
 
             }
-            productcategoryRepository.save(entity.get());
+            productcategoryRepository.save(productCategory);
             return category;
         }
     }
 
     @Cacheable(value = "CategoryCache",key = "'Category_CACHE_BY_ID_'.concat(#id)")
     public ProductCategoryDto getDrinkById(int id){
+        //id null check
         if(!productcategoryRepository.findById(id).isPresent())
         {
             throw new EntityNotFound("Category "+messageSourceExternalizer.getMessage("entity.error"));

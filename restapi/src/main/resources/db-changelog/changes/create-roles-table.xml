@@ -10,22 +10,22 @@
 
     <changeSet id="15" author="can.okan">
         <createTable tableName="ROLES">
-            <column autoIncrement="true" name="id" type="int(10)" >
+            <column autoIncrement="true" name="ID" type="int(10)" >
                 <constraints primaryKey="true"></constraints>
             </column>
-            <column name="name" type="VARCHAR(255)"></column>
+            <column name="NAME" type="VARCHAR(255)"></column>
         </createTable>
     </changeSet>
 
 
     <changeSet id="16" author="can.ok">
         <insert tableName="ROLES">
-            <column name="id" valueNumeric="1"></column>
-            <column name="name" value="ROLE_ADMIN"></column>
+            <column name="ID" valueNumeric="1"></column>
+            <column name="NAME" value="ROLE_ADMIN"></column>
         </insert>
         <insert tableName="ROLES">
-            <column name="id" valueNumeric="2"></column>
-            <column name="name" value="ROLE_USER"></column>
+            <column name="ID" valueNumeric="2"></column>
+            <column name="NAME" value="ROLE_USER"></column>
         </insert>
     </changeSet>
 

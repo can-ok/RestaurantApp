@@ -44,12 +44,13 @@ import EditCustomer from './component/Customer/EditCustomer';
 
 const App = () => {
 
-  const [appState,setAppState]=useState({ 
+   const [appState,setAppState]=useState({ 
     token:null,
     language:'en'
   
   });
 
+  //*** */
   const context=appState.token? appState.token:localStorage.getItem('token')
 
 

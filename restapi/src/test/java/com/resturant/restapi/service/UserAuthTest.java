@@ -2,9 +2,12 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.builder.RoleBuilder;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.RoleDtoConverter;
 import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.dto.RoleDto;
+import com.resturant.restapi.exception.ContentNotAllowed;
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.RolesRepository;
 import com.resturant.restapi.repository.UsersRepository;
 import org.junit.Before;
@@ -30,13 +33,17 @@ import static org.mockito.Matchers.any;
 public class UserAuthTest {
 
     @Mock
-    RoleMapper roleMapper;
+    private RoleMapper roleMapper;
 
     @Mock
-    RolesRepository rolesRepository;
+    private RolesRepository rolesRepository;
+
+    @Mock
+    private MessageSourceExternalizer messageSourceExternalizer;
+
 
     @InjectMocks
-    RoleService roleService;
+    private RoleService roleService;
 
     private List<RoleDto> roleDtos =new ArrayList<>();
 
@@ -53,6 +60,8 @@ public class UserAuthTest {
         roleDto= RoleDtoConverter.roleToRoleDto(role);
 
         roleDtos.add(roleDto);
+
+        when(roleMapper.toDtoList(any())).thenReturn(roleDtos);
 
     }
 
@@ -86,7 +95,7 @@ public class UserAuthTest {
 
         assertEquals(roleService.delete(1),"Success");
     }
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shouldNotDeleteRole() {
         when(rolesRepository.findById(any())).thenReturn(Optional.empty());
 
@@ -100,7 +109,7 @@ public class UserAuthTest {
         assertEquals(roleService.update(roleDto,1),"Success");
     }
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shouldNotUpdateRole() {
         when(rolesRepository.findById(any())).thenReturn(Optional.empty());
 

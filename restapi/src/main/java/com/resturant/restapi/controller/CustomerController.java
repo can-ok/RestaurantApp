@@ -4,9 +4,18 @@ package com.resturant.restapi.controller;
 import com.resturant.restapi.Model.Customer;
 import com.resturant.restapi.dto.CustomerDto;
 import com.resturant.restapi.service.CustomerService;
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
@@ -48,5 +57,19 @@ public class CustomerController {
     {
         return customerService.getCustomerByPhoneNumber(page,size,customerDto);
     }
+
+
+    @GetMapping("/export")
+    public ResponseEntity<Resource> exportToExcel(){
+
+        String filename="customer.xlsx";
+        InputStreamResource file=new InputStreamResource(customerService.loadXML());
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=" + filename)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(file);
+
+    }
+
 
 }

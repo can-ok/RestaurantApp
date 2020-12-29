@@ -7,13 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductCategoryDto {
+public class ProductCategoryDto implements Serializable {
 
     private Integer id;
 
@@ -21,7 +22,7 @@ public class ProductCategoryDto {
 
     private String description;
 
-    private Set<ProductDto> products;
+//    private Set<ProductDto> products;
 
     private Media categorymedia;
 

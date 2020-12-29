@@ -1,5 +1,7 @@
 package com.resturant.restapi.service;
 
+import com.resturant.restapi.Model.Media;
+import com.resturant.restapi.builder.MediaBuilder;
 import com.resturant.restapi.builder.MediaDtoBuilder;
 import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.dto.MediaDto;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,8 @@ public class MediaServiceTest {
 
     List<MediaDto> mediaDtos=new ArrayList<>();
     MediaDto dto;
+
+
     @Before
     public void SetUp(){
 
@@ -47,6 +52,10 @@ public class MediaServiceTest {
         dto= new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build();
 
         mediaDtos.add(dto);
+
+
+
+
     }
 
     MockMultipartFile file;
@@ -73,9 +82,17 @@ public class MediaServiceTest {
 
     @Test
     public void saveFile() {
+        byte [] b ={ (byte)0xe0, 0x4f, (byte)0xd0,
+                0x20, (byte)0xea, 0x3a, 0x69, 0x10, (byte)0xa2, (byte)0xd8, 0x08, 0x00, 0x2b,
+                0x30, 0x30, (byte)0x9d };
+        byte[] json = "{\"name\":\"test\"}".getBytes(StandardCharsets.UTF_8);
+        MockMultipartFile file = new MockMultipartFile("json", "json", "application/json", json);
+
+
+        Media media = new MediaBuilder().id(1).name("zar.png").fileContent(b).build();
         when(mediaRepository.save(any())).thenReturn(MediaDtoConverter.mediaDtoToMedia(dto));
 
-        String result=mediaService.saveFile(any(),any());
+        String result=mediaService.saveFile(file,"zar.png");
 
         assertEquals(result,"Success");
 

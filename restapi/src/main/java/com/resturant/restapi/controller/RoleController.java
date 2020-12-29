@@ -40,7 +40,6 @@ public class RoleController {
 
     @PutMapping("/{id}")
     public String update(@RequestBody RoleDto roleDto,@PathVariable int id){
-
         return roleService.update(roleDto,id);
     }
 

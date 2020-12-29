@@ -14,9 +14,9 @@ import java.util.Set;
 public interface ProductsCategoryMapper {
 
 
-    @Mapping(
-            ignore = true,
-            source = "products",target = "products")
+//    @Mapping(
+//            ignore = true,
+//            source = "products",target = "products")
     ProductCategoryDto toDto(ProductCategory productCategory);
 
 
