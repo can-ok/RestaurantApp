@@ -2,22 +2,27 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {GrFormAdd} from 'react-icons/gr'
 import {Button, FormGroup, Label,Form,Input} from 'reactstrap';
-import axios from 'axios';
+import PageLoader from '../PageLoader';
+
+
+import UserSerivce from '../../api/UserService';
 
 class UserList extends Component {
     state = { 
             users:[],
-            userRoleValue:""
+            userRoleValue:"",
+            loading:true
             }
 
 
     componentDidMount(){
         //http://localhost:8080/users/getAll
-        axios.get("http://localhost:8080/users/getAll")
+        UserSerivce.getAllUser()
         .then((response)=>{
 
             this.setState({
-                users:response.data
+                users:response.data,
+                loading:false
             })
 
         })
@@ -34,8 +39,10 @@ class UserList extends Component {
         const users=this.state.users.filter(item => item.id !==itemId)
 
         this.setState({users})
-        //http://localhost:8080/users/delete/1
-        axios.delete("http://localhost:8080/users/delete/"+itemId).then((response)=>console.log(response))
+        //http://localhost:8080/users/delete/1,
+
+        UserSerivce.deleteUser(itemId)
+        .then((response)=>console.log(response))
         .catch((err)=>console.error(err))
         
     }
@@ -73,8 +80,9 @@ class UserList extends Component {
 
          return( <tr key={user.id}>
                 <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.role}</td>
+                <td>{user.username}</td>
+                <td>{user.enabled.toString()}</td>
+                <td>{user.roles.map((role)=><Link> { role.name}</Link>) }</td>
                 <td><Link to={"/users/edit/"+user.id}  className="btn btn-warning">Edit</Link></td>
                 <td><Button className="btn btn-danger" onClick={()=>this.handle_detele(user.id)}> Delete </Button></td>
             </tr>)
@@ -84,6 +92,7 @@ class UserList extends Component {
         return ( 
 
             <div>
+                <PageLoader loading={this.state.loading} />
 
                 <div className="row">
 
@@ -95,11 +104,8 @@ class UserList extends Component {
                 <Input name="userRoleValue" type="text"  onChange={this.handleInputChange} />
                 </Label>
                 </FormGroup>
-
                 </Form>
                 </div>
-
-
                 </div>
             
             <div className="row">
@@ -121,6 +127,7 @@ class UserList extends Component {
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
+                            <th>Status</th>
                             <th>Role</th>
                             <th></th>
                             <th></th>

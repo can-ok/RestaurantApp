@@ -1,64 +1,45 @@
 package com.resturant.restapi.Model;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="users")
-public class Users {
+@Entity(name = "USERS")
+@SQLDelete(
+        sql="UPDATE USERS  SET DELETED= true WHERE id=?")
+@Where(clause = "DELETED=false")
+public class Users extends BaseEntity  implements Serializable {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-
-
-
-    @Column(name="USERNAME")
-    private String UserName;
-
-    @Column(name ="PASSWORD")
-    private String Password;
-
+    @Column(name = "USERNAME")
+    private String username;
+    @Column(name = "PASSWORD")
+    private String password;
     @Column(name = "ENABLED")
-    private boolean Enabled;
+    private boolean enabled;
+
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(
+            name="USER_ROLES",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="role_id")
+    )
+    private Set<Role> roles=new HashSet<>();
 
 
+    @Column(name = "DELETED")
+    private boolean deleted;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return UserName;
-    }
-
-    public void setUserName(String userName) {
-        UserName = userName;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    public boolean isEnabled() {
-        return Enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        Enabled = enabled;
-    }
 }

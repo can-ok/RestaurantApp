@@ -1,54 +1,101 @@
 import React,{Component} from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
-
 import ProductsService from '../../api/ProductsService';
+import Select from 'react-select';
+import MediaService from '../../api/MediaService';
+
+import CategoryService from '../../api/CategoryService';
+import AppContext from '../../AppContext';
+
 
 class AddProduct extends Component {
     state = { itemTitle:"",
               itemDescription:"",
               productCategory:"",
               price:"",
-
+              options:[],
+              mediaOptions:[],
+              selectValue:[""],
+              selectedMedia:[]
             }
 
 
-    //http://localhost:8080/add/drink
+    static contextType=AppContext;
+
+    componentDidMount(){
+
+      let appContext=this.context;
+      let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
+
+      CategoryService.token=token;
+
+      CategoryService.getCategories()
+      .then((response)=>{
+          return response.json()
+      })
+      .then((data)=>{
+
+        this.setState({
+          options:data
+        })
+      })
+
+      MediaService.getAllMedia()
+      .then((response)=>response.json())
+      .then((data)=>{
+        this.setState({
+          mediaOptions:data
+        })
+      })
+
+    }
 
 
     handleInputChange=(event)=>{
-        const target = event.target;
-        const name = target.name;
-    
+      const target = event.target;
+      const name = target.name;
+
+       
         this.setState({
     
             [name]:event.target.value
         })
-    
+        
+        
     }
+
+    handleInputSelectChange=(event)=>{
+      const target = event.target;
+      const name = target.name;
+
+      const options=target.options;
+
+      var value=[];
+
+      for (var i = 0, l =options.length; i < l; i++) {
+        if (options[i].selected) {
+          value.push(options[i].value);
+        }
+      }
+
+      console.log(value)
+
+      this.setState({
+    
+        [name]:value
+    }) 
+
+
+        
+    }
+
+    
 
 
     mySubmitHandler=()=>{
 
         const type=this.props.match.params.type;
-        
-      /*   var data={
-            "title":this.state.itemTitle,
-            "description":this.state.itemDescription,
-            "price":this.state.price,
-            "productCategory":this.state.productCategory
-            };
-
-
-        fetch("http://localhost:8080/add/"+type,{
-
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-        }) */
 
         ProductsService.addProduct(this.state,type)
         .then((response)=>{
@@ -60,8 +107,24 @@ class AddProduct extends Component {
         
     }
 
+    handleSelectChange=(item)=>{
+        
+      this.setState({
+          selectedMedia:item
+      })
+  }
+
 
     render() { 
+
+        const optionList=this.state.options.map((item)=>{
+          return(<option key={item.id} value={[item.id,item.name]}>{item.name}</option>)
+        })
+
+        const mediaList=this.state.mediaOptions.map((option)=>{
+          return({'label':<div>{option.name}  <img src={'data:image/png;base64,'+option.fileContent} width="30" /></div> ,value:option})
+        })
+
         return ( <Form>
            
             <FormGroup>
@@ -72,9 +135,17 @@ class AddProduct extends Component {
               <Label>Description:
               <Input name="itemDescription" type="text"  onChange={this.handleInputChange}/></Label>
             </FormGroup>
+
             <FormGroup>
-              <Label>Category:
-              <Input name="productCategory" type="text"  onChange={this.handleInputChange}/></Label>
+             <select id = "dropdown" name="selectValue" multiple={true} value={this.state.selectValue}   onChange={this.handleInputSelectChange}>
+                {optionList}
+              </select>
+              </FormGroup>
+            <FormGroup>
+            <Label>Media:
+              
+              </Label>
+            <Select className="col-md-4" options={mediaList} value={this.state.selectedMedia}  onChange={this.handleSelectChange}  />
             </FormGroup>
 
             <FormGroup>

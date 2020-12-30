@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
+import Select from 'react-select';
 
+import UserService from '../../api/UserService'
 
 class EditUser extends Component {
     state = {
         id:"",
         userName:"",
         userPass:"",
-        userRole:"" }
+        selectedRole:[],authRoles:[],        
+        enabled:"" }
 
 
     handleInputChange=(event)=>{
@@ -27,15 +29,15 @@ class EditUser extends Component {
     componentDidMount(){
 
         let id=this.props.match.params.id
-        axios.get("http://localhost:8080/users/get/"+id)
+        UserService.getUserById(id)
         .then((response)=>{
 
             console.log(response)
             this.setState({
                 id:response.data.id,
-                userName:response.data.name,
+                userName:response.data.username,
                 userPass:response.data.password,
-                userRole:response.data.role
+                enabled:response.data.enabled
             })
 
         })
@@ -44,20 +46,23 @@ class EditUser extends Component {
             console.error(err);
         })
 
+
+        UserService.getAllRoles().then((respose)=>{
+            
+            this.setState({
+                authRoles:respose.data
+            })
+
+        })
+
+       
     }
 
     handleUpdate=()=>{
 
-
-        let userData={
-            "id":this.state.id,
-            "name":this.state.userName,
-            "password":this.state.userPass,
-            "role":this.state.userRole
-        }
         //http://localhost:8080/users/update/1
         
-        axios.put(`http://localhost:8080/users/update/${this.state.id}`,userData)
+        UserService.updateUser(this.state)
         .then((response)=>{
             
         
@@ -68,29 +73,50 @@ class EditUser extends Component {
             });
 
     }
+
+    handleSelectChange=(items)=>{
+
+        let list= Array.isArray(items)? items.map(item=>{
+            
+            //console.log(item)
+            return(item.value)
+        }):[]
+
+        console.log(list)
+
+        this.setState({
+            selectedRole:list
+        })
+
+    }
+
     
 
     render() { 
 
-        const {userName,userPass,userRole}=this.state;
+
+        const roles= this.state.selectedRole;
+
+        const {userName,userPass,authRoles}=this.state;
+
+        const authOptions=authRoles.map((item)=>{return({'label':item.name,'value':item})})
 
         return ( <Form>
            
             <FormGroup>
-              <Label>Name:
+              <Label>Username:
               <Input name="userName" type="text"  onChange={this.handleInputChange} value={userName} /></Label>
             </FormGroup>
             <FormGroup>
               <Label>Password:
-              <Input name="userPass" type="text"  onChange={this.handleInputChange} value={userPass}/></Label>
+              <Input name="userPass" type="password"  onChange={this.handleInputChange} value={userPass}/></Label>
             </FormGroup>
-            <FormGroup>
-              <Label>Role:
-              <Input name="userRole" type="text"  onChange={this.handleInputChange} value={userRole}/></Label>
-            </FormGroup>
+           <FormGroup>
+                <Select options={authOptions} values={authOptions.filter(obj=>roles.includes(obj.value))}onChange={this.handleSelectChange} isMulti isClearable/>
+           </FormGroup>
 
             <Link to="/users" onClick={this.handleUpdate} className="btn btn-success">Submit</Link>
-            <Link to="/users" className="btn btn-danger ml-2">Cancel</Link>        
+            <Link to="/users" className="btn btn-danger ml-2">Geri</Link>        
             </Form>  );
     }
 }

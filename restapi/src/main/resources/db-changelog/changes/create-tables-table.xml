@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="5" author="can.ok">
+        <createTable tableName="Tables">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="enabled" type="BOOLEAN" />
+            <column name="tableCount" type="int(10)"/>
+            <column name="media_id" type="int(10)">
+                <constraints foreignKeyName="fk_media_table" referencedColumnNames="Media(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="can.okan">
+        <insert tableName="Tables">
+            <column name="title" value="Ayakta"></column>
+            <column name="enabled" valueBoolean="true"></column>
+            <column name="tableCount" value="0"></column>
+            <column name="media_id" value="12"></column>
+        </insert>
+        <insert tableName="Tables">
+            <column name="title" value="Salon"></column>
+            <column name="enabled" valueBoolean="true"></column>
+            <column name="tableCount" value="20"></column>
+            <column name="media_id" value="13"></column>
+        </insert>
+        <insert tableName="Tables">
+            <column name="title" value="Bahçe"></column>
+            <column name="enabled" valueBoolean="true"></column>
+            <column name="tableCount" value="20"></column>
+            <column name="media_id" value="14"></column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="21" author="can.ok">
+        <addColumn tableName="Tables">
+            <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

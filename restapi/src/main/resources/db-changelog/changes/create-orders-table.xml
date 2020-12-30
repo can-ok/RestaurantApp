@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="can.okan" id="3">
+        <createTable tableName="Orders">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="productId" type="int(5)"/>
+            <column name="productCount" type="int(5)"/>
+            <column name="totalPrice" type="int(6)"/>
+            <column name="orderDate"  defaultValueComputed="CURRENT_TIMESTAMP" type="TIMESTAMP"/>
+            <column name="paymentType" type="VARCHAR(255)"></column>
+            <column name="orderTable" type="VARCHAR(255)"></column>
+            <column name="waiterId" type="VARCHAR(255)"></column>
+
+        </createTable>
+
+    </changeSet>
+
+    <changeSet author="can.okan" id="4">
+        <insert tableName="Orders">
+            <column name="id" valueNumeric="1"/>
+            <column name="productId" valueNumeric="1"/>
+            <column name="productCount" valueNumeric="1"/>
+            <column name="totalPrice" valueNumeric="25"/>
+            <column name="orderDate" valueDate="now()"/>
+            <column name="paymentType" value="cash"/>
+            <column name="orderTable" value="1"/>
+            <column name="waiterId" value="1"/>
+        </insert>
+
+    </changeSet>
+
+    <changeSet id="21" author="can.ok">
+        <addColumn tableName="Orders">
+            <column name="deleted" type="boolean" defaultValueBoolean="false"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="25" author="can.ok">
+        <addColumn tableName="Orders">
+            <column name="customerId" type="VARCHAR(255)"></column>
+        </addColumn>
+    </changeSet>
+
+
+</databaseChangeLog>

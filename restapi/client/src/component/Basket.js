@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
 import '../App.css'
 import { AiOutlinePlusCircle,AiOutlineMinusCircle } from 'react-icons/ai';
+import { Label } from 'reactstrap';
+
+import OrdersService from '../api/OrdersService';
+
+import AppContext from '../AppContext';
 
 
 export default class Basket extends Component {
     constructor(props){
         super(props);
         this.state = {
-            cartItems:props.cartItems
-
+            cartItems:props.cartItems,
         };
       }
 
+      static contextType=AppContext;
 
    
 
-    handleBaskesState=(item,cartItems)=>{
+    handleBaskesIncrement=(item,cartItems)=>{
 
      for (let i in cartItems) {
-        if (cartItems[i].id == item.id) {
+        if ((cartItems[i].id == item.id) && (cartItems[i].productcategory.name == item.productcategory.name )) {
             cartItems[i].count++;
+            this.setbasket(cartItems)
+
            break; //Stop this loop, we found it!
         }
       }
@@ -36,8 +43,8 @@ export default class Basket extends Component {
 
     handleBaskesStateDecremet=(event,item,cartItems)=>{
 
-        for (let i in cartItems) {
-           if (cartItems[i].id == item.id) {
+        for (let i in cartItems) {  
+           if ((cartItems[i].id == item.id) && (cartItems[i].productcategory.name == item.productcategory.name )) {
                if(cartItems[i].count<=1)
                {
                 cartItems[i].count--;
@@ -46,6 +53,8 @@ export default class Basket extends Component {
                }
                else{
                 cartItems[i].count--;
+                
+                this.setbasket(cartItems)
                }
                 
               break; //Stop this loop, we found it!
@@ -57,11 +66,63 @@ export default class Basket extends Component {
          })
    
    
-       }
+    }
+
+
+
+    setbasket=(cartItemList)=>{
+
+        let appContext=this.context;
+        let tableContext=appContext.appState.table
+        console.log("table context",tableContext)
+
+        
+        let item=localStorage.getItem(tableContext)
+        item=JSON.parse(item)
+        let basketItem;
+        //console.log(item.table)
+        
+        //if contains table already
+
+        if(item===null){
+            basketItem={
+                'table':tableContext,
+                'products':cartItemList
+            };
+            localStorage.setItem(tableContext,JSON.stringify(basketItem))
+
+        }
+        else{
+            if(item.table==tableContext){
+
+                basketItem={
+                    'table':tableContext,
+                    'products':cartItemList
+                };
+               
+            }
+           
+
+            localStorage.setItem(tableContext,JSON.stringify(basketItem))
+
+        }
+        
+
+      
+    }
 
     
     handleClick=(event,price,items)=>{
         var data=[]
+
+
+        let appContext=this.context;
+        let token=appContext.appState.token? appContext.appState.token:localStorage.getItem('token')
+
+        let tableContext=appContext.appState.table
+        let waiterContext=appContext.appState.waiter
+        let customerContext=appContext.appState.customer
+        console.log("customer "+customerContext)
 
         items.forEach(item => {
             //delete item
@@ -71,34 +132,50 @@ export default class Basket extends Component {
                 "productId":item.id,
                 "productCount":item.count,
                 "totalPrice":price,
-                "paymentType":"cash"
+                "paymentType":"cash",
+                "orderTable":tableContext,
+                "waiterId":waiterContext,
+                "customerId":customerContext
             }
             
             data.push(jsonData);
         });
 
-        fetch("http://localhost:8080/orders/saveOrders",{
+       
 
-
-            method:'POST',
-            headers:{
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(data,)}
-        ).then((response)=>{
+        
+        OrdersService.token=token;
+        
+        OrdersService.saveOrders(data)
+        .then((response)=>{
 
             console.log(response)
-
-
+           
+            alert("Sipariş verildi")
+            
+             //clean context
+            let appState={...this.context.appState}
+            appState.table=null
+            this.context.setAppState(appState)
+                
+            localStorage.removeItem(tableContext)
         })
         
         .catch((err)=>{
             console.error(err)
         })
-            
+
+       
+
+       
 
         
+
+        //localStorage.removeItem('table')
+
+        //this.props.history.push("/menu")
+
+       // window.location='/menu'
     }
         
 
@@ -106,37 +183,51 @@ export default class Basket extends Component {
     render() { 
     
         const cartItems=this.props.cartItems;
+        let carts;
+        if(cartItems.length>0)
+        {
+            carts=cartItems.map( (item)=>
+
+            <li className="mt-3 border-bottom">
+                
+                
+                <label className="float-left"  onClick={()=>this.handleBaskesIncrement(item,cartItems)}><AiOutlinePlusCircle size={24} /></label>
+                <label>
+                <label>{item.title} </label>
+                <label className="ml-1">{item.count} Adet </label>
+                <label className="ml-1"> {item.count*item.price} TL</label>
+                </label>
+                
+
+                {/*<button className="btn btn-danger" onClick={(e)=>this.props.handleRemoveFromCart(e,item)}>X</button>*/}
+                <label className="float-right" onClick={(event)=>this.handleBaskesStateDecremet(event,item,cartItems)}><AiOutlineMinusCircle size={24}/> </label>
+
+            </li>
+
+        )
+        }
+
         return (
-            <div className="border border-secondary rounded">
-                {cartItems.length==0? "Basket is empty": "Basket"}
-                {
-                    cartItems.length>0 &&
-                    <div>
-                        <ul className="descriptionItem">
-                            {cartItems.map( (item)=>
+            <div className="border border-secondary rounded ">
+                
+                
+                   
+        <div className="basketItem basketPaket">
+            <ul className="descriptionItem">
+                {carts}
+            </ul>
+            </div>   
+        
+        <div className="border-top border-primary"></div>
 
-                                <li className="mt-3 border-bottom">
-                                    
-                                    <label className="mr-2 float-left" onClick={()=>this.handleBaskesState(item,cartItems)}><AiOutlinePlusCircle size={24} /></label>
-                                    <label>{item.title} :</label>
-                                    <label className="ml-2">{item.count} </label>
-            
-                                    {/*<button className="btn btn-danger" onClick={(e)=>this.props.handleRemoveFromCart(e,item)}>X</button>*/}
-                                    <label className="ml-2 float-right" onClick={(event)=>this.handleBaskesStateDecremet(event,item,cartItems)}><AiOutlineMinusCircle size={24}/> </label>
+        <div className="mt-2 mb-2">
+        <label>Toplam: {cartItems.reduce((a,c)=>a+c.price*c.count,0)} TL</label>
 
-                                </li>
+        <button className="btn btn-danger mr-2 float-right" onClick={(event)=>this.handleClick(event,cartItems.reduce((a,c)=>a+c.price*c.count,0),this.props.cartItems)}>Sipariş</button>
+        </div>
+      
 
-                            )}
-                        </ul>
-                            
-                            <div className="mt-2 mb-2">
-                            <label>Total: {cartItems.reduce((a,c)=>a+c.price*c.count,0)}</label>
-                            <button className="btn btn-danger float-right" onClick={(event)=>this.handleClick(event,cartItems.reduce((a,c)=>a+c.price*c.count,0),this.props.cartItems)}>Order</button>
-                            </div>
-                    </div>   
-                }
-
-            </div>
+        </div>
 
           );
     }

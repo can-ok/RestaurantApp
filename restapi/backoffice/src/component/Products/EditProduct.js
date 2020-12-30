@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {Link} from "react-router-dom";
+import ProductsService from '../../api/ProductsService'
+import Select from 'react-select';
+import CategoryService from '../../api/CategoryService';
+import MediaService from '../../api/MediaService';
+import AppContext from '../../AppContext';
 
 
 class EditProduct extends Component {
@@ -9,18 +14,30 @@ class EditProduct extends Component {
         itemTitle:"",
         itemDescription:"",
         productCategory:"",
-        price:"",  }
+        price:"",
+        optionsCategory:[],
+        selectedCategories:[],
+        mediaOptions:[],
+        selectedMedia:[]
 
+    }
+
+    static contextType=AppContext;
 
     componentDidMount(){
+
+
+        let appContext=this.context;
+        let token=appContext.appState.token?appContext.appState.token:localStorage.getItem('token')
+
+        ProductsService.token=token;
+        CategoryService.token=token;
 
         let id=this.props.match.params.id
         let type=this.state.type
 
-        console.log("id"+id)
-        console.log("type"+type)
-            //http://localhost:8080/news/5
-        fetch(`http://localhost:8080/${type}/${id}`)
+      
+        ProductsService.getProductbyId(id,type)
         .then((response)=>{
             
             //this.setState({response})
@@ -30,20 +47,41 @@ class EditProduct extends Component {
         }
         ).then((data)=>{
 
-            
-            
             this.setState({
                 itemTitle:data.title,
                 id:data.id,
                 itemDescription:data.description,
                 productCategory:data.productCategory,
-                price:data.price
+                price:data.price,
             })
 
         })
         .catch((error) => {
             console.error('Error:', error);
         });
+
+
+
+        
+        CategoryService.getCategories()
+        .then((response)=>{
+            return response.json()
+        })
+        .then((data)=>{
+
+            this.setState({
+            optionsCategory:data
+            })
+        })
+
+        MediaService.getAllMedia()
+        .then((response)=>response.json())
+        .then((data)=>{
+          this.setState({
+            mediaOptions:data
+          })
+        })
+  
 
 
     }
@@ -59,33 +97,31 @@ class EditProduct extends Component {
     
     }
 
+    handleSelectChange=(items)=>{
+        //console.log("selected",items)
+        let list= Array.isArray(items)? items.map(item=>{
+            
+            //console.log(item)
+            return(item.value)
+        }):[]
+
+
+        this.setState({
+            selectedCategories:list
+        })
+    }
+
     handleUpdate=()=>{
 
-        let id=this.props.match.params.id
+        //let id=this.props.match.params.id
         let type=this.props.match.params.type
-        var data={
-                "id":id,
-                "title":this.state.itemTitle,
-                "description":this.state.itemDescription,
-                "productCategory":this.state.productCategory,
-                "price":this.state.price
-        };
-        //http://localhost:8080/update/drink/1
-               
-        fetch(`http://localhost:8080/update/${type}/${id}` ,{
 
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-            body: JSON.stringify(data)
-        })
+        ProductsService.updateProduct(type,this.state)
         .then((response)=>{
             
         
             console.log(response)
-            })
+        })
         .catch((error) => {
             console.error('Error:', error);
             });
@@ -95,8 +131,17 @@ class EditProduct extends Component {
 
     render() { 
 
-        const {itemTitle,itemDescription,productCategory,price}=this.state;
+        const {itemTitle,itemDescription,selectedCategories,price}=this.state;
+        
+        const categoryOptions=this.state.optionsCategory.map((item)=>{
+            return({'label':item.name,'value':item})
+        })
 
+        const mediaList=this.state.mediaOptions.map((option)=>{
+            return({'label':<div>{option.name}  <img src={'data:image/png;base64,'+option.fileContent} width="30" /></div> ,value:option})
+          })
+  
+        
         return (   <div>
 
             <Form>
@@ -110,9 +155,17 @@ class EditProduct extends Component {
               <Input name="itemDescription" type="text"  onChange={this.handleInputChange} value={itemDescription}/></Label>
             </FormGroup>
             <FormGroup>
-              <Label>Category:
-              <Input name="productCategory" type="text"  onChange={this.handleInputChange} value={productCategory}/></Label>
+            <Label>Category: </Label>
+            <Select options={categoryOptions} value={categoryOptions.filter(obj=>selectedCategories.includes(obj.value))}  onChange={this.handleSelectChange} isMulti isClearable/>
             </FormGroup>
+
+            <FormGroup>
+            <Label>Media:
+              </Label>
+            <Select options={mediaList} value={this.state.selectedMedia}  onChange={(e)=>{this.setState({selectedMedia:e})}} isClearable/>
+            </FormGroup>
+
+
             <FormGroup>
               <Label>Price:
               <Input name="price" type="text"  onChange={this.handleInputChange} value={price}/></Label>

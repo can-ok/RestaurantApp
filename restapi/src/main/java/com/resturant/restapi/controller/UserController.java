@@ -1,10 +1,13 @@
 package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.Users;
+import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -16,19 +19,19 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/getAll")
-    public List<Users> getAllUsers(){
+    public List<UsersDto> getAllUsers(){
 
         return userService.getAllUser();
     }
 
     @PostMapping("/save")
-    public Users saveUser(@RequestBody Users users){
+    public UsersDto saveUser(@Valid @RequestBody UsersDto usersDto){
 
-        return userService.insertUser(users);
+        return userService.insertUser(usersDto);
     }
 
     @GetMapping("/get/{id}")
-    public Users getUser(@PathVariable Integer id){
+    public UsersDto getUser(@NotNull @PathVariable Integer id){
 
         return userService.getUser(id);
     }
@@ -38,10 +41,18 @@ public class UserController {
 
         return userService.deleteUser(id);
     }
-//    @PutMapping("/update/{id}")
-//    public Users updateUser(@PathVariable Integer id, @RequestBody Users users){
+    @PutMapping("/update/{id}")
+    public UsersDto updateUser(@PathVariable Integer id,@Valid @RequestBody UsersDto usersDto){
+
+        return userService.updateUser(id, usersDto);
+    }
+
+
+
+//    @GetMapping("/getAllAuth")
+//    public List<AUTHORITIES> getAllAuth(){
 //
-//        return userService.updateUser(id, users);
+//        return userService.getAllAuth();
 //    }
 
 

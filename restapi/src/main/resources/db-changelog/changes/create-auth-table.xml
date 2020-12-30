@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="5" author="can.okan">
+        <createTable tableName="AUTHORITIES">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="USERNAME" type="VARCHAR(255)"></column>
+            <column name="AUTHORITY" type="VARCHAR(255)"></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="can.ok">
+        <insert tableName="AUTHORITIES">
+            <column name="USERNAME" value="user1"></column>
+            <column name="AUTHORITY" value="ROLE_USER"></column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="7" author="can.ok">
+        <insert tableName="AUTHORITIES">
+            <column name="USERNAME" value="admin"></column>
+            <column name="AUTHORITY" value="ROLE_ADMIN"></column>
+        </insert>
+    </changeSet>
+
+
+
+</databaseChangeLog>

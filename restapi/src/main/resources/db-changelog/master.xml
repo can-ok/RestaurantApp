@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <include file="/db-changelog/changes/create-waiter-table.xml"></include>
+    <include file="/db-changelog/changes/create-orders-table.xml"/>
+    <include file="/db-changelog/changes/create-user-table.xml"/>
+    <include file="/db-changelog/changes/create-tables-table.xml"/>
+    <include file="/db-changelog/changes/create-productCategory-table.xml"/>
+    <include file="/db-changelog/changes/create-product-table.xml"/>
+    <include file="/db-changelog/changes/create-media-table.xml"/>
+    <include file="/db-changelog/changes/create-roles-table.xml"/>
+    <include file="/db-changelog/changes/create-user_roles-table.xml"/>
+    <include file="/db-changelog/changes/create-customer-table.xml"/>
+</databaseChangeLog>
