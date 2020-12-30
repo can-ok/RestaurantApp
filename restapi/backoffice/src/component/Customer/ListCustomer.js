@@ -90,6 +90,60 @@ const CustomerList = () => {
 
    };
 
+
+
+   let table=(items,showEditCustomer,handle_detele)=>{
+
+    if(items.length<1){
+      return null;
+    }
+
+    return(<table className="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>İsim</th>
+        <th>Soyisim</th>
+        <th>Sehir</th>
+        <th>Address</th>
+        <th>Telefon</th>
+        <th>Görsel</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {items.map((item) => {
+        return (
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.firstName}</td>
+            <td>{item.lastName} </td>
+            <td>{item.city} </td>
+            <td>{item.address} </td>
+            <td>{item.phoneNumber} </td>
+            <td><img src={'data:image/png;base64,'+item.media.fileContent} width="60" alt="waiter"/></td>
+            <td>
+              <button  
+                className="btn btn-warning"
+                onClick={() => showEditCustomer(item)}>
+                Edit
+              </button>
+            </td>
+            <td>
+              <Link
+                to={"/customer"}
+                className="btn btn-danger"
+                onClick={() => handle_detele(item.id)} >
+                Sil
+              </Link>
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+    </table>)
+   }
   return (
 
    <div>
@@ -113,51 +167,7 @@ const CustomerList = () => {
           </div>
         </div>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>İsim</th>
-              <th>Soyisim</th>
-              <th>Sehir</th>
-              <th>Address</th>
-              <th>Telefon</th>
-              <th>Görsel</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => {
-              return (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.firstName}</td>
-                  <td>{item.lastName} </td>
-                  <td>{item.city} </td>
-                  <td>{item.address} </td>
-                  <td>{item.phoneNumber} </td>
-                  <td><img src={'data:image/png;base64,'+item.media.fileContent} width="60" alt="waiter"/></td>
-                  <td>
-                    <button  
-                      className="btn btn-warning"
-                      onClick={() => showEditCustomer(item)}>
-                      Edit
-                    </button>
-                  </td>
-                  <td>
-                    <Link
-                      to={"/customer"}
-                      className="btn btn-danger"
-                      onClick={() => handle_detele(item.id)} >
-                      Sil
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+          {table(items,showEditCustomer,handle_detele)}
           
           <PaginationBar pageNumbers={pageNumbers} paginate={paginate} />
         </div> 

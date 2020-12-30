@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 
+import {ExportReactCSV} from "./ExportCSV";
 
 
 class Config extends Component {
-    state = { config:[] }
+    state = { config:[],
+              beans:[]  
+            }
 
 
     componentDidMount(){
@@ -29,6 +32,14 @@ class Config extends Component {
         })
 
 
+        fetch(`http://localhost:8080/info/beans`,requestOptions)
+        .then((response)=>response.json())
+        .then((data)=>{
+            
+            this.setState({beans:data})
+        })
+
+
     }
 
 
@@ -41,7 +52,7 @@ class Config extends Component {
 
                         <tr>
                         <td><strong>Message: </strong></td>
-                        <td>{items.message}</td>                        </tr>
+                        <td>{items.message}</td></tr>
 
                        <tr>
                        <td><strong>Jpa: </strong></td>
@@ -69,6 +80,10 @@ class Config extends Component {
         )
 
         return ( <div>
+             <div className="float-right mb-3">
+                <ExportReactCSV  items={this.state.beans} fileName={"my-file.csv"} />
+          
+                 </div>
 
                 <table className="table">
                     <thead>

@@ -5,7 +5,7 @@ import CustomerService from '../../api/CustomerService';
 import Select from 'react-select';
 import MediaService from '../../api/MediaService';
 import AppContext from "../../AppContext";
-
+import CustomerForm from './CustomerForm';
 
 const AddCustomer = ({setListComponent,setAddComponent}) => {
 
@@ -110,6 +110,8 @@ const AddCustomer = ({setListComponent,setAddComponent}) => {
             <button onClick={(e)=>mySubmitHandler(e)} className="btn btn-success">Submit</button>
             <button onClick={()=>{setListComponent(true); setAddComponent(false);}}  className="btn btn-danger ml-2">Cancel</button>
             </Form>
+
+            <CustomerForm options={options} meidaOptions={meidaOptions}/>
         </div>
         
      );

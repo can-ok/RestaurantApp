@@ -22,8 +22,8 @@
 
         </createTable>
 
-
     </changeSet>
+
     <changeSet author="can.okan" id="4">
         <insert tableName="Orders">
             <column name="id" valueNumeric="1"/>

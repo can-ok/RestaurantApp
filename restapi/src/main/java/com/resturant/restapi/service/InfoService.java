@@ -1,9 +1,14 @@
 package com.resturant.restapi.service;
 
+import liquibase.pro.packaged.S;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -39,6 +44,20 @@ public class InfoService {
         map.put("loggingType",logginType);
         map.put("dataSourceName",dataSource);
         return map;
+    }
+
+
+    @Autowired
+    ApplicationContext context;
+
+    public List<String> getBeans() {
+        List<String> stringList=new ArrayList<>();
+        String[] allBeans=context.getBeanDefinitionNames();
+
+        for(String bean:allBeans){
+           stringList.add(bean);
+        }
+        return stringList;
     }
 
 }
