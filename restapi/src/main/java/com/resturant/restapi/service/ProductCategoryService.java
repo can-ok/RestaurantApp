@@ -16,6 +16,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -36,19 +38,15 @@ public class ProductCategoryService {
     @Cacheable(cacheNames = "catagories")
     public Set<ProductCategoryDto> getAll(){
         Set<ProductCategoryDto> productCategoryDtoList=new HashSet<>();
-        productcategoryRepository.findAll().forEach(productCategory -> {
-            ProductCategoryDto productCategoryDto=productsCategoryMapper.toDto(productCategory);
-            productCategoryDtoList.add(productCategoryDto);
-        });
-       // productsCategoryMapper.toProductCategorySet()
+
+
+        productCategoryDtoList=productsCategoryMapper.toProductCategoryListDtoSet(productcategoryRepository.findAll());
         return productCategoryDtoList;
     }
 
     @CacheEvict(value="catagories" ,allEntries = true)
+    @Transactional(propagation = Propagation.REQUIRED)
     public ProductCategoryDto insertCatagory(ProductCategoryDto categoryDto){
-        if (categoryDto==null || categoryDto.getId()<1  || categoryDto.getCategorymedia().getId()<1){
-            throw new ContentNotAllowed("Category content not allowed");
-        }
 
         Optional<Media> media=mediaRepository.findById(categoryDto.getCategorymedia().getId());
         if(!media.isPresent()){
@@ -63,6 +61,7 @@ public class ProductCategoryService {
     }
 
     @CacheEvict(value="catagories",allEntries = true)
+    @Transactional(propagation = Propagation.REQUIRED)
     public String deleteUser(Integer id){
         Optional<ProductCategory> byId = productcategoryRepository.findById(id);
         if (!byId.isPresent())
@@ -77,11 +76,9 @@ public class ProductCategoryService {
 
     @CachePut(value = "CategoryCache",key = "'Category_CACHE_BY_ID_'.concat(#id)")
     @CacheEvict(value="catagories" ,allEntries = true)
+    @Transactional(propagation = Propagation.REQUIRED)
     public ProductCategoryDto updateCategory(Integer id,ProductCategoryDto category){
 
-        if(category==null || id<1){
-            throw new ContentNotAllowed("Content not allowed");
-        }
 
         Optional<ProductCategory> entity=productcategoryRepository.findById(id);
 
@@ -113,7 +110,6 @@ public class ProductCategoryService {
 
     @Cacheable(value = "CategoryCache",key = "'Category_CACHE_BY_ID_'.concat(#id)")
     public ProductCategoryDto getDrinkById(int id){
-        //id null check
         if(!productcategoryRepository.findById(id).isPresent())
         {
             throw new EntityNotFound("Category "+messageSourceExternalizer.getMessage("entity.error"));

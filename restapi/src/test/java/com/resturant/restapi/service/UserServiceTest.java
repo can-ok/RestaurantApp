@@ -3,12 +3,17 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.builder.RoleBuilder;
+import com.resturant.restapi.builder.RoleDtoBuilder;
 import com.resturant.restapi.builder.UserBuilder;
+import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.converter.UserDtoConverter;
 import com.resturant.restapi.converter.UserMapper;
+import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.dto.WaiterDto;
+import com.resturant.restapi.exception.AuthenticationNotAllowed;
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.RolesRepository;
 import com.resturant.restapi.repository.UsersRepository;
 import org.junit.Before;
@@ -43,6 +48,9 @@ public class UserServiceTest {
     @Mock
     RolesRepository rolesRepository;
 
+    @Mock
+    private MessageSourceExternalizer messageSourceExternalizer;
+
     @InjectMocks
     UserService userService;
 
@@ -53,19 +61,26 @@ public class UserServiceTest {
     private Users user;
 
     private Role role;
-
+    private RoleDto roleDto;
     private Set<Role> roles=new HashSet<>();
 
+    private Set<RoleDto> rolesDto=new HashSet<>();
     @Before
     public void setUpDto(){
 
         role=new RoleBuilder().id(1).name("user").build();
         roles.add(role);
+
+        roleDto=new RoleDtoBuilder().id(1).name("user").build();
+        rolesDto.add(roleDto);
+
         user=new UserBuilder().id(1).username("user").password("pass").roles(roles).build();
         usersList.add(user);
 
+
         usersDto=new UsersDto(1,"user","pass",true,null);
         usersDtoList.add(usersDto);
+        usersDto.setRoles(rolesDto);
 
         when(userMapper.toEntityWOROle(any())).thenReturn(user);
         when(userMapper.toDto(any())).thenReturn(usersDto);
@@ -107,7 +122,7 @@ public class UserServiceTest {
         assertEquals(usersResult.getUsername(),usersDto.getUsername());
     }
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shouldNotGetUser() {
         int id=1;
         when(usersRepository.findById(id)).thenReturn(Optional.empty());
@@ -116,14 +131,14 @@ public class UserServiceTest {
     }
 
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shoudNotdeleteUser() {
         Integer id=1;
         assertEquals(userService.deleteUser(id),"Success");
 
     }
 
-    @Test
+    @Test()
     public void shoudDeleteUser() {
         Integer id=1;
         when(usersRepository.findById(id)).thenReturn(Optional.of(user));
@@ -139,7 +154,7 @@ public class UserServiceTest {
 
     }
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shouldNotUpdateUser() {
         when(usersRepository.findById(any())).thenReturn(Optional.empty());
 
@@ -147,7 +162,7 @@ public class UserServiceTest {
 
     }
 
-    @Test
+    @Test()
     public void shouldRegister() {
         when(usersRepository.getUsersByUSERNAME(any())).thenReturn(Optional.of(UserDtoConverter.userDtoToUser(usersDto)));
 
@@ -156,7 +171,7 @@ public class UserServiceTest {
     }
 
 
-    @Test
+    @Test(expected = AuthenticationNotAllowed.class)
     public void shouldNotRegister() {
         when(usersRepository.getUserByNameANDPass(any(),any())).thenReturn(Optional.empty());
 

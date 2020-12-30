@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Matchers.any;
 @RunWith(MockitoJUnitRunner.class)
-public class UserAuthTest {
+public class UserRoleTest {
 
     @Mock
     private RoleMapper roleMapper;
@@ -63,6 +63,7 @@ public class UserAuthTest {
 
         when(roleMapper.toDtoList(any())).thenReturn(roleDtos);
 
+
     }
 
 
@@ -70,10 +71,17 @@ public class UserAuthTest {
     public void getAllRole() {
 
        when(rolesRepository.findAll()).thenReturn(RoleDtoConverter.roleDtoListToRoleList(roleDtos));
-       when(roleMapper.toDto(any())).thenReturn(roleDto);
        assertEquals(roleService.getAll().size(),roleDtos.size());
     }
 
+
+    @Test(expected = ContentNotAllowed.class)
+    public void shouldNotGetRole() {
+        int id=-1;
+        when(rolesRepository.findById(-1)).thenReturn(Optional.of(role));
+        roleService.getRole(-1).getId();
+
+    }
 
     @Test
     public void shouldGetRole() {

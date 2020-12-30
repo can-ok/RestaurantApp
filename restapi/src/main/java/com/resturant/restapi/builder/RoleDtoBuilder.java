@@ -1,35 +1,30 @@
 package com.resturant.restapi.builder;
 
 import com.resturant.restapi.Model.Role;
+import com.resturant.restapi.dto.RoleDto;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-public class RoleBuilder  extends Builder{
+public class RoleDtoBuilder extends Builder{
 
     private Integer id;
 
     private String name;
 
-
     @Override
-    public Role build() {
-        Role role=new Role();
+    public RoleDto build() {
+        RoleDto role=new RoleDto();
         role.setId(this.id);
         role.setName(name);
         return role;
     }
 
     @Override
-    public RoleBuilder id(int id) {
+    public RoleDtoBuilder id(int id) {
         this.id=id;
         return this;
     }
-
-    public RoleBuilder name(String name) {
+    public RoleDtoBuilder name(String name) {
         this.name=name;
         return this;
     }
-
 
 }

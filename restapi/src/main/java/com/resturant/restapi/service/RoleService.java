@@ -10,6 +10,8 @@ import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,23 +34,21 @@ public class RoleService {
     }
 
     public RoleDto getRole(int id){
-
         if(id<0){
             throw new ContentNotAllowed("Role id is not allowed");
         }
         return roleMapper.toDto(rolesRepository.findById(id).get());
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public RoleDto insert(RoleDto roleDto){
-        if(roleDto==null){
-            throw new ContentNotAllowed("Role"+messageSourceExternalizer.getMessage("content.error"));
-        }
+
         Role role=roleMapper.toEntity(roleDto);
         rolesRepository.save(role);
         return roleDto;
     }
 
-
+    @Transactional(propagation = Propagation.REQUIRED)
     public String delete(int id){
 
         Optional<Role> roleOptional=rolesRepository.findById(id);
@@ -61,11 +61,9 @@ public class RoleService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public String update(RoleDto roleDto,int id){
 
-        if(roleDto==null && id<0){
-            throw new ContentNotAllowed(messageSourceExternalizer.getMessage("content.error"));
-        }
 
         Optional<Role> roleOptinal=rolesRepository.findById(id);
         if(!roleOptinal.isPresent()){

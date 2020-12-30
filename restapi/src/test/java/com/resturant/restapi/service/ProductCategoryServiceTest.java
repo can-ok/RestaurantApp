@@ -46,7 +46,7 @@ public class ProductCategoryServiceTest {
     private ProductCategoryService productCategoryService;
 
     private List<ProductCategory> listCategory=new ArrayList<>( );
-    private Set<ProductCategory> setCategory=new HashSet<>( );
+    private Set<ProductCategoryDto> setCategory=new HashSet<>( );
     private ProductCategory productCategory;
     private ProductCategoryDto productCategoryDto;
 
@@ -55,16 +55,16 @@ public class ProductCategoryServiceTest {
     @Before
     public void setUp() throws Exception {
         productCategory=new ProductCategoryBuilder().id(1).name("deneme").description("x").build();
-        setCategory.add(productCategory);
         listCategory.add(productCategory);
         productCategoryDto=new ProductCategoryDtoBuilder().id(1).name("deneme").description("x").build();
+        setCategory.add(productCategoryDto);
 
         byte[] fileBytes = "deneme".getBytes();
         media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
 
         when(productsCategoryMapper.toDto(productCategory)).thenReturn(productCategoryDto);
         when(productsCategoryMapper.toEntity(productCategoryDto)).thenReturn(productCategory);
-
+        when(productsCategoryMapper.toProductCategoryListDtoSet(listCategory)).thenReturn(setCategory);
     }
 
     @Test
@@ -84,14 +84,14 @@ public class ProductCategoryServiceTest {
 
     }
 
-    @Test(expected = ContentNotAllowed.class)
-    public void shouldNotInsertCatagoryWhenContentNotAllowed() {
-        int id=1;
-        when(mediaRepository.findById(id)).thenReturn(Optional.of(media));
-
-        assertEquals(productCategoryService.insertCatagory(null).getId(),productCategoryDto.getId());
-
-    }
+//    @Test(expected = ContentNotAllowed.class)
+//    public void shouldNotInsertCatagoryWhenContentNotAllowed() {
+//        int id=1;
+//        when(mediaRepository.findById(id)).thenReturn(Optional.of(media));
+//
+//        assertEquals(productCategoryService.insertCatagory(null).getId(),productCategoryDto.getId());
+//
+//    }
 
     @Test(expected = EntityNotFound.class)
     public void shouldNotInsertCatagoryWhenEntityNotFound() {

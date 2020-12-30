@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,28 +41,28 @@ public class ProductsController {
 
 
     @PostMapping(path ="/add/drink")
-    public String addDrink(@RequestBody ProductDto productDTO){
+    public String addDrink(@Valid @RequestBody ProductDto productDTO){
 
 
         return productsService.insertDrink(productDTO);
     }
 
     @GetMapping(path = "/drink/{id}")
-    public ProductDto retriveProduct(@PathVariable Integer id){
+    public ProductDto retriveProduct(@NotNull @PathVariable Integer id){
 
         return productsService.getDrinkById(id);
     }
 
 
     @DeleteMapping(path = "/delete/drink/{id}")
-    public String deleteDrink(@PathVariable Integer id){
+    public String deleteDrink(@NotNull @PathVariable Integer id){
 
         return productsService.deleteDrink(id);
     }
 
 
     @PutMapping(path = "/update/drink/")
-    public ProductDto updateDrink(@RequestBody ProductDto productDto){
+    public ProductDto updateDrink(@Valid @RequestBody ProductDto productDto){
 
         return productsService.updateDrink(productDto);
     }

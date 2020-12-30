@@ -87,6 +87,19 @@ class ProductsServiceTest {
 
 
     @Test
+    void shouldgetAllProducts() {
+
+        Slice<Product> products=new SliceImpl<>(productList);
+        when(productRepository.findAllProd(pages)).thenReturn(products);
+        Slice<ProductDto> result = productsService.getAllDrinks(0, 5);
+
+        assertNotNull(result);
+        //assertEquals(productList.size(),result.getTotalElements());
+
+    }
+
+
+    @Test
     void shouldgetAllDrinks() {
 
         Page<Product> products=new PageImpl<>(productList);

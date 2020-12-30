@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
@@ -22,7 +23,7 @@ public class MediaController {
     }
 
     @PostMapping("/add")
-    public String addAllMedia(@RequestParam("file") MultipartFile file, @RequestParam String imageName)
+    public String addAllMedia(@NotNull @RequestParam("file") MultipartFile file,@NotNull @RequestParam String imageName)
     {
        return mediaService.saveFile(file,imageName);
     }

@@ -1,8 +1,10 @@
 package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Media;
+import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.builder.MediaDtoBuilder;
+import com.resturant.restapi.builder.OrdersBuilder;
 import com.resturant.restapi.config.MessageSourceExternalizer;
 import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.converter.TableDtoConverter;
@@ -24,6 +26,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.mockito.Mockito.doThrow;
@@ -37,9 +40,11 @@ public class TableServiceTest {
 
     @Mock
     private TableRepository tableRepository;
+    @Mock
+    private OrdersRepository ordersRepository;
 
     @Mock
-    TableMapper tableMapper;
+    private TableMapper tableMapper;
 
     @InjectMocks
     private TableService tableService;
@@ -56,6 +61,7 @@ public class TableServiceTest {
     private List<TablesDto> tablesDtoList =new ArrayList<>();
 
     private Media media;
+
 
     @Before
     public void setUp(){
@@ -81,6 +87,17 @@ public class TableServiceTest {
         tablesDto.setTableCount(10);
         tables.setMedia(media);
         tablesDto.setMedia(media);
+
+    }
+
+
+    private List<Orders> orderList=new ArrayList<>();
+    @Before
+    public void setUpOrder(){
+        Orders orders=new OrdersBuilder().id(1).paymentType("cash").orderTable("Masa 1").productCount(5)
+                .totalPrice(100).productId(1).waiterId("1").build();
+
+        orderList.add(orders);
 
     }
 
@@ -116,7 +133,7 @@ public class TableServiceTest {
     }
 
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shoudNotGetTablebyId() {
         int id=1;
         when(tableRepository.findById(1)).thenReturn(Optional.empty());
@@ -159,7 +176,8 @@ public class TableServiceTest {
 
     @Test
     public void shouldGetReservedTable(){
-
+        when(ordersRepository.findAll()).thenReturn(orderList);
+        assertEquals(tableService.getResvervedTable().size(),1);
     }
 
 }

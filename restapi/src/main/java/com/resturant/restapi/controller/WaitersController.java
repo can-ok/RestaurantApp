@@ -6,6 +6,8 @@ import com.resturant.restapi.service.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -24,19 +26,18 @@ public class WaitersController {
     }
 
     @PostMapping(path ="/save")
-    public WaiterDto saveWaiter(@RequestBody WaiterDto waiterDto){
+    public WaiterDto saveWaiter(@Valid @RequestBody WaiterDto waiterDto){
 
         return waiterService.insert(waiterDto);
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    public String deleteWaiter(@PathVariable Integer id){
-
+    public String deleteWaiter(@NotNull @PathVariable Integer id){
         return waiterService.delete(id);
     }
 
     @PutMapping(path = "/update/{id}")
-    public WaiterDto updateWaiter(@PathVariable int id,@RequestBody WaiterDto waiterDto){
+    public WaiterDto updateWaiter(@NotNull @PathVariable int id,@Valid @RequestBody WaiterDto waiterDto){
 
         return waiterService.updateWaiter(id,waiterDto);
     }

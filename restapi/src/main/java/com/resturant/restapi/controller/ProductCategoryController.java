@@ -8,6 +8,9 @@ import com.resturant.restapi.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -27,25 +30,25 @@ public class ProductCategoryController {
     }
 
     @PostMapping("/save")
-    public ProductCategoryDto saveCategory(@RequestBody ProductCategoryDto productcategory){
+    public ProductCategoryDto saveCategory(@Valid @RequestBody ProductCategoryDto productcategory){
 
         return categoryService.insertCatagory(productcategory);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable int id){
+    public String deleteCategory(@NotNull @PathVariable int id){
 
         return categoryService.deleteUser(id);
     }
 
     @PutMapping("/update/{id}")
-    public ProductCategoryDto updateCategory(@PathVariable int id,@RequestBody ProductCategoryDto category)
+    public ProductCategoryDto updateCategory(@NotNull @PathVariable int id, @Valid @RequestBody ProductCategoryDto category)
     {
         return categoryService.updateCategory(id,category);
     }
 
     @GetMapping(path = "/get/{id}")
-    public ProductCategoryDto retriveDrink(@PathVariable Integer id){
+    public ProductCategoryDto retriveDrink(@NotNull @PathVariable Integer id){
 
         return categoryService.getDrinkById(id);
     }

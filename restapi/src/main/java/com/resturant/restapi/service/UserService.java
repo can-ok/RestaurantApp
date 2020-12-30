@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -40,10 +42,8 @@ public class UserService {
     @Autowired
     private MessageSourceExternalizer messageSourceExternalizer;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public UsersDto insertUser(UsersDto usersDto){
-        if(usersDto==null && usersDto.getId()<1){
-            throw new ContentNotAllowed("User"+ messageSourceExternalizer.getMessage("content.error"));
-        }
 
 
         Users users=userMapper.toEntityWOROle(usersDto);
@@ -60,13 +60,6 @@ public class UserService {
 
     public List<UsersDto> getAllUser(){
 
-//        List<UsersDto> usersDtoList=new ArrayList<>();
-//
-//        userRepository.findAll().forEach(entity->{
-//            UsersDto usersDto=userMapper.toDto(entity);
-//            usersDtoList.add(usersDto);
-//        });
-
         return userMapper.toDtoList(userRepository.findAll());
     }
 
@@ -76,15 +69,16 @@ public class UserService {
         if(!userEntity.isPresent()){
             throw new  EntityNotFound("User "+messageSourceExternalizer.getMessage("entity.error"));
         }
-        else{
 
-            UsersDto usersDto=userMapper.toDto(userEntity.get());
-            return usersDto;
-        }
+
+        UsersDto usersDto=userMapper.toDto(userEntity.get());
+        return usersDto;
+
 
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public String deleteUser(Integer id){
         Optional<Users> byId = userRepository.findById(id);
         if(!byId.isPresent()){
@@ -95,12 +89,13 @@ public class UserService {
     }
 
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public UsersDto updateUser(Integer id, UsersDto usersDto){
         Optional<Users> entity = userRepository.findById(id);
 
         if (!entity.isPresent()) {
 
-            throw new ContentNotAllowed(messageSourceExternalizer.getMessage("content.error"));
+            throw new EntityNotFound(messageSourceExternalizer.getMessage("entity.error"));
         }
         else{
 

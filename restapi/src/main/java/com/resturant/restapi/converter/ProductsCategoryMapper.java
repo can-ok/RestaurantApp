@@ -25,5 +25,7 @@ public interface ProductsCategoryMapper {
 
     Set<ProductCategoryDto> toProductCategoryDtoSet(Set<ProductCategory> productCategories);
 
+    Set<ProductCategoryDto> toProductCategoryListDtoSet(List<ProductCategory> productCategories);
+
     List<ProductCategory> toProductCategorySet(Set<ProductCategoryDto> productCategories);
 }

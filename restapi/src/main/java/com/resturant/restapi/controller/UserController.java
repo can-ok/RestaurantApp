@@ -6,6 +6,8 @@ import com.resturant.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
@@ -23,13 +25,13 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public UsersDto saveUser(@RequestBody UsersDto usersDto){
+    public UsersDto saveUser(@Valid @RequestBody UsersDto usersDto){
 
         return userService.insertUser(usersDto);
     }
 
     @GetMapping("/get/{id}")
-    public UsersDto getUser(@PathVariable Integer id){
+    public UsersDto getUser(@NotNull @PathVariable Integer id){
 
         return userService.getUser(id);
     }
@@ -40,7 +42,7 @@ public class UserController {
         return userService.deleteUser(id);
     }
     @PutMapping("/update/{id}")
-    public UsersDto updateUser(@PathVariable Integer id, @RequestBody UsersDto usersDto){
+    public UsersDto updateUser(@PathVariable Integer id,@Valid @RequestBody UsersDto usersDto){
 
         return userService.updateUser(id, usersDto);
     }

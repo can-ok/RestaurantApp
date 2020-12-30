@@ -8,6 +8,8 @@ import com.resturant.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
@@ -27,19 +29,19 @@ public class RoleController {
     }
 
     @PostMapping()
-    public RoleDto save(@RequestBody RoleDto role){
+    public RoleDto save(@Valid @RequestBody RoleDto role){
 
         return roleService.insert(role);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable int id){
+    public String delete(@NotNull @PathVariable int id){
 
         return roleService.delete(id);
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody RoleDto roleDto,@PathVariable int id){
+    public String update(@Valid @RequestBody RoleDto roleDto,@PathVariable int id){
         return roleService.update(roleDto,id);
     }
 

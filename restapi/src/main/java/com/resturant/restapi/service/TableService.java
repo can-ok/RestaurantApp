@@ -15,6 +15,8 @@ import com.resturant.restapi.repository.TableRepository;
 import javafx.scene.control.Tab;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -65,11 +67,9 @@ public class TableService {
         return reservedListd;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public TablesDto insertTable(TablesDto tablesDto){
 
-        if(tablesDto==null){
-            throw new ContentNotAllowed("Table"+messageSourceExternalizer.getMessage("entity.error"));
-        }
 
         //Media media=mediaRepository.findById(tablesDto.getMedia().getId()).get();
         Tables tables=tableMapper.toEntity(tablesDto);
@@ -84,15 +84,17 @@ public class TableService {
 
         Optional<Tables> tableEntity=tableRepository.findById(id);
 
-        if(tableEntity.isPresent()){
+        if(!tableEntity.isPresent()){
 
-           TablesDto tablesDto=tableMapper.toDto(tableEntity.get());
-            return tablesDto;
+          throw new EntityNotFound("Entity not found");
         }
 
-        return null;
+        TablesDto tablesDto=tableMapper.toDto(tableEntity.get());
+        return tablesDto;
+
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public TablesDto updateTable(TablesDto tablesDto,int id){
 
         Optional<Tables> tableEntity=tableRepository.findById(id);
@@ -122,6 +124,7 @@ public class TableService {
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public String deleteTable(Integer id){
         Optional<Tables> byId = tableRepository.findById(id);
         if(!byId.isPresent()){

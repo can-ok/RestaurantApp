@@ -4,9 +4,11 @@ import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Waiter;
 import com.resturant.restapi.builder.MediaDtoBuilder;
 import com.resturant.restapi.builder.WaiterBuilder;
+import com.resturant.restapi.builder.WaiterDtoBuilder;
 import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.converter.WaiterMapper;
 import com.resturant.restapi.dto.WaiterDto;
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.WaiterRepository;
 import org.junit.Before;
@@ -49,7 +51,7 @@ public class WaiterServiceTest {
     private List<WaiterDto> waiterDtoList=new ArrayList<>();
     private List<Waiter> waiterList=new ArrayList<>();
 
-    private WaiterDto waiterDto=new WaiterDto();
+    private WaiterDto waiterDto;
     private Waiter waiter;
     private Media media;
 
@@ -60,13 +62,13 @@ public class WaiterServiceTest {
         media= MediaDtoConverter.mediaDtoToMedia(new MediaDtoBuilder().fileContent(fileBytes).id(1).name("deneme").build());
 
         waiter=new WaiterBuilder().firstname("deneme").id(1).lastname("deneme").media(media).build();
+        waiterDto=new WaiterDtoBuilder().firstname("deneme").id(1).lastname("deneme").media(media).build();
 
         when(waiterMapper.toDto(any())).thenReturn(waiterDto);
         when(waiterMapper.toWaiter(any())).thenReturn(waiter);
         when(waiterMapper.waiterDtoList(any())).thenReturn(waiterDtoList);
         when(waiterMapper.waiterList(any())).thenReturn(waiterList);
 
-        waiterDto= waiterMapper.toDto(waiter);
     }
 
     @Before
@@ -83,13 +85,7 @@ public class WaiterServiceTest {
         assertEquals(waiterService.getAllWaiters().size(),waiterDtoList.size());
     }
 
-    @Test
-    public void shoudlNotInsert() {
 
-        WaiterDto waiterDto=waiterService.insert(null);
-        assertNull(waiterDto);
-
-    }
 
     @Test
     public void shouldInsert() {
@@ -130,7 +126,7 @@ public class WaiterServiceTest {
         assertEquals(waiterDto,waiterService.updateWaiter(id,waiterDto));
     }
 
-    @Test
+    @Test(expected = EntityNotFound.class)
     public void shouldNotUpdateWaiter() {
         int id=1;
         when(waiterRepository.findById(id)).thenReturn(Optional.empty());

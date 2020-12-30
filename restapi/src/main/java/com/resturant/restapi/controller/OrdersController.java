@@ -8,6 +8,7 @@ import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
@@ -25,13 +26,13 @@ public class OrdersController {
     }
 
     @PostMapping("/saveOrder")
-    public OrdersDto saveOrder(@RequestBody OrdersDto ordersDto){
+    public OrdersDto saveOrder(@Valid @RequestBody OrdersDto ordersDto){
 
         return ordersService.saveOrder(ordersDto);
     }
 
     @PostMapping("/saveOrders")
-    public List<OrdersDto> saveOrders(@RequestBody List<OrdersDto> ordersDto){
+    public List<OrdersDto> saveOrders(@Valid @RequestBody List<OrdersDto> ordersDto){
 
         System.out.println(ordersDto);
 

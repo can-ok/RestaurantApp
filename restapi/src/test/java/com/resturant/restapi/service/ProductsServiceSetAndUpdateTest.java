@@ -82,7 +82,6 @@ public class ProductsServiceSetAndUpdateTest {
         productDto= ProductDtoConverter.convertDrinktoDrinkDto(product);
         productCategory=new ProductCategoryBuilder().id(1).description("deneme").name("deneme").build();
 
-        when(productMapper.toDto(any())).thenReturn(productDto);
         when(productMapper.toEntity(any())).thenReturn(product);
 
 
@@ -94,7 +93,6 @@ public class ProductsServiceSetAndUpdateTest {
     public void shouldNotInsertFood() {
         // ın that scenario we assume that catagory doesnt exit so it goes fail
 
-        Mockito.when(productRepository.save(any())).thenReturn(product);
         String response=productsService.insertDrink(productDto);
 
 
@@ -136,9 +134,8 @@ public class ProductsServiceSetAndUpdateTest {
     @Test(expected = EntityNotFound.class)
     public void  shouldNotUpdateDrink(){
         int id=1;
-        Mockito.when(productRepository.findById(id)).thenReturn(Optional.empty());
+        when(productRepository.findById(id)).thenReturn(Optional.empty());
 
-        when(productRepository.save(any())).thenReturn(product);
 
         ProductDto dto=productsService.updateDrink(productDto);
 

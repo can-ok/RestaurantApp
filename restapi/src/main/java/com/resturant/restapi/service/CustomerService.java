@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -37,7 +39,6 @@ public class CustomerService {
 
 
     public Page<CustomerDto> getAllCustomers(int pageCount,int pageSize){
-
         Pageable pages= PageRequest.of(pageCount,pageSize);
         Page<CustomerDto> customers=customerRepository.findAll(pages).map(customerMapper::toDto);
 
@@ -45,17 +46,14 @@ public class CustomerService {
     }
 
     public Page<CustomerDto> getCustomerByPhoneNumber(int pageCount,int pageSize,CustomerDto customerDto){
-
         Pageable pages= PageRequest.of(pageCount,pageSize);
         Page<CustomerDto> customers=customerRepository.findAllByPhoneNumber(pages,customerDto.getPhoneNumber()).map(customerMapper::toDto);
 
         return customers;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public String insertCustomer(CustomerDto customerDto){
-        if(customerDto==null || customerDto.getId()<1) {
-           throw new ContentNotAllowed(messageSourceExternalizer.getMessage("content.error"));
-        }
 
         Optional<Media> byId = mediaRepository.findById(customerDto.getMedia().getId());
         if(!byId.isPresent()){
@@ -68,6 +66,7 @@ public class CustomerService {
         return "Success";
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public String deleteCustomer(Integer id){
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if(!customerOptional.isPresent()){
@@ -78,11 +77,10 @@ public class CustomerService {
         return "Success";
     }
 
+
+    @Transactional(propagation = Propagation.REQUIRED)
     public CustomerDto updateCustomer(CustomerDto customerDto){
 
-        if(customerDto==null || customerDto.getId()==null){
-            throw new ContentNotAllowed(messageSourceExternalizer.getMessage("acontent.error"));
-        }
 
         Optional<Customer> optionalCustomer = customerRepository.findById(customerDto.getId());
         if(!optionalCustomer.isPresent()){

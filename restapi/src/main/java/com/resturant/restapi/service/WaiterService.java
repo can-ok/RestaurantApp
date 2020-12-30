@@ -4,10 +4,13 @@ import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Waiter;
 import com.resturant.restapi.converter.WaiterMapper;
 import com.resturant.restapi.dto.WaiterDto;
+import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.WaiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,33 +31,35 @@ public class WaiterService {
 
     public List<WaiterDto> getAllWaiters(){
 
-        List<WaiterDto> waiterDtoList=new ArrayList<>();
-        waiterRepository.findAll().forEach(waiter ->{
+//        List<WaiterDto> waiterDtoList=new ArrayList<>();
+//        waiterRepository.findAll().forEach(waiter ->{
+//
+//            WaiterDto waiterDto=waiterMapper.toDto(waiter);
+//
+//            waiterDtoList.add(waiterDto);
+//        } );
 
-            WaiterDto waiterDto=waiterMapper.toDto(waiter);
-
-            waiterDtoList.add(waiterDto);
-        } );
+        List<WaiterDto> waiterDtoList=waiterMapper.waiterDtoList(waiterRepository.findAll());
 
         return waiterDtoList;
     }
 
-
+    @Transactional(propagation = Propagation.REQUIRED)
     public WaiterDto insert(WaiterDto waiterDto){
-        if(waiterDto!=null){
 
-            Media media=mediaRepository.findById(waiterDto.getMedia().getId()).get();
-            Waiter waiter= waiterMapper.toWaiter(waiterDto);
+        Waiter waiter= waiterMapper.toWaiter(waiterDto);
+        Optional<Media> byId = mediaRepository.findById(waiterDto.getMedia().getId());
+        if(!byId.isPresent()){
+            throw new EntityNotFound("Media Not Found");
+        }
+        waiter.setMedia(byId.get());
+        waiterRepository.save(waiter);
+        return waiterDto;
 
-            waiter.setMedia(media);
-            waiterRepository.save(waiter);
-            return waiterDto;
-        }
-        else{
-            return null;
-        }
+
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public String delete(Integer id){
 
         Optional<Waiter> waiterOptional=waiterRepository.findById(id);
@@ -66,13 +71,13 @@ public class WaiterService {
         return "Fail";
     }
 
-
+    @Transactional(propagation = Propagation.REQUIRED)
     public WaiterDto updateWaiter(Integer id,WaiterDto waiterDto){
         Optional<Waiter> waiterOptional=waiterRepository.findById(id);
 
         if(!waiterOptional.isPresent()){
-            System.out.println("Sonuç bulnamadı");
-            return null;
+            throw new EntityNotFound("Waiter Not Found");
+
         }
         else {
             Media media=mediaRepository.findById(waiterDto.getMedia().getId()).get();

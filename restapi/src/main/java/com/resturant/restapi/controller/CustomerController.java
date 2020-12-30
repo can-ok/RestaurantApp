@@ -15,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.InputStream;
 
 
@@ -35,25 +38,25 @@ public class CustomerController {
     }
 
     @PostMapping
-    public String saveCustomer(@RequestBody CustomerDto customerDto){
+    public String saveCustomer(@Valid @RequestBody CustomerDto customerDto){
 
         return customerService.insertCustomer(customerDto);
     }
 
     @PutMapping
-    public CustomerDto updateCustomer(@RequestBody CustomerDto customerDto){
+    public CustomerDto updateCustomer(@Valid @RequestBody CustomerDto customerDto){
 
         return customerService.updateCustomer(customerDto);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteCustomer(@PathVariable Integer id){
+    public String deleteCustomer(@NotNull @PathVariable  Integer id){
         return customerService.deleteCustomer(id);
     }
 
     @PostMapping( path = "/byNumber")
     public Page<CustomerDto> getCustomersbyNumber(@RequestParam(value = "page") int page, @RequestParam(value = "size") int size,
-                                                  @RequestBody CustomerDto customerDto)
+                                                  @Valid @RequestBody CustomerDto customerDto)
     {
         return customerService.getCustomerByPhoneNumber(page,size,customerDto);
     }
