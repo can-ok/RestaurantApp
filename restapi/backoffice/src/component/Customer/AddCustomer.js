@@ -111,7 +111,6 @@ const AddCustomer = ({setListComponent,setAddComponent}) => {
             <button onClick={()=>{setListComponent(true); setAddComponent(false);}}  className="btn btn-danger ml-2">Cancel</button>
             </Form>
 
-            <CustomerForm options={options} meidaOptions={meidaOptions}/>
         </div>
         
      );

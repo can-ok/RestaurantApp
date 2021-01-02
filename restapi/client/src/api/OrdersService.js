@@ -11,8 +11,7 @@ class OrdersService{
         myHeaders.append("Content-Type", "application/json");
 
         //http://localhost:8080/orders/saveOrder
-        let response=fetch("http://localhost:8080/orders/saveOrders",{
-
+        let response=fetch("http://localhost:8080/orders/saveOrder",{
 
             method:'POST',
             headers:myHeaders,

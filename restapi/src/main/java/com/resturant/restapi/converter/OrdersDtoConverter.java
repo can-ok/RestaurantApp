@@ -18,9 +18,7 @@ public class OrdersDtoConverter {
         orders.setOrderTable(ordersDto.getOrderTable());
         orders.setOrderDate(ordersDto.getOrderDate());
         orders.setPaymentType(ordersDto.getPaymentType());
-        orders.setProductCount(ordersDto.getProductCount());
         orders.setTotalPrice(ordersDto.getTotalPrice());
-        orders.setProductId(ordersDto.getProductId());
         orders.setWaiterId(ordersDto.getWaiterId());
         return orders;
     }
@@ -45,8 +43,7 @@ public class OrdersDtoConverter {
         ordersDto.setOrderDate(orders.getOrderDate());
         ordersDto.setOrderTable(orders.getOrderTable());
         ordersDto.setPaymentType(orders.getPaymentType());
-        ordersDto.setProductCount(orders.getProductCount());
-        ordersDto.setProductId(orders.getProductId());
+
         ordersDto.setTotalPrice(orders.getTotalPrice());
         ordersDto.setWaiterId(orders.getWaiterId());
 

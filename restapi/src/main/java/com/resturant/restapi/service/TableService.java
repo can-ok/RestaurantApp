@@ -47,25 +47,25 @@ public class TableService {
 
 
 
-    public List<Map<String,String>> getResvervedTable(){
-
-        List<Map<String,String>> reservedListd=new ArrayList<>();
-
-
-        List<Orders> orders=ordersRepository.findAll();
-
-
-        orders.stream().forEach(order->{
-            Map<String,String> tablesOrder=new HashMap<>();
-            tablesOrder.put("Table",order.getOrderTable());
-            tablesOrder.put("Count",order.getProductCount().toString());
-            reservedListd.add(tablesOrder);
-
-        });
-
-
-        return reservedListd;
-    }
+//    public List<Map<String,String>> getResvervedTable(){
+//
+//        List<Map<String,String>> reservedListd=new ArrayList<>();
+//
+//
+//        List<Orders> orders=ordersRepository.findAll();
+//
+//
+//        orders.stream().forEach(order->{
+//            Map<String,String> tablesOrder=new HashMap<>();
+//            tablesOrder.put("Table",order.getOrderTable());
+//            tablesOrder.put("Count",order.getProductCount().toString());
+//            reservedListd.add(tablesOrder);
+//
+//        });
+//
+//
+//        return reservedListd;
+//    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public TablesDto insertTable(TablesDto tablesDto){

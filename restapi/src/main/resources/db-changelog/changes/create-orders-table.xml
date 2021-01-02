@@ -12,14 +12,18 @@
                 <constraints primaryKey="true"/>
             </column>
 
-            <column name="productId" type="int(5)"/>
-            <column name="productCount" type="int(5)"/>
+<!--            <column name="productId" type="int(5)"/>-->
+<!--            <column name="productCount" type="int(5)"/>-->
             <column name="totalPrice" type="int(6)"/>
             <column name="orderDate"  defaultValueComputed="CURRENT_TIMESTAMP" type="TIMESTAMP"/>
             <column name="paymentType" type="VARCHAR(255)"></column>
             <column name="orderTable" type="VARCHAR(255)"></column>
-            <column name="waiterId" type="VARCHAR(255)"></column>
-
+            <column name="waiterId" type="int(10)">
+                <constraints foreignKeyName="fk_customer_waiter" referencedColumnNames="WAITER_TABLE(id)"></constraints>
+            </column>
+            <column name="customerId" type="int(10)">
+                <constraints foreignKeyName="fk_customer_order" referencedColumnNames="Customer(id)"></constraints>
+            </column>
         </createTable>
 
     </changeSet>
@@ -27,13 +31,13 @@
     <changeSet author="can.okan" id="4">
         <insert tableName="Orders">
             <column name="id" valueNumeric="1"/>
-            <column name="productId" valueNumeric="1"/>
-            <column name="productCount" valueNumeric="1"/>
+
             <column name="totalPrice" valueNumeric="25"/>
             <column name="orderDate" valueDate="now()"/>
             <column name="paymentType" value="cash"/>
             <column name="orderTable" value="1"/>
-            <column name="waiterId" value="1"/>
+            <column name="waiterId" valueNumeric="1"/>
+            <column name="customerId" valueNumeric="1"/>
         </insert>
 
     </changeSet>
@@ -44,11 +48,7 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="25" author="can.ok">
-        <addColumn tableName="Orders">
-            <column name="customerId" type="VARCHAR(255)"></column>
-        </addColumn>
-    </changeSet>
+
 
 
 </databaseChangeLog>

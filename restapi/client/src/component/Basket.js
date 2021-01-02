@@ -7,12 +7,18 @@ import OrdersService from '../api/OrdersService';
 
 import AppContext from '../AppContext';
 
+import Modal from './Modal';
 
 export default class Basket extends Component {
     constructor(props){
         super(props);
         this.state = {
             cartItems:props.cartItems,
+            paymentType:'',
+            showModal:false,
+            paymentStatus:null,
+            totalPrice:null,
+            customerName:''
         };
       }
 
@@ -31,18 +37,12 @@ export default class Basket extends Component {
         }
       }
 
-      this.setState({
-          cartItems
-      })
-
+      this.setState({ cartItems})
 
     }
 
 
-
-
     handleBaskesStateDecremet=(event,item,cartItems)=>{
-
         for (let i in cartItems) {  
            if ((cartItems[i].id == item.id) && (cartItems[i].productcategory.name == item.productcategory.name )) {
                if(cartItems[i].count<=1)
@@ -62,10 +62,9 @@ export default class Basket extends Component {
          }
    
          this.setState({
-             cartItems
-         })
+             cartItems})
    
-   
+
     }
 
 
@@ -80,10 +79,7 @@ export default class Basket extends Component {
         let item=localStorage.getItem(tableContext)
         item=JSON.parse(item)
         let basketItem;
-        //console.log(item.table)
-        
-        //if contains table already
-
+     
         if(item===null){
             basketItem={
                 'table':tableContext,
@@ -102,80 +98,114 @@ export default class Basket extends Component {
                
             }
            
-
             localStorage.setItem(tableContext,JSON.stringify(basketItem))
-
         }
         
 
       
     }
 
+    selectPaymentType=(item)=>{
+        let type=item.value
+        this.setState({paymentType:type})
+
+        if(type=='Nakit'){
+            this.setState({paymentStatus:true})
+        }
+        if(type=='Kredi Kartı'){
+            this.setState({paymentStatus:false})
+        }
+        
+    }
+    orderWithCash=(name,charge)=>{
+        console.log(name,charge)
+        this.setState({customerName:name})
+        this.sendOrder()
+    }
+
+
+    orderWithCard=(cardNumber,charge)=>{
+        console.log(cardNumber,charge)
+        this.setState({cardNumber:cardNumber})
+        this.sendOrder()
+    }
     
-    handleClick=(event,price,items)=>{
+    handleClick=(price)=>{
+        this.setState({totalPrice:price})
+        this.setState({showModal:true})
+
+    
+    }
+
+    sendOrder=()=>{
         var data=[]
-
-
         let appContext=this.context;
         let token=appContext.appState.token? appContext.appState.token:localStorage.getItem('token')
-
         let tableContext=appContext.appState.table
         let waiterContext=appContext.appState.waiter
         let customerContext=appContext.appState.customer
+        OrdersService.token=token;
+
         console.log("customer "+customerContext)
+               
+        console.log(this.props.cartItems)
+        let items=this.props.cartItems
 
         items.forEach(item => {
             //delete item
-            this.props.handleRemoveFromCart(event,item)
+            this.props.handleRemoveFromCart(item)
 
             var jsonData={
                 "productId":item.id,
                 "productCount":item.count,
-                "totalPrice":price,
-                "paymentType":"cash",
-                "orderTable":tableContext,
-                "waiterId":waiterContext,
-                "customerId":customerContext
+                "productPrice":item.price,
+                "orderId":null
             }
             
             data.push(jsonData);
-        });
-
-       
+        });  
 
         
-        OrdersService.token=token;
+
+        let order={
+            "paymentType":this.state.paymentType,
+            "orderTable":tableContext,
+            "waiterId":null,
+            "customerId":null,
+            "totalPrice":this.state.totalPrice,
+            "orderItems":null
+        }
+
+        let model={
+            "orderItemsDtoList":data,
+            "ordersDto":order,
+            "waiterId":waiterContext.id,
+            "customerId":customerContext
+        }
         
-        OrdersService.saveOrders(data)
+        console.log(model)
+
+       OrdersService.saveOrders(model)
         .then((response)=>{
 
             console.log(response)
+
+            this.setState({showModal:false})
+
            
             alert("Sipariş verildi")
             
              //clean context
             let appState={...this.context.appState}
             appState.table=null
+            appState.waiter=null
             this.context.setAppState(appState)
-                
             localStorage.removeItem(tableContext)
         })
         
         .catch((err)=>{
             console.error(err)
-        })
-
-       
-
-       
-
-        
-
-        //localStorage.removeItem('table')
-
-        //this.props.history.push("/menu")
-
-       // window.location='/menu'
+        })  
     }
         
 
@@ -223,9 +253,14 @@ export default class Basket extends Component {
         <div className="mt-2 mb-2">
         <label>Toplam: {cartItems.reduce((a,c)=>a+c.price*c.count,0)} TL</label>
 
-        <button className="btn btn-danger mr-2 float-right" onClick={(event)=>this.handleClick(event,cartItems.reduce((a,c)=>a+c.price*c.count,0),this.props.cartItems)}>Sipariş</button>
+        <button className="btn btn-danger mr-2 float-right" onClick={(event)=>this.handleClick(cartItems.reduce((a,c)=>a+c.price*c.count,0))}>Sipariş</button>
         </div>
-      
+
+            {this.state.showModal && <Modal open={this.state.showModal} selectPaymentType={this.selectPaymentType}
+             onClose={()=>this.setState({showModal:false}) }
+            paymentStatus={this.state.paymentStatus} 
+            orderWithCash={this.orderWithCash} 
+            orderWithCard={this.orderWithCard}/> }
 
         </div>
 

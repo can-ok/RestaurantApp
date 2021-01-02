@@ -146,7 +146,7 @@ class Production extends Component {
     }
 
 
-    handleRemoveFromCart=(event,item)=>{
+    handleRemoveFromCart=(item)=>{
 
         this.setState(state=>{
 

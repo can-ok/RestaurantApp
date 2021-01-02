@@ -7,7 +7,36 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 
+    <changeSet author="can.okan" id="30.12.2020">
+        <createTable tableName="ORDERITEMS">
+            <column autoIncrement="true" name="ID" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
 
+            <column name="PRODUCTID" type="int(5)"/>
+            <column name="PRODUCTCOUNT" type="int(5)"/>
+            <column name="PRODUCTPRICE" type="int(6)"/>
+            <column name="DELETED" type="boolean" defaultValueBoolean="false"></column>
+            <column name="orderId" type="int(10)">
+                <constraints foreignKeyName="fk_orderItem_order" referencedColumnNames="Orders(id)"></constraints>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+
+    <changeSet author="can.okan" id="30.12.2020-2">
+        <insert tableName="ORDERITEMS">
+            <column name="ID" valueNumeric="1"/>
+            <column name="PRODUCTID" valueNumeric="1"/>
+            <column name="PRODUCTCOUNT" valueNumeric="1"/>
+            <column name="PRODUCTPRICE" valueNumeric="20"/>
+            <column name="DELETED" valueBoolean="false"/>
+            <column name="ORDERID" valueDate="1"/>
+
+        </insert>
+
+    </changeSet>
 
 
 </databaseChangeLog>

@@ -1,7 +1,9 @@
 package com.resturant.restapi.controller;
 
 import com.resturant.restapi.Model.Orders;
+import com.resturant.restapi.dto.OrderDetailsDto;
 import com.resturant.restapi.dto.OrdersDto;
+import com.resturant.restapi.service.OrderDetailService;
 import com.resturant.restapi.service.OrdersService;
 import com.resturant.restapi.service.ProductsService;
 import org.hibernate.criterion.Order;
@@ -19,6 +21,9 @@ public class OrdersController {
     @Autowired
     OrdersService ordersService;
 
+    @Autowired
+    OrderDetailService orderDetailService;
+
     @GetMapping("/getOrders")
     public List<OrdersDto> getAllOrders(){
 
@@ -26,9 +31,10 @@ public class OrdersController {
     }
 
     @PostMapping("/saveOrder")
-    public OrdersDto saveOrder(@Valid @RequestBody OrdersDto ordersDto){
+    public OrderDetailsDto saveOrder(@RequestBody OrderDetailsDto ordersDto){
 
-        return ordersService.saveOrder(ordersDto);
+       // return ordersService.saveOrder(ordersDto);
+        return orderDetailService.saveOrders(ordersDto);
     }
 
     @PostMapping("/saveOrders")

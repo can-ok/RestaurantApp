@@ -50,10 +50,10 @@ public class TableController {
         return tableService.getTablebyId(id);
     }
 
-    @GetMapping(path = "/getResvervedTable")
-    public List<Map<String,String>> getReservedTable(){
-
-        return tableService.getResvervedTable();
-    }
+//    @GetMapping(path = "/getResvervedTable")
+//    public List<Map<String,String>> getReservedTable(){
+//
+//        return tableService.getResvervedTable();
+//    }
 
 }

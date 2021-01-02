@@ -28,7 +28,8 @@ public class OrdersService {
     public OrdersDto saveOrder(OrdersDto ordersDto){
 
         Orders orders= ordersMapper.toEntity(ordersDto);
-        ordersRepository.save(orders);
+        orders=ordersRepository.save(orders);
+        ordersDto=ordersMapper.toDto(orders);
         return ordersDto;
     }
 

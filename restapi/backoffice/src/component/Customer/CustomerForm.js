@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+/* import React,{useState} from 'react';
 import {Form,FormGroup,Label,Input} from 'reactstrap';
 import {useFormik} from 'formik';
 
@@ -61,4 +61,4 @@ const CustomerForm = ({meidaOptions,options}) => {
     );
 }
  
-export default CustomerForm;
+export default CustomerForm; */

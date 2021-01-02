@@ -37,7 +37,7 @@ const Modal = ({open,onClose,waiters,selectWaiter}) => {
     }) */
 
     const waitersList=waiters.map((item)=>{
-        return({label:<div className="mr-5" ><h5>{item.firstname} <img className="ml-5"src={'data:image/png;base64,'+item.media.fileContent} width="50" /> </h5> </div> ,value:item.id}
+        return({label:<div className="mr-5" ><h5>{item.firstname} <img className="ml-5"src={'data:image/png;base64,'+item.media.fileContent} width="50" /> </h5> </div> ,value:item}
             )
     })
    
