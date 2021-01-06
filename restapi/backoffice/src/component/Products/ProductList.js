@@ -35,7 +35,8 @@ class ProductList extends Component {
             }
             this.props.history.push("/login")
         }).then((data)=>{
-
+            
+            console.log(data.content)
             let arr=new Array();
             for(let i = 1; i <= Math.ceil(data.totalElements/this.state.pageSize); i++){
                 arr.push(i);

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class OrderService{
 
-    token=localStorage.getItem('token')
+    static token=""
 
     getAllOrders(){
 

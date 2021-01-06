@@ -1,7 +1,6 @@
 package com.resturant.restapi.dto;
 
 import com.resturant.restapi.Model.Media;
-import com.resturant.restapi.Model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.Setter;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Set;
 
 @Setter
 @Getter

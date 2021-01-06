@@ -2,9 +2,7 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
-    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
 
     <changeSet author="can.okan" id="30.12.2020">
@@ -25,18 +23,22 @@
     </changeSet>
 
 
-    <changeSet author="can.okan" id="30.12.2020-2">
-        <insert tableName="ORDERITEMS">
-            <column name="ID" valueNumeric="1"/>
-            <column name="PRODUCTID" valueNumeric="1"/>
-            <column name="PRODUCTCOUNT" valueNumeric="1"/>
-            <column name="PRODUCTPRICE" valueNumeric="20"/>
-            <column name="DELETED" valueBoolean="false"/>
-            <column name="ORDERID" valueDate="1"/>
+<!--    <changeSet author="can.okan" id="30.12.2020-2">-->
+<!--        <insert tableName="ORDERITEMS">-->
+<!--            <column name="ID" valueNumeric="1"/>-->
+<!--            <column name="PRODUCTID" valueNumeric="1"/>-->
+<!--            <column name="PRODUCTCOUNT" valueNumeric="1"/>-->
+<!--            <column name="PRODUCTPRICE" valueNumeric="20"/>-->
+<!--            <column name="DELETED" valueBoolean="false"/>-->
+<!--            <column name="ORDERID" valueDate="1"/>-->
 
-        </insert>
+<!--        </insert>-->
 
+<!--    </changeSet>-->
+
+
+    <changeSet id="05.01.2021" author="can.ok" runOnChange="true">
+        <sqlFile path="/db-changelog/orderItem.sql"></sqlFile>
     </changeSet>
-
 
 </databaseChangeLog>

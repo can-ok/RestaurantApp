@@ -27,15 +27,7 @@ const AddCustomer = ({setListComponent,setAddComponent}) => {
           : localStorage.getItem("token");
         CustomerService.token = token;
         
-        MediaService.getAllMedia()
-        .then((response)=>{
-            console.log(response)
-            if(response.status===200) return response.json()
-        
-        })
-        .then(data=>{
-          setCustomerMedia(data)
-        })
+       
     
       }, []);
 
@@ -47,8 +39,7 @@ const AddCustomer = ({setListComponent,setAddComponent}) => {
         "lastName":lastName,
         "phoneNumber":phoneNumber,
         "city":selectedCity[0].value,
-        "address":address,
-        "media":selectedMedia[0].value
+        "address":address
         };
 
      
@@ -70,10 +61,7 @@ const AddCustomer = ({setListComponent,setAddComponent}) => {
         { value: 'Ankara', label: 'Ankara' },
         { value: 'İzmir', label: 'İzmir' }
       ]
-      const meidaOptions=customerMedia.map((item)=>{
-        return({label:<div>{item.name} <img src={'data:image/png;base64,'+item.fileContent} width="30" /> </div> ,value:item}
-            )
-    })
+      
     return ( 
         <div>
             <Form> 
@@ -95,11 +83,7 @@ const AddCustomer = ({setListComponent,setAddComponent}) => {
             <Label>City: </Label>
             <Select  options={options}   onChange={setSelectedCity} isMulti isClearable/>
             </FormGroup>
-           
-            <FormGroup style={{width:"300px"}}>
-            <Label>Media: </Label>
-            <Select  options={meidaOptions}  onChange={setSelectedMedia} isMulti isClearable/>
-            </FormGroup>
+        
 
             <FormGroup>
               <Label>Address:

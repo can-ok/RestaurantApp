@@ -1,23 +1,16 @@
 package com.resturant.restapi.Model;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import liquibase.pro.packaged.C;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -62,9 +55,13 @@ public class Orders extends BaseEntity {
 //    @Column(name="CUSTOMERNAME")
 //    private String customerName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "CUSTOMERID")
-    private Customer customerId;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "CUSTOMERID")
+//    private Customer customerId;
+
+    @Column(name="CUSTOMERID")
+    private Integer customerId;
+
 
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "orderId")

@@ -1,6 +1,5 @@
 package com.resturant.restapi.dto;
 
-import com.resturant.restapi.Model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

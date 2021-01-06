@@ -1,17 +1,13 @@
 package com.resturant.restapi.controller;
 
 
-import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.dto.ProductCategoryDto;
-import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 

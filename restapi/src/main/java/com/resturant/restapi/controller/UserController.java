@@ -1,6 +1,5 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

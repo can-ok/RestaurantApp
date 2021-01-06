@@ -9,7 +9,6 @@ import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.exception.ContentNotAllowed;
 import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.RolesRepository;
-import com.resturant.restapi.repository.UsersRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,13 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-
-import static org.mockito.ArgumentMatchers.nullable;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserRoleTest {
 

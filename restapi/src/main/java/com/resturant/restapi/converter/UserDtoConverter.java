@@ -2,7 +2,6 @@ package com.resturant.restapi.converter;
 
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.dto.UsersDto;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;

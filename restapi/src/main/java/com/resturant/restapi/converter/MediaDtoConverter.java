@@ -2,7 +2,6 @@ package com.resturant.restapi.converter;
 
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.dto.MediaDto;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;

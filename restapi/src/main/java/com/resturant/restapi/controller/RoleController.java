@@ -1,7 +1,6 @@
 package com.resturant.restapi.controller;
 
 
-import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.service.RoleService;
 import com.resturant.restapi.service.UserService;

@@ -1,24 +1,21 @@
 package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Media;
-import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.Model.Tables;
 import com.resturant.restapi.config.MessageSourceExternalizer;
-import com.resturant.restapi.converter.TableDtoConverter;
 import com.resturant.restapi.converter.TableMapper;
 import com.resturant.restapi.dto.TablesDto;
-import com.resturant.restapi.exception.ContentNotAllowed;
 import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.TableRepository;
-import javafx.scene.control.Tab;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TableService {

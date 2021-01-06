@@ -1,8 +1,6 @@
 package com.resturant.restapi.builder;
 
 import com.resturant.restapi.Model.Media;
-import com.resturant.restapi.dto.MediaDto;
-import liquibase.pro.packaged.B;
 
 public class MediaBuilder extends Builder {
 

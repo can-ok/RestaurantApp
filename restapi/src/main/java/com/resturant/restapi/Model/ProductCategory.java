@@ -1,17 +1,15 @@
 package com.resturant.restapi.Model;
 
 
-import lombok.Getter;
-import lombok.Setter;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor

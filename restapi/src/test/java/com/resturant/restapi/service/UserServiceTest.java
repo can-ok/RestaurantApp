@@ -11,7 +11,6 @@ import com.resturant.restapi.converter.UserDtoConverter;
 import com.resturant.restapi.converter.UserMapper;
 import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.dto.UsersDto;
-import com.resturant.restapi.dto.WaiterDto;
 import com.resturant.restapi.exception.AuthenticationNotAllowed;
 import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.RolesRepository;
@@ -23,15 +22,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
-
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.nullable;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)

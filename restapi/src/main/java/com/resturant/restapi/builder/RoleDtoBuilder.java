@@ -1,6 +1,5 @@
 package com.resturant.restapi.builder;
 
-import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.dto.RoleDto;
 
 public class RoleDtoBuilder extends Builder{

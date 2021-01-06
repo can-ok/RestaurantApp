@@ -3,7 +3,6 @@ package com.resturant.restapi.converter;
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
-import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.dto.ProductDto;
 
 import java.util.List;

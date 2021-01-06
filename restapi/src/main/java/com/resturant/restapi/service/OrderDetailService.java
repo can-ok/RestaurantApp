@@ -1,22 +1,19 @@
 package com.resturant.restapi.service;
 
 
-import com.resturant.restapi.Model.Customer;
-import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.Model.Waiter;
 import com.resturant.restapi.converter.OrdersMapper;
 import com.resturant.restapi.dto.OrderDetailsDto;
 import com.resturant.restapi.dto.OrdersDto;
-import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.CustomerRepository;
 import com.resturant.restapi.repository.OrdersRepository;
 import com.resturant.restapi.repository.WaiterRepository;
+import com.resturant.restapi.stub.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.Order;
 import java.util.Optional;
 
 @Service
@@ -40,6 +37,9 @@ public class OrderDetailService {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    CustomerService customerService;
+
     @Transactional
     public OrderDetailsDto saveOrders(OrderDetailsDto ordersDetailsDto){
 
@@ -47,15 +47,24 @@ public class OrderDetailService {
 
         Orders order=ordersMapper.toEntity(ordersDto);
 
-        Optional<Waiter> waiterByID = waiterRepository.findById(ordersDetailsDto.getWaiterId());
-        if(waiterByID.isPresent()){
-            order.setWaiterId(waiterByID.get());
+        if(ordersDetailsDto.getWaiterId()!=null){
+            Optional<Waiter> waiterByID = waiterRepository.findById(ordersDetailsDto.getWaiterId());
+            if(waiterByID.isPresent()){
+                order.setWaiterId(waiterByID.get());
+            }
         }
 
-        Optional<Customer> customerById= customerRepository.findById(ordersDetailsDto.getCustomerId());
-        if(customerById.isPresent()){
-            order.setCustomerId(customerById.get());
+
+        if(ordersDetailsDto.getCustomerId()!=null){
+
+            Customer customer =customerService.getCustomer(ordersDetailsDto.getCustomerId());
+            if(customer!=null){
+                order.setCustomerId(customer.getId());
+
+            }
+
         }
+
 
         ordersRepository.save(order);
 

@@ -1,6 +1,5 @@
 package com.resturant.restapi.dto;
 
-import com.resturant.restapi.Model.Customer;
 import com.resturant.restapi.Model.OrderItems;
 import com.resturant.restapi.Model.Waiter;
 import lombok.AllArgsConstructor;
@@ -8,14 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -45,7 +38,7 @@ public class OrdersDto {
     private Waiter waiterId;
 
     //@NotNull(message = "customerId Can Not BE Null")
-    private Customer customerId;
+    private Integer customerId;
 
 
 //    @NotNull(message = "orderItems Can Not BE Null")

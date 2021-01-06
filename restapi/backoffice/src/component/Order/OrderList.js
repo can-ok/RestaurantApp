@@ -18,10 +18,13 @@ class OrderList extends Component {
     componentDidMount(){
 
 
-        OrderService.getAllOrders().then(
+        OrderService.getAllOrders()
+        .then(
             (response)=>{
-                this.setState({orders:response.data,
-                                loading:false
+                console.log(response)
+                this.setState({
+                    orders:response.data,
+                    loading:false
                 })
             }
         

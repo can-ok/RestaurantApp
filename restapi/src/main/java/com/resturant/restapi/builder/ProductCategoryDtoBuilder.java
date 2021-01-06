@@ -1,6 +1,5 @@
 package com.resturant.restapi.builder;
 
-import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.converter.MediaDtoConverter;
 import com.resturant.restapi.dto.ProductCategoryDto;
 

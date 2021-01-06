@@ -31,7 +31,7 @@ import EditTable from './component/Table/EditTable';
 import WaiterList from './component/Waiter/WaiterList';
 import AddWaiter from './component/Waiter/AddWaiter';
 import EditWaiter from './component/Waiter/EditWaiter';
-import OrderList from './component/Order/OrderList';
+import ListOrder from './component/Order/ListOrder';
 
 import ListRoles from './component/Role/ListRole';
 
@@ -89,7 +89,7 @@ const App = () => {
           <Route exact path="/addWaiter" component={AddWaiter}/>
           <Route exact path="/editWaiter/:id" component={EditWaiter}/>
           <Route exact path="/media" component={Media}/>
-          <Route exact path="/order" component={OrderList} />
+          <Route exact path="/order" component={ListOrder} />
           <Route exact path="/roles" component={ListRoles}/>
           <Route exact path="/customer" component={CustomerList}/>
           <Route exact path="/customerAdd" component={AddCustomer}/>

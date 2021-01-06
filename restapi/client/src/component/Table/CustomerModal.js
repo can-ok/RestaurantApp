@@ -2,9 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import "./Table.css";
 import AppContext from "../../AppContext";
 import CustomerService from "../../api/CustomerService";
-import { Link } from "react-router-dom";
 import { GrFormAdd } from "react-icons/gr";
-
+import {BiArrowBack} from 'react-icons/bi'
 import AddCustomerModel from "./AddCustomerModal";
 
 const MODAL_STYLES = {
@@ -47,12 +46,14 @@ const CustomerModel = ({ onClose, goProduct }) => {
   let paginate = (number) => {
     CustomerService.getCustomers(pageSize, number-1 )
       .then((response) => {
+        
         let arr = new Array();
         for (let i = 1; i <= Math.ceil(response.data.totalElements / pageSize);i++) {
           arr.push(i);
         }
         if (response.status == 200) {
-          setItems(response.data.content);
+          console.log(response.data)
+          setItems(response.data);
           setPageNumbers(arr);
         }
       })
@@ -87,7 +88,7 @@ const CustomerModel = ({ onClose, goProduct }) => {
     goProduct();
   };
 
-  let customers = items.map((item) => {
+  let customers = items.length>0?items.map((item) => {
     return (
       <tr key={item.id} onClick={() => selectCustomer(item)}>
         <td>{item.id}</td>
@@ -98,7 +99,7 @@ const CustomerModel = ({ onClose, goProduct }) => {
         <td></td>
       </tr>
     );
-  });
+  }):null;
 
   let pagination = pageNumbers.map((number) => {
     return (
@@ -154,6 +155,9 @@ const CustomerModel = ({ onClose, goProduct }) => {
           </ul>
         </div>
         {addCustomerModel && <AddCustomerModel />}
+
+        <h2 className="mt-5" onClick={onClose}> <BiArrowBack/> Geri </h2>
+
       </div>
     </>
   );

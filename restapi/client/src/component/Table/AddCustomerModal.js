@@ -1,4 +1,5 @@
 import React from 'react';
+import {BiArrowBack} from 'react-icons/bi'
 
 
 const MODAL_STYLES={

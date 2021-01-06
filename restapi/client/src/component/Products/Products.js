@@ -278,7 +278,7 @@ class Production extends Component {
             </div>
 
             <div className="col-5  mt-2">
-                <Basket cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart} />
+                <Basket  cartItems={this.state.cartItems} handleRemoveFromCart={this.handleRemoveFromCart} />
             </div>
 
          </div>   

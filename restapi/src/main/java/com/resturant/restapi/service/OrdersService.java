@@ -1,10 +1,8 @@
 package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Orders;
-import com.resturant.restapi.converter.OrdersDtoConverter;
 import com.resturant.restapi.converter.OrdersMapper;
 import com.resturant.restapi.dto.OrdersDto;
-import com.resturant.restapi.exception.ContentNotAllowed;
 import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;

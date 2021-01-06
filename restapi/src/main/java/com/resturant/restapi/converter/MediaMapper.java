@@ -3,7 +3,6 @@ package com.resturant.restapi.converter;
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.dto.MediaDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface MediaMapper {

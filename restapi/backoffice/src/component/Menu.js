@@ -11,6 +11,7 @@ const MenuBar = (props) => {
       <Nav.Link href="roles">Yetkililer</Nav.Link>
       <Nav.Link href="/categories">Kategoriler</Nav.Link>
       <Nav.Link href="/order">Sipariş</Nav.Link>
+      <Nav.Link href="/customer">Müşteriler</Nav.Link>
       <Nav.Link href="/tables">Masalar</Nav.Link>
       <Nav.Link href="/waiters">Garsonlar</Nav.Link>
       <Nav.Link href="/media">Media</Nav.Link>

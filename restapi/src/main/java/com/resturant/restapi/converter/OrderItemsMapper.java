@@ -5,7 +5,6 @@ import com.resturant.restapi.Model.Orders;
 import com.resturant.restapi.dto.OrderItemsDto;
 import com.resturant.restapi.dto.OrdersDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.Set;

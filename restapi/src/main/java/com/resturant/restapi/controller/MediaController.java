@@ -1,6 +1,5 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.dto.MediaDto;
 import com.resturant.restapi.service.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;

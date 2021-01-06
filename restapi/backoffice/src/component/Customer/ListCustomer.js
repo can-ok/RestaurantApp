@@ -45,7 +45,7 @@ const CustomerList = () => {
         for (let i = 1; i <= Math.ceil(response.data.totalElements / pageSize);i++) {
           arr.push(i);
         }
-        setItems(response.data.content);
+        setItems(response.data);
         setLoading(false);
         setPageNumbers(arr);
 
@@ -61,7 +61,7 @@ const CustomerList = () => {
           arr.push(i);
         }
         if (response.status == 200) {
-          setItems(response.data.content);
+          setItems(response.data);
           setPageNumbers(arr);
         }
       })
@@ -107,7 +107,6 @@ const CustomerList = () => {
         <th>Sehir</th>
         <th>Address</th>
         <th>Telefon</th>
-        <th>Görsel</th>
         <th></th>
         <th></th>
       </tr>
@@ -122,7 +121,7 @@ const CustomerList = () => {
             <td>{item.city} </td>
             <td>{item.address} </td>
             <td>{item.phoneNumber} </td>
-            <td><img src={'data:image/png;base64,'+item.media.fileContent} width="60" alt="waiter"/></td>
+          
             <td>
               <button  
                 className="btn btn-warning"

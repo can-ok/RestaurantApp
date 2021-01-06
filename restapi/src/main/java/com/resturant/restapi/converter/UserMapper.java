@@ -2,11 +2,8 @@ package com.resturant.restapi.converter;
 
 import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.dto.UsersDto;
-import jdk.nashorn.internal.ir.annotations.Ignore;
-import org.apache.catalina.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 

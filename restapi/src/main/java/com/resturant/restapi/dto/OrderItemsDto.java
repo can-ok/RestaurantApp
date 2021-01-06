@@ -1,18 +1,12 @@
 package com.resturant.restapi.dto;
 
-import com.resturant.restapi.Model.OrderItems;
-import com.resturant.restapi.Model.Orders;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.jnlp.IntegrationService;
-import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Getter

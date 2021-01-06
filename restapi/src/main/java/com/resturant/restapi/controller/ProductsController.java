@@ -1,6 +1,5 @@
 package com.resturant.restapi.controller;
 
-import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3006"})
 @RestController

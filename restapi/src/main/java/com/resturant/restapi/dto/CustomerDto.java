@@ -1,20 +1,20 @@
 package com.resturant.restapi.dto;
 
 
-import com.resturant.restapi.Model.Media;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+
+@XmlRootElement(name = "customer")
 public class CustomerDto {
 
     //@Min()
@@ -31,7 +31,5 @@ public class CustomerDto {
     @NotNull(message = "PhoneNumber Can Not BE Null")
     private String phoneNumber;
 
-    @NotNull(message = "Media Can Not BE Null")
-    private Media media;
 
 }

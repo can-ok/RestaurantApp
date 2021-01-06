@@ -15,7 +15,7 @@
     <include file="/db-changelog/changes/create-media-table.xml"/>
     <include file="/db-changelog/changes/create-roles-table.xml"/>
     <include file="/db-changelog/changes/create-user_roles-table.xml"/>
-    <include file="/db-changelog/changes/create-customer-table.xml"/>
+<!--    <include file="/db-changelog/changes/create-customer-table.xml"/>-->
     <include file="/db-changelog/changes/create-orderItem-table.xml"/>
 
 </databaseChangeLog>

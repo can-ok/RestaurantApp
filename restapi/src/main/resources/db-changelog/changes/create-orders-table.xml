@@ -2,9 +2,7 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
-    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet author="can.okan" id="3">
         <createTable tableName="Orders">
@@ -21,26 +19,24 @@
             <column name="waiterId" type="int(10)">
                 <constraints foreignKeyName="fk_customer_waiter" referencedColumnNames="WAITER_TABLE(id)"></constraints>
             </column>
-            <column name="customerId" type="int(10)">
-                <constraints foreignKeyName="fk_customer_order" referencedColumnNames="Customer(id)"></constraints>
-            </column>
+            <column name="customerId" type="int(10)"/>
         </createTable>
 
     </changeSet>
 
-    <changeSet author="can.okan" id="4">
-        <insert tableName="Orders">
-            <column name="id" valueNumeric="1"/>
+<!--    <changeSet author="can.okan" id="4">-->
+<!--        <insert tableName="Orders">-->
+<!--            <column name="id" valueNumeric="1"/>-->
 
-            <column name="totalPrice" valueNumeric="25"/>
-            <column name="orderDate" valueDate="now()"/>
-            <column name="paymentType" value="cash"/>
-            <column name="orderTable" value="1"/>
-            <column name="waiterId" valueNumeric="1"/>
-            <column name="customerId" valueNumeric="1"/>
-        </insert>
+<!--            <column name="totalPrice" valueNumeric="25"/>-->
+<!--            <column name="orderDate" valueDate="now()"/>-->
+<!--            <column name="paymentType" value="cash"/>-->
+<!--            <column name="orderTable" value="1"/>-->
+<!--            <column name="waiterId" valueNumeric="1"/>-->
+<!--            <column name="customerId" valueNumeric="1"/>-->
+<!--        </insert>-->
 
-    </changeSet>
+<!--    </changeSet>-->
 
     <changeSet id="21" author="can.ok">
         <addColumn tableName="Orders">
@@ -49,6 +45,9 @@
     </changeSet>
 
 
+    <changeSet id="04.01.2021" author="can.ok" runOnChange="true">
+        <sqlFile path="/db-changelog/order.sql"></sqlFile>
+    </changeSet>
 
 
 </databaseChangeLog>

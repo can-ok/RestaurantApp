@@ -2,7 +2,6 @@ package com.resturant.restapi.service;
 
 import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.config.MessageSourceExternalizer;
-import com.resturant.restapi.converter.RoleDtoConverter;
 import com.resturant.restapi.converter.RoleMapper;
 import com.resturant.restapi.dto.RoleDto;
 import com.resturant.restapi.exception.ContentNotAllowed;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

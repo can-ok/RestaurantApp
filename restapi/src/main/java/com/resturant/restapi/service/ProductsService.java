@@ -4,26 +4,27 @@ import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.Product;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.config.MessageSourceExternalizer;
-import com.resturant.restapi.converter.ProductDtoConverter;
 import com.resturant.restapi.converter.ProductMapper;
-import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
 import com.resturant.restapi.converter.ProductsCategoryMapper;
 import com.resturant.restapi.dto.ProductCategoryDto;
 import com.resturant.restapi.dto.ProductDto;
 import com.resturant.restapi.exception.ContentNotAllowed;
 import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
-import com.resturant.restapi.repository.ProductRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
+import com.resturant.restapi.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Optional;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -48,7 +49,7 @@ public class ProductsService {
     @Autowired
     private MessageSourceExternalizer messageSourceExternalizer;
 
-    public Slice<ProductDto> getAllDrinks(int pageCount,int pageSize){
+    public Slice<ProductDto> getAllDrinks(int pageCount, int pageSize){
 
         Pageable pages=PageRequest.of(pageCount,pageSize);
 

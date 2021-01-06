@@ -2,9 +2,6 @@ package com.resturant.restapi.builder;
 
 import com.resturant.restapi.Model.Role;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 public class RoleBuilder  extends Builder{
 
     private Integer id;

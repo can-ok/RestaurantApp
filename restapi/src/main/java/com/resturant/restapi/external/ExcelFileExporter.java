@@ -1,12 +1,10 @@
 package com.resturant.restapi.external;
 
 import com.resturant.restapi.Model.Customer;
-import com.resturant.restapi.dto.CustomerDto;
 import lombok.SneakyThrows;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.persistence.Column;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;

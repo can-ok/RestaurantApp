@@ -1,11 +1,13 @@
 package com.resturant.restapi.controller;
 
 
-import com.resturant.restapi.Model.Users;
 import com.resturant.restapi.dto.UsersDto;
 import com.resturant.restapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 

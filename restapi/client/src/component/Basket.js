@@ -8,8 +8,9 @@ import OrdersService from '../api/OrdersService';
 import AppContext from '../AppContext';
 
 import Modal from './Modal';
+import { withRouter } from 'react-router-dom';
 
-export default class Basket extends Component {
+class Basket extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -179,7 +180,7 @@ export default class Basket extends Component {
         let model={
             "orderItemsDtoList":data,
             "ordersDto":order,
-            "waiterId":waiterContext.id,
+            "waiterId":waiterContext==null?null:waiterContext.id,
             "customerId":customerContext
         }
         
@@ -201,6 +202,8 @@ export default class Basket extends Component {
             appState.waiter=null
             this.context.setAppState(appState)
             localStorage.removeItem(tableContext)
+            this.props.history.push('/table')
+
         })
         
         .catch((err)=>{
@@ -219,15 +222,12 @@ export default class Basket extends Component {
             carts=cartItems.map( (item)=>
 
             <li className="mt-3 border-bottom">
-                
-                
                 <label className="float-left"  onClick={()=>this.handleBaskesIncrement(item,cartItems)}><AiOutlinePlusCircle size={24} /></label>
                 <label>
                 <label>{item.title} </label>
                 <label className="ml-1">{item.count} Adet </label>
                 <label className="ml-1"> {item.count*item.price} TL</label>
                 </label>
-                
 
                 {/*<button className="btn btn-danger" onClick={(e)=>this.props.handleRemoveFromCart(e,item)}>X</button>*/}
                 <label className="float-right" onClick={(event)=>this.handleBaskesStateDecremet(event,item,cartItems)}><AiOutlineMinusCircle size={24}/> </label>
@@ -268,3 +268,4 @@ export default class Basket extends Component {
     }
 }
  
+export default withRouter(Basket)

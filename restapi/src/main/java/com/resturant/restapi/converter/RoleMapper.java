@@ -3,7 +3,6 @@ package com.resturant.restapi.converter;
 import com.resturant.restapi.Model.Role;
 import com.resturant.restapi.dto.RoleDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 import java.util.Set;

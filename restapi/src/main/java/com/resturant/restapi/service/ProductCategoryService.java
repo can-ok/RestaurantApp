@@ -3,11 +3,8 @@ package com.resturant.restapi.service;
 import com.resturant.restapi.Model.Media;
 import com.resturant.restapi.Model.ProductCategory;
 import com.resturant.restapi.config.MessageSourceExternalizer;
-import com.resturant.restapi.converter.ProductMapper;
-import com.resturant.restapi.converter.ProductsCategoryDtoConverter;
 import com.resturant.restapi.converter.ProductsCategoryMapper;
 import com.resturant.restapi.dto.ProductCategoryDto;
-import com.resturant.restapi.exception.ContentNotAllowed;
 import com.resturant.restapi.exception.EntityNotFound;
 import com.resturant.restapi.repository.MediaRepository;
 import com.resturant.restapi.repository.ProductCategoryRepository;
@@ -19,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductCategoryService {
